@@ -1,0 +1,49 @@
+{
+
+  "byDeveloper": "by {developer}",
+  
+  "bottomWallSelectorTitle": "Set Wallpaper as",
+  "bottomWallSelectorSubTitle": "Would you like to set this image as your wallpaper, lock screen, or both?",
+  "bottomWallSelectorHS": "Set as Home Screen",
+  "bottomWallSelectorLS": "Set as Lock Screen",
+  "bottomWallSelectorBS": "Set as Both Screen",
+
+  "errorMessage": "Well isn't this embarrassing? We can't seem to find what you're looking for",
+  "noFunction": "Function not available at the moment",
+  "downloadOk": "Successfully downloaded",
+  "downloadError": "Download Error",
+
+  "settingsAppBarTitle": "Configuration",
+
+  "settingsAppearance": "Appearance",
+  "settingsAppearanceLT1": "Application theme",
+  "settingsAppearanceLST1": "Choose a preset theme",
+
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+
+  "settingsAbout": "About",
+  "settingsAboutLST1": "About the Kustom Pack",
+  "settingsAboutLST2": "About the Dashboard",
+
+  "aboutDashboard": "Kreator Frame is the dashboard that gives you full control to customize the look and feel of your mobile device with modern, personalized widgets. \n\nWith Kreator Frame, you can create a unique experience tailored to your needs. Widgets compatible with the Kustom Widget Maker app allow you to add additional features to your mobile device, such as widgets for music, weather, activity tracking and more. \n\nThanks to its minimalist and modern design, the application integrates perfectly with the style of your mobile device. Kreator Frame gives you the fluidity and control you need to customize your mobile device's home screen.",
+  "aboutPackage": "{packageName} is a skin pack for Kustom, the most advanced wallpaper engine for android. \n\nThis pack has been created by {developerName} and we appreciate your support by downloading this app directly from Google Play Store. \n\nIn this application you can find widgets and wallpapers that you can add to your home screen to give it a nicer look, remember that widgets can be modified by you for a more pleasant and accurate experience. \n\nIf you have any questions or advice do not hesitate to contact me through any of my social networks listed below.",
+
+  "settingsLegal": "Legal Aspects",
+  "settingsLegalLT1": "Terms and Conditions",
+  "settingsLegalLST1": "Effective as of 04/11/2021",
+  "settingsLegalLT2": "Privacy Policy",
+  "settingsLegalLST2": "Policy effective as of 04/11/2021",
+
+  "settingsLicences": "Software licences",
+  "settingsLicencesLT1": "Licences (OSS)",
+  "settingsLicencesLST1": "Open source licences",
+
+  "settingsVersions": "Current Versions",
+
+  "themeAppBarTitle": "Theme Selector",
+  "themeSelector": "Select a theme",
+  "themeColorSelector": "Select a colour for the theme"
+
+}

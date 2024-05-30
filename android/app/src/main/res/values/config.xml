@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~
+  ~ Copyright (c) 2023.  Luis Gamas <luiss.gamass@tutanota.com>
+  ~ All rights reserved.
+  -->
+<resources>
+    <!--    KUSTOM EXCLUSIVE CONFIGS -->
+
+    <!--    Name of the skin to be shown inside the Kustom app default must be the same as the name of the app. -->
+    <string name="kustom_pack_title">Kreator Frame</string>
+
+    <!--    A brief description of the pack contents -->
+    <string name="kustom_pack_description">Amazing widget pack for KWGT by Luis Gamas.</string>
+
+</resources>

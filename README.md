@@ -63,7 +63,7 @@ You can try and use the **Kreator Frame Dashboard** app before you have to set u
 ### Variables:
 
 > [!IMPORTANT]
-> Before starting the project you need to provide the environment variables, without this the project will not compile. Before starting the project it is necessary to provide the environment variables, without this the project will not compile. ***In case you don't want to add wallpapers to your app or any social network just change the link you see there for the word NA***.
+> Before starting the project it is necessary to provide the environment variables, without this the project will not compile. ***In case you don't want to add wallpapers to your app or any social network just change the link you see there for the word NA***.
 
 #### JSON Example
 

@@ -13,11 +13,8 @@ import 'package:kreator_frame/presentation/providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   await dotenv.load(fileName: ".env");
-
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -31,23 +28,13 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(appThemeModeProvider);
     final primaryColorTheme = ref.watch(appColorThemeProvider);
 
-    Color getPrimaryColor() {
-      ref.read(appColorThemeProvider.notifier).updateColorTheme();
-      return primaryColorTheme;
-    }
-
-    ThemeMode getTheme() {
-      ref.read(appThemeModeProvider.notifier).updateThemeFromStorage();
-      return themeMode;
-    }
-
     return MaterialApp.router(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: appRouter,
-      themeMode: getTheme(),
-      theme: AppTheme(primaryColor: getPrimaryColor()).getLightTheme(),
-      darkTheme: AppTheme(primaryColor: getPrimaryColor()).getDarkTheme(),
+      themeMode: themeMode,
+      theme: AppTheme(primaryColor: primaryColorTheme).getLightTheme(),
+      darkTheme: AppTheme(primaryColor: primaryColorTheme).getDarkTheme(),
     );
   }
 }

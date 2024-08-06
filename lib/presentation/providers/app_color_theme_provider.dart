@@ -17,6 +17,7 @@ class AppColorTheme extends _$AppColorTheme {
 
   @override
   Color build() {
+    _updateColorTheme();
     return AppThemeColors.primaryColor.first;
   }
 
@@ -26,7 +27,7 @@ class AppColorTheme extends _$AppColorTheme {
     await storageService.setKeyValue(Environment.keyColorTheme, colorIndex);
   }
 
-  void updateColorTheme() async {
+  void _updateColorTheme() async {
     final colorIndex = await storageService.getKeyValue<int>(Environment.keyColorTheme);
     if (colorIndex != null && colorIndex >= 0 && colorIndex < AppThemeColors.primaryColor.length) {
       state = AppThemeColors.primaryColor[colorIndex];

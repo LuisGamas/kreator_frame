@@ -18,6 +18,7 @@ class AppThemeMode extends _$AppThemeMode {
 
   @override
   ThemeMode build() {
+    _updateThemeFromStorage();
     return appThemesSelector[0].themeMode;
   }
 
@@ -26,7 +27,7 @@ class AppThemeMode extends _$AppThemeMode {
     await storageService.setKeyValue(Environment.keyThemeMode, state.name);
   }
 
-  void updateThemeFromStorage() async{
+  void _updateThemeFromStorage() async{
     final themeFromStorage = await storageService.getKeyValue<String>(Environment.keyThemeMode);
 
     if (themeFromStorage != null) {

@@ -59,8 +59,8 @@ flutter {
     source '../..'
 }
 
- dependencies {
-     //This is the official Kustom Packs API hosted in Frank Monza Bitbucked repository.
-     implementation 'org.bitbucket.frankmonza:kustomapi:21'
-     implementation 'org.bitbucket.frankmonza:kustompreset:21'
+dependencies {
+    //This is the official Kustom Packs API hosted in Frank Monza Bitbucked repository.
+    implementation 'org.bitbucket.frankmonza:kustomapi:21'
+    implementation 'org.bitbucket.frankmonza:kustompreset:21'
 }

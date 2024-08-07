@@ -1,7 +1,7 @@
 <!------------------ [#####################] ------------------>
 # Kreator Frame Dashboard
 
-![GitHub License](https://img.shields.io/github/license/LuisGamas/kreator_frame?style=for-the-badge)	![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/LuisGamas/kreator_frame/total?style=for-the-badge)	[![FLUTTER](https://img.shields.io/badge/FLUTTER-FRAMEWORK-gray?labelColor=02569B&style=for-the-badge&logo=flutter)](https://flutter.dev/)  [![DART](https://img.shields.io/badge/DART-LANGUAGE-gray?labelColor=0175C2&style=for-the-badge&logo=dart/)](https://flutter.dev/)
+![GitHub License](https://img.shields.io/github/license/LuisGamas/kreator_frame?style=for-the-badge)	![GitHub Downloads](https://img.shields.io/github/downloads/LuisGamas/kreator_frame/total?style=for-the-badge)	[![FLUTTER](https://img.shields.io/badge/FLUTTER-FRAMEWORK-gray?labelColor=02569B&style=for-the-badge&logo=flutter)](https://flutter.dev/)  [![DART](https://img.shields.io/badge/DART-LANGUAGE-gray?labelColor=0175C2&style=for-the-badge&logo=dart/)](https://flutter.dev/)
 
 Kreator Frame Dashboard is a Flutter-based project created to share your widget and wallpaper packs compatible with Kustom Apps (KWGT & KWLP) and share them on the Play Store.
 

@@ -17,7 +17,7 @@ class Environment {
 
   // * Variables of Dashboard Preference **DO NOT REMOVE**
   static String dashName = 'Kreator Frame';
-  static String dashVersion = '1.0.4 β';
+  static String dashVersion = '1.0.5 β';
   static String dashDeveloper = 'Luis Gamas';
 }
 

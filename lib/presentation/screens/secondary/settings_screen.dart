@@ -192,8 +192,8 @@ class _SettingsSliverList extends StatelessWidget {
     
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(packageName), // AQUI
-          subtitle: Text(packageVersion), // AQUI
+          title: Text(packageName),
+          subtitle: Text(packageVersion),
           leading: const Icon(Hicon.informationCircleBold),
         ),
     

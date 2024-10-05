@@ -5,7 +5,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+// 🌎 Project imports:
+import 'package:kreator_frame/config/config.dart';
 
 class CustomCardPreviews extends StatelessWidget {
 
@@ -52,29 +55,16 @@ class CustomCardPreviews extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10)
               ),
-              child: isUrlImage != false
-              ? FancyShimmerImage(
-                imageUrl: imageUrl!,
-                shimmerBaseColor: colors.surfaceContainerHighest,
-                shimmerHighlightColor: colors.onSurfaceVariant,
-                width: double.infinity,
-                height: heightPreview!,
-                boxFit: fitPreview!,
-              )
-              : addPadding == false
-              ? Image.memory(
-                image!,
+              child: SizedBox(
                 width: double.infinity,
                 height: heightPreview,
-                fit: fitPreview,
-              )
-              : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                child: Image.memory(
-                  image!,
-                  width: double.infinity,
-                  height: heightPreview,
-                  fit: fitPreview,
+                child: isUrlImage != false
+                ? _loadImagePreview(CachedNetworkImageProvider(imageUrl!))
+                : addPadding == false
+                ? _loadImagePreview(MemoryImage(image!))
+                : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                  child: _loadImagePreview(MemoryImage(image!))
                 ),
               ),
             ),
@@ -121,5 +111,24 @@ class CustomCardPreviews extends StatelessWidget {
       ),
     );
 
+  }
+
+  Image _loadImagePreview (ImageProvider<Object> image) {
+    return Image(
+      image: image,
+      fit: fitPreview,
+      loadingBuilder: (context, child, loadingProgress) {
+        return loadingProgress == null
+        ? child
+        : const Center(child: CircularProgressIndicator(strokeWidth: 2));
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return const Center(
+          child: Icon(
+            Hicon.dangerTriangleOutline
+          ),
+        );
+      },
+    );
   }
 }

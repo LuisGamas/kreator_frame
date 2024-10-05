@@ -31,8 +31,8 @@ environment:
 dependencies:
   animate_do: ^3.3.4
   archive: ^3.6.1
+  cached_network_image: ^3.4.1
   dio: ^5.5.0+1
-  fancy_shimmer_image: ^2.0.3
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.4.0

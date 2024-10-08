@@ -42,7 +42,7 @@ class CustomCardPreviews extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
 
     return Card.filled(
-      color: const Color(0xFF0F1011),
+      color: colors.surfaceContainerLowest,
       elevation: 2,
       child: GestureDetector(
         onTap: onTap,

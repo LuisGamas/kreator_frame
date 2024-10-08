@@ -10,4 +10,5 @@ abstract class DataSource {
   Future<List<WidgetEntity>> getListOfWidgets(String filesExt, String thumbName);
   Future<void> launchExternalApp(String url);
   FutureBuilder<String> getOfficialData(String nameFolder, String nameFile);
+  Future<List<LicenseEntity>> getLicenses();
 }

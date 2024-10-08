@@ -34,5 +34,10 @@ class RepositoryImpl extends Repository {
   FutureBuilder<String> getOfficialData(String nameFolder, String nameFile) {
     return dataSource.getOfficialData(nameFolder, nameFile);
   }
+  
+  @override
+  Future<List<LicenseEntity>> getLicenses() {
+    return dataSource.getLicenses();
+  }
 
 }

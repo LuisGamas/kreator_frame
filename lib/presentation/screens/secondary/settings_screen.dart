@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -55,7 +56,6 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 class _SettingsSliverList extends StatelessWidget {
-
   final String packageName;
   final String packageVersion;
 
@@ -67,22 +67,12 @@ class _SettingsSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // * Variables
-    final textStyles = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
-
     return SliverList(
       delegate: SliverChildListDelegate([
     
         // * First part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsAppearance,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsAppearance,
         ),
     
         _CustomListTile(
@@ -95,14 +85,8 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Second part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsAbout,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsAbout,
         ),
     
         _CustomListTile(
@@ -122,14 +106,8 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Third part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsLegal,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsLegal,
         ),
     
         _CustomListTile(
@@ -149,45 +127,22 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Fourth part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsLicences,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsLicences,
         ),
-    
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(AppLocalizations.of(context)!.settingsLicencesLT1),
-          subtitle: Text(AppLocalizations.of(context)!.settingsLicencesLST1),
-          leading: const Icon(Hicon.award2Bold),
-          trailing: const Icon(Hicon.right2Bold),
-          onTap: () => showLicensePage(
-            context: context,
-            applicationName: Environment.dashName,
-            applicationLegalese: 'Dashboard',
-            applicationIcon: const Icon(
-              Hicon.graphBold,
-              size: 40,
-            ),
-            applicationVersion: Environment.dashVersion,
-          ),
+
+        _CustomListTile(
+          title: AppLocalizations.of(context)!.settingsLicencesLT1,
+          subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
+          location: '/licenses-screen',
+          leadingWidget: const Icon(Hicon.award2Bold),
         ),
     
         const Gap(25),
     
         // * Fifth part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsVersions,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsVersions
         ),
     
         ListTile(
@@ -209,6 +164,32 @@ class _SettingsSliverList extends StatelessWidget {
   }
 }
 
+// * Title Widget
+class _TitleListTile extends StatelessWidget {
+  final String title;
+
+  const _TitleListTile({
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+    return FadeIn(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: Text(
+          title,
+          style: textStyles.titleLarge!.copyWith(
+            color: colors.onSurface,
+          )
+        ),
+      ),
+    );
+  }
+}
+
 // * Custom ListTile widget
 class _CustomListTile extends StatelessWidget {
   final String title;
@@ -225,26 +206,27 @@ class _CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-      splashColor: colors.secondaryContainer,
-      textColor: colors.onSurface,
-      title: Text(title),
-      titleTextStyle: textStyles.titleMedium,
-      subtitle: Text(subTitle),
-      subtitleTextStyle: textStyles.bodySmall,
-      leading: leadingWidget,
-      trailing: Icon(
-        Hicon.right2Bold,
-        color: colors.onSurface,
+    return FadeIn(
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        splashColor: colors.secondaryContainer,
+        textColor: colors.onSurface,
+        title: Text(title),
+        titleTextStyle: textStyles.titleMedium,
+        subtitle: Text(subTitle),
+        subtitleTextStyle: textStyles.bodySmall,
+        leading: leadingWidget,
+        trailing: Icon(
+          Hicon.right2Bold,
+          color: colors.onSurface,
+        ),
+        onTap: location == null 
+        ? null
+        : () => context.push(location!),
       ),
-      onTap: location == null 
-      ? null
-      : () => context.push(location!),
     );
   }
 }

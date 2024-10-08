@@ -15,18 +15,10 @@ part 'app_router.g.dart';
 GoRouter appRouter(AppRouterRef ref) {
   return GoRouter(routes: [
     // * Primary Screens
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-    ),
+    _createRoute('/', const HomeScreen()),
 
     // * Secondary Screens
-    GoRoute(
-      path: '/settings',
-      pageBuilder: (context, state) {
-        return pagesTransition(const SettingsScreen());
-      },
-    ),
+    _createRoute('/settings', const SettingsScreen()),
 
     // * Tertiary Screens
     GoRoute(
@@ -36,47 +28,31 @@ GoRouter appRouter(AppRouterRef ref) {
         return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
       },
     ),
+    _createRoute('/theme-selector', const ThemeSelectorScreen()),
+    _createRoute('/kustom-app-information', const AboutPackageAppScreen()),
+    _createRoute('/dashboard-information', const AboutDashboardScreen()),
+    _createRoute('/terms-and-conditions', const TermsAndConditionsScreen()),
+    _createRoute('/privacy-policy', const PrivacyPolicyScreen()),
 
+    // * Other Screens
+    _createRoute('/licenses-screen', const LicensesScreen()),
     GoRoute(
-      path: '/theme-selector',
+      path: '/license-detail-screen',
       pageBuilder: (context, state) {
-        return pagesTransition(const ThemeSelectorScreen());
+        LicenseEntity licenseEntity = state.extra as LicenseEntity;
+        return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));
       },
-      //builder: (context, state) => const ThemeSelectorScreen(),
-    ),
-
-    GoRoute(
-      path: '/kustom-app-information',
-      pageBuilder: (context, state) {
-        return pagesTransition(const AboutPackageAppScreen());
-      },
-      //builder: (context, state) => const AboutPackageAppScreen(),
-    ),
-
-    GoRoute(
-      path: '/dashboard-information',
-      pageBuilder: (context, state) {
-        return pagesTransition(const AboutDashboardScreen());
-      },
-      //builder: (context, state) => const AboutDashboardScreen(),
-    ),
-
-    GoRoute(
-      path: '/terms-and-conditions',
-      pageBuilder: (context, state) {
-        return pagesTransition(const TermsAndConditionsScreen());
-      },
-      //builder: (context, state) => const TermsAndConditionsScreen(),
-    ),
-
-    GoRoute(
-      path: '/privacy-policy',
-      pageBuilder: (context, state) {
-        return pagesTransition(const PrivacyPolicyScreen());
-      },
-      //builder: (context, state) => const PrivacyPolicyScreen(),
     ),
   ]);
+}
+
+GoRoute _createRoute(String path, Widget page) {
+  return GoRoute(
+    path: path,
+    pageBuilder: (context, state) {
+      return pagesTransition(page);
+    },
+  );
 }
 
 CustomTransitionPage<dynamic> pagesTransition(Widget page) {

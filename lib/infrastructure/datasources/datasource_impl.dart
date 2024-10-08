@@ -122,6 +122,18 @@ class DataSourceImpl extends DataSource {
         });
   }
 
+  @override
+  Future<List<LicenseEntity>> getLicenses() async {
+    try {
+      final String response = await rootBundle.loadString('assets/official/licenses.json');
+      final List<dynamic> jsonData = json.decode(response);
+      final List<LicenseModel> licenseModels = jsonData.map((json) => LicenseModel.fromJson(json)).toList();
+      return licenseModels.map((model) => LicenseMapper.modelToEntity(model)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
   // * Obtains a list of .zip files in the assets folder with a specified file extension.
   Future<List<String>> _listZipFiles(String filesExt) async {
     // Get the list of application assets

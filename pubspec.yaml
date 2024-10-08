@@ -66,6 +66,7 @@ dev_dependencies:
   custom_lint: ^0.6.4
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^4.0.0
+  flutter_oss_licenses: ^3.0.2
   flutter_test:
     sdk: flutter
   import_sorter: ^4.6.0

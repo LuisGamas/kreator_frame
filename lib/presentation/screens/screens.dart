@@ -1,4 +1,6 @@
 export 'home_screen.dart';
+export 'licenses/license_detail_screen.dart';
+export 'licenses/licenses_screen.dart';
 export 'secondary/klwp_screen.dart';
 export 'secondary/kwgt_screen.dart';
 export 'secondary/settings_screen.dart';

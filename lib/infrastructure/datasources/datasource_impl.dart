@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 // 🐦 Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -122,13 +123,24 @@ class DataSourceImpl extends DataSource {
         });
   }
 
+  // * Obtains a list of licenses in the project
   @override
   Future<List<LicenseEntity>> getLicenses() async {
     try {
-      final String response = await rootBundle.loadString('assets/official/licenses.json');
-      final List<dynamic> jsonData = json.decode(response);
-      final List<LicenseModel> licenseModels = jsonData.map((json) => LicenseModel.fromJson(json)).toList();
-      return licenseModels.map((model) => LicenseMapper.modelToEntity(model)).toList();
+      final licenses = await LicenseRegistry.licenses.toList();
+      final processedPackages = <String>{};
+      final licenseEntities = <LicenseEntity>[];
+
+      for (var license in licenses) {
+        for (var packageName in license.packages) {
+          if (!processedPackages.contains(packageName)) {
+            processedPackages.add(packageName);
+            final licenseContent = license.paragraphs.map((e) => e.text).join('\n\n');
+            licenseEntities.add(LicenseEntity(name: packageName, license: licenseContent));
+          }
+        }
+      }
+      return licenseEntities;
     } catch (e) {
       return [];
     }

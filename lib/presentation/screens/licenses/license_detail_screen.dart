@@ -1,7 +1,12 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:tex_markdown/tex_markdown.dart';
+
+// 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
-import 'package:tex_markdown/tex_markdown.dart';
 
 class LicenseDetailScreen extends StatelessWidget {
   final LicenseEntity licenseEntity;

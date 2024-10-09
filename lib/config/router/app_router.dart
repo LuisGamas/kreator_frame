@@ -28,6 +28,7 @@ GoRouter appRouter(AppRouterRef ref) {
         return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
       },
     ),
+
     _createRoute('/theme-selector', const ThemeSelectorScreen()),
     _createRoute('/kustom-app-information', const AboutPackageAppScreen()),
     _createRoute('/dashboard-information', const AboutDashboardScreen()),
@@ -36,13 +37,15 @@ GoRouter appRouter(AppRouterRef ref) {
 
     // * Other Screens
     _createRoute('/licenses-screen', const LicensesScreen()),
+
     GoRoute(
       path: '/license-detail-screen',
       pageBuilder: (context, state) {
-        LicenseEntity licenseEntity = state.extra as LicenseEntity;
+        LicenseEntity  licenseEntity = state.extra as LicenseEntity ;
         return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));
       },
     ),
+
   ]);
 }
 

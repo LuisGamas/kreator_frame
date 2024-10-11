@@ -47,8 +47,8 @@ class AboutDashboardScreen extends StatelessWidget {
                     // * Dashboard profile Image
                     ZoomIn(
                       child: Container(
-                        height: 100,
-                        width: 100,
+                        height: 80,
+                        width: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: const DecorationImage(
@@ -157,10 +157,10 @@ class AboutDashboardScreen extends StatelessWidget {
                       height: 45,
                       width: 45,
                       child: CustomFilledIconButton(
-                        onPressed: () => repository.launchExternalApp('https://play.google.com/store/apps/dev?id=8123070731776044190'),
+                        onPressed: () => repository.launchExternalApp('https://kutt.it/gamas-dev'),
                         buttonColor: colors.secondary,
                         icon: Icon(
-                          Hicon.bag1Bold,
+                          Hicon.websiteBold,
                           color: colors.onSecondary,
                           size: 17,
                         ),

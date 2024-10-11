@@ -87,8 +87,8 @@ class _SliverAboutPackage extends StatelessWidget {
               // * Dashboard profile Image
               ZoomIn(
                 child: Container(
-                  height: 100,
-                  width: 100,
+                  height: 80,
+                  width: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(

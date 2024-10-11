@@ -67,8 +67,36 @@ class _SettingsSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+
     return SliverList(
       delegate: SliverChildListDelegate([
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: colors.primaryContainer,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Hicon.heart2Bold),
+                const Gap(10),
+                Expanded(
+                  child: Text(
+                    AppLocalizations.of(context)!.donations,
+                    style: textStyles.titleMedium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
     
         // * First part
         _TitleListTile(

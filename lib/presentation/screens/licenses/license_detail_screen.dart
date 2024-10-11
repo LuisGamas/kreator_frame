@@ -25,19 +25,46 @@ class LicenseDetailScreen extends StatelessWidget {
             tileText: licenseEntity.name
           ),
 
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // License Deatil
-                TexMarkdown(
-                  licenseEntity.license,
-                )
-              ])
-            ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final license = licenseEntity.licenses[index];
+              return _CustomLicenseBody(
+                title: license,
+              );
+            },
+            addAutomaticKeepAlives: true,
+            childCount: licenseEntity.licenses.length
+            )
           ),
+          
         ],
       )
+    );
+  }
+}
+
+class _CustomLicenseBody extends StatelessWidget {
+  final String title;
+
+  const _CustomLicenseBody({
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      splashColor: colors.secondaryContainer,
+      textColor: colors.onSurface,
+      title: TexMarkdown(title),
+      titleTextStyle: textStyles.titleMedium,
+      subtitleTextStyle: textStyles.bodySmall,
+      subtitle: const Divider(
+        height: 50,
+      ),
     );
   }
 }

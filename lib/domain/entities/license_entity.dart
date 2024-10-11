@@ -1,9 +1,11 @@
 class LicenseEntity {
   final String name;
-  final String license;
+  final List<String> licenses;
+  final int licenseCount;
 
   LicenseEntity({
     required this.name,
-    required this.license,
+    required this.licenses,
+    required this.licenseCount,
   });
 }

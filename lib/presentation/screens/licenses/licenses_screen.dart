@@ -47,6 +47,7 @@ class LicensesScreen extends StatelessWidget {
                     return FadeIn(
                       child: _CustomListTile(
                         title: license.name,
+                        subTitle: '${license.licenseCount} License',
                         onTap: () => context.push(
                           '/license-detail-screen',
                           extra: license,
@@ -69,16 +70,17 @@ class LicensesScreen extends StatelessWidget {
 // * Custom ListTile widget
 class _CustomListTile extends StatelessWidget {
   final String title;
+  final String subTitle;
   final void Function()? onTap;
 
   const _CustomListTile({
     required this.title,
-    required this.onTap
+    required this.subTitle,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 
@@ -88,6 +90,7 @@ class _CustomListTile extends StatelessWidget {
       textColor: colors.onSurface,
       title: Text(title),
       titleTextStyle: textStyles.titleMedium,
+      subtitle: Text(subTitle),
       subtitleTextStyle: textStyles.bodySmall,
       trailing: Icon(
         Hicon.right2Bold,

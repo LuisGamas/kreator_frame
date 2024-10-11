@@ -128,18 +128,27 @@ class DataSourceImpl extends DataSource {
   Future<List<LicenseEntity>> getLicenses() async {
     try {
       final licenses = await LicenseRegistry.licenses.toList();
-      final processedPackages = <String>{};
-      final licenseEntities = <LicenseEntity>[];
+      final Map<String, List<String>> consolidatedLicenses = {};
 
       for (var license in licenses) {
         for (var packageName in license.packages) {
-          if (!processedPackages.contains(packageName)) {
-            processedPackages.add(packageName);
-            final licenseContent = license.paragraphs.map((e) => e.text).join('\n\n');
-            licenseEntities.add(LicenseEntity(name: packageName, license: licenseContent));
+          final licenseContent = license.paragraphs.map((e) => e.text).join('\n\n');
+
+          if (consolidatedLicenses.containsKey(packageName)) {
+            consolidatedLicenses[packageName]?.add(licenseContent);
+          } else {
+            consolidatedLicenses[packageName] = [licenseContent];
           }
         }
       }
+
+      final licenseEntities = consolidatedLicenses.entries.map((entry) =>
+      LicenseMapper.dataToEntity(
+        packageName: entry.key,
+        licenses: entry.value,
+      )).toList();
+
+      licenseEntities.sort((a, b) => a.name.compareTo(b.name));
       return licenseEntities;
     } catch (e) {
       return [];

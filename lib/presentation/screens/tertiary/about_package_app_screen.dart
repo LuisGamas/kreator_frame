@@ -57,7 +57,6 @@ class AboutPackageAppScreen extends ConsumerWidget {
 }
 
 class _SliverAboutPackage extends StatelessWidget {
-
   final String packageName;
   final String packageVersion;
 
@@ -160,18 +159,20 @@ class _SliverAboutPackage extends StatelessWidget {
           const Gap(35),
 
           // * Social Apps
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.center,
+            runAlignment: WrapAlignment.center,
+            spacing: 10,
+            runSpacing: 10,
             children: [
 
               // Social app 1
               SizedBox(
                 height: 45,
-                width: 45,
-                child: CustomFilledIconButton(
+                width: 120,
+                child: CustomFilledIconTextButton(
                   onPressed: () {
-
                     Environment.twitterUrl != 'NA' && Environment.twitterUrl != 'Error TWITTER'
                     ? repository.launchExternalApp(Environment.twitterUrl)
                     : _showCustomSnackbar(context);
@@ -182,6 +183,10 @@ class _SliverAboutPackage extends StatelessWidget {
                     color: colors.onSecondary,
                     size: 17,
                   ),
+                  label: Text(
+                    'Twitter',
+                    style: TextStyle(color: colors.onSecondary),
+                  ),
                 ),
               ),
 
@@ -189,10 +194,9 @@ class _SliverAboutPackage extends StatelessWidget {
               // Social app 2
               SizedBox(
                 height: 45,
-                width: 45,
-                child: CustomFilledIconButton(
+                width: 120,
+                child: CustomFilledIconTextButton(
                   onPressed: () {
-
                     Environment.instagramUrl != 'NA' && Environment.instagramUrl != 'Error INSTAGRAM'
                     ? repository.launchExternalApp(Environment.instagramUrl)
                     : _showCustomSnackbar(context);
@@ -203,6 +207,10 @@ class _SliverAboutPackage extends StatelessWidget {
                     color: colors.onSecondary,
                     size: 17,
                   ),
+                  label: Text(
+                    'Instagram',
+                    style: TextStyle(color: colors.onSecondary),
+                  ),
                 ),
               ),
 
@@ -211,10 +219,8 @@ class _SliverAboutPackage extends StatelessWidget {
               // Social app 3
               SizedBox(
                 height: 45,
-                width: 45,
-                child: CustomFilledIconButton(
+                child: CustomFilledIconTextButton(
                   onPressed: () {
-
                     Environment.googlePlayStoreUrl != 'NA' && Environment.googlePlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
                     ? repository.launchExternalApp(Environment.googlePlayStoreUrl)
                     : _showCustomSnackbar(context);
@@ -224,6 +230,10 @@ class _SliverAboutPackage extends StatelessWidget {
                     Hicon.bag1Bold,
                     color: colors.onSecondary,
                     size: 17,
+                  ),
+                  label: Text(
+                    'Google Play',
+                    style: TextStyle(color: colors.onSecondary),
                   ),
                 ),
               ),

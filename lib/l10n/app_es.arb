@@ -15,8 +15,9 @@
 
   "settingsAppBarTitle": "Configuración",
 
-    "donations": "¿Disfrutas de una experiencia sin anuncios? Ayúdanos a mantener Kreator Frame libre con tu donación.",
-    "donationsNote": "Las donaciones apoyan el desarrollo continuo del dashboard. El contenido compartido en esta plataforma es propiedad de sus respectivos creadores.",
+    "donations": "Ayúdanos a mantener la experiencia sin anuncios",
+    "donationsNote": "Las donaciones apoyan el desarrollo continuo y código libre de Kreator Frame. El contenido compartido en esta plataforma es propiedad de sus respectivos creadores.",
+    "donationsButton": "Contribuir ahora",
 
   "settingsAppearance": "Apariencia",
   "settingsAppearanceLT1": "Tema de la aplicación",
@@ -31,7 +32,7 @@
   "settingsAboutLST2": "Acerca del Dashboard",
 
     "aboutDashboard": "Kreator Frame es el dashboard que te da el control total para personalizar el aspecto de tu dispositivo móvil con widgets modernos y personalizados. \n\nCon Kreator Frame, puedes crear una experiencia única adaptada a tus necesidades. Los widgets compatibles con la aplicación Kustom Widget Maker te permiten añadir funciones adicionales a tu dispositivo móvil, como widgets para música, el tiempo, seguimiento de actividad y mucho más. \n\nGracias a su diseño minimalista y moderno, la aplicación se integra perfectamente con el estilo de tu dispositivo móvil. Kreator Frame te ofrece la fluidez y el control que necesitas para personalizar la pantalla de inicio de tu dispositivo móvil de forma sencilla. \n\nEste dashboard es completamente gratuito, sin publicidad y OpenSource. Si encuentras útil esta plataforma y te gustaría apoyar el desarrollo continuo de la misma, considera hacer una donación. Las donaciones que hagas ayudarán a mantener y mejorar el dashboard, pero no afectan el contenido compartido por los creadores de widgets. Agradecemos mucho tu apoyo para mantener esta app disponible para todos.",
-    "aboutPackage": "{packageName} es un pack de skins para Kustom, el motor de fondos de pantalla para android más avanzado. Este pack ha sido creado por {developerName} y agradecemos tu apoyo descargando esta app directamente desde Google Play Store. \n\nEn esta aplicación puedes encontrar widgets y fondos de pantalla que puedes añadir a tu pantalla de inicio para darle un aspecto más agradable, recuerda que los widgets pueden ser modificados por ti para una experiencia más agradable y precisa. \n\nLos creadores de contenido como {developerName} son responsables de los widgets que comparten, ya sea de forma gratuita o mediante aplicaciones de pago. Las donaciones a Kreator Frame son exclusivamente para apoyar el desarrollo del dashboard y no están vinculadas al contenido de pago o gratuito de los creadores. \n\nSi tienes alguna duda o consejo no dudes en ponerte en contacto conmigo a través de cualquiera de mis redes sociales que aparecen a continuación.",
+    "aboutPackage": "{packageName} es un pack de skins para Kustom, el motor de fondos de pantalla para android más avanzado. Este pack ha sido creado por {developerName} y agradecemos tu apoyo descargando esta app directamente desde Google Play Store. \n\nEn esta aplicación puedes encontrar widgets y fondos de pantalla que puedes añadir a tu pantalla de inicio para darle un aspecto más agradable, recuerda que los widgets pueden ser modificados por ti para una experiencia más agradable y precisa. \n\nSi tienes alguna duda o consejo no dudes en ponerte en contacto conmigo a través de cualquiera de mis redes sociales que aparecen a continuación.",
 
   "settingsLegal": "Aspectos Legales",
   "settingsLegalLT1": "Términos y Condiciones",

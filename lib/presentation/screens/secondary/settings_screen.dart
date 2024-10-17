@@ -10,6 +10,8 @@ import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
+import 'package:kreator_frame/domain/domain.dart';
+import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
@@ -67,35 +69,13 @@ class _SettingsSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final textStyles = Theme.of(context).textTheme;
-
     return SliverList(
       delegate: SliverChildListDelegate([
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: colors.primaryContainer,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Hicon.heart2Bold),
-                const Gap(10),
-                Expanded(
-                  child: Text(
-                    AppLocalizations.of(context)!.donations,
-                    style: textStyles.titleMedium,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        // * Banner for donations
+        Dismissible(
+          key: UniqueKey(),
+          child: const _DonationChildDimissible(),
         ),
     
         // * First part
@@ -254,6 +234,71 @@ class _CustomListTile extends StatelessWidget {
         onTap: location == null 
         ? null
         : () => context.push(location!),
+      ),
+    );
+  }
+}
+
+// * Dimissible Child Donation
+class _DonationChildDimissible extends StatelessWidget {
+  const _DonationChildDimissible();
+
+
+  @override
+  Widget build(BuildContext context) {
+    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        color: colors.primaryContainer,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            Icon(
+              Hicon.heart2Bold,
+              color: colors.onPrimaryContainer,
+            ),
+
+            const Gap(16),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              
+                  Text(
+                    AppLocalizations.of(context)!.donations,
+                    style: textStyles.titleMedium!.copyWith(
+                      color: colors.onPrimaryContainer,
+                    ),
+                  ),
+
+                  Text(
+                    AppLocalizations.of(context)!.donationsNote,
+                    style: textStyles.bodySmall!.copyWith(
+                      color: colors.onPrimaryContainer,
+                    ),
+                  ),
+
+                  const Gap(10),
+
+                  CustomOutlineButton(
+                    color: colors.onPrimaryContainer,
+                    text: AppLocalizations.of(context)!.donationsButton,
+                    onPressed: () => repository.launchExternalApp('https://buymeacoffee.com/luisgamas'),
+                  ),
+              
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

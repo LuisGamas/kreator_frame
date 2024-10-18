@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v1.1.0] - 2024-10-18
+
+### Added
+- Added request for user permission to save downloaded images to device A13+ & A13-.
+- Added a loading indicator for image previews.
+
+### Changed
+- Updated dependencies to the latest compatible versions.
+- Change ofifical datala (Terms & Conditions and Privacy Policy).
+- Change of method for applying the centred wallpaper.
+- Changes in the design and representation of OSS licenses.
+- Change widget to display image from URL with cache and loader.
+
 ## [v1.0.5] - 2024-08-06
 
 ### Added

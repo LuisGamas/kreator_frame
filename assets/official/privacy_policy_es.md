@@ -1,51 +1,36 @@
-Esta política de privacidad se aplica a la aplicación Kreator Frame Dashboard (en adelante, la «Aplicación») para dispositivos móviles creada por Luis Donaldo Gamas Vázquez (en adelante, el «Proveedor de Servicios») como un servicio comercial. Este servicio está destinado para su uso «TAL CUAL».
+Esta política de privacidad se aplica a la aplicación **Kreator Frame Dashboard**  (en adelante, la «Aplicación»), desarrollada por **Luis Donaldo Gamas Vázquez** (en adelante, el «Proveedor de Servicios»). La Aplicación es un dashboard de código abierto que permite a los creadores de contenido compartir widgets para Android compatibles con las aplicaciones Kustom Maker (KWLP y KWGT).
+
+Esta política describe cómo se maneja la información recopilada de los usuarios y cómo se protege dicha información. La Aplicación se ofrece tal como está, sin modificaciones por parte de los usuarios.
 
 #### Recopilación y uso de la información
 
-La Aplicación recopila información cuando usted la descarga y la utiliza. Esta información puede incluir datos como
+Actualmente, la Aplicación **no recopila** información precisa sobre la ubicación de su dispositivo móvil. Sin embargo, en futuras actualizaciones, el Proveedor de Servicios puede comenzar a recopilar datos de localización para mejorar las funciones de la Aplicación, tales como personalización de contenido y recomendaciones. Estos cambios se notificarán en esta política antes de su implementación.
 
-*   La dirección de protocolo de Internet de su dispositivo (por ejemplo, la dirección IP)
-*   Las páginas de la Aplicación que visita, la hora y la fecha de su visita, el tiempo que pasa en esas páginas
-*   El tiempo dedicado a la aplicación
-*   El sistema operativo que utiliza en su dispositivo móvil
+La Aplicación almacena cierta información de manera **local** en su dispositivo con fines de autenticación y para mejorar su experiencia de usuario. Esta información incluye, entre otros:
 
-La Aplicación no recopila información precisa sobre la ubicación de su dispositivo móvil.
+* Correo electrónico
+* Nombre
+* Nombre de usuario, generado inicialmente a partir del nombre proporcionado, pero que el usuario podrá cambiar posteriormente.
 
-La Aplicación recopila la ubicación de su dispositivo, lo que ayuda al Proveedor de Servicios a determinar su ubicación geográfica aproximada y a utilizarla de las siguientes formas:
+Esta información no se comparte con terceros ni se almacena en servidores externos. Todo el procesamiento y almacenamiento de datos ocurre en su dispositivo.
 
-*   Servicios de geolocalización: El Proveedor de Servicios utiliza datos de localización para proporcionar funciones como contenidos personalizados, recomendaciones relevantes y servicios basados en la localización.
-*   Análisis y mejoras: Los datos de localización agregados y anonimizados ayudan al Proveedor de Servicios a analizar el comportamiento de los usuarios, identificar tendencias y mejorar el rendimiento general y la funcionalidad de la Aplicación.
-*   Servicios de terceros: Periódicamente, el Proveedor de Servicios puede transmitir datos de ubicación anonimizados a servicios externos. Estos servicios les ayudan a mejorar la Aplicación y a optimizar sus ofertas.
+#### Servicios de Rastreo y Publicidad
 
-El Proveedor de Servicios puede utilizar la información que nos ha facilitado para ponerse en contacto con usted de vez en cuando y proporcionarle información importante, avisos obligatorios y promociones de marketing.
+La Aplicación **no utiliza cookies** ni servicios de rastreo en este momento. Tampoco se utilizan plataformas de anuncios dentro de la Aplicación. 
 
-Para una mejor experiencia, al utilizar la Aplicación, el Proveedor de Servicios puede solicitarle que nos proporcione cierta información de identificación personal, incluyendo pero no limitándose a luisgamas00@gmail.com. La información que el Proveedor de Servicios solicite será retenida por ellos y utilizada como se describe en esta política de privacidad.
+El Proveedor de Servicios tiene la intención de mantener la Aplicación libre de publicidad mientras las **donaciones** sean suficientes para sostener el desarrollo. Si después de un año no se recibe ningún apoyo en donaciones, se considerará la posibilidad de incluir publicidad en el proyecto. En ese caso, se actualizará esta política de privacidad para reflejar cualquier cambio relevante.
 
-#### Acceso de Terceras Partes
+#### Acceso de Terceros
 
-Sólo se transmiten periódicamente datos agregados y anónimos a servicios externos para ayudar al Proveedor de Servicios a mejorar la Aplicación y su servicio. El Proveedor de Servicios puede compartir su información con terceros en las formas que se describen en esta declaración de privacidad.
-
-Tenga en cuenta que la Aplicación utiliza servicios de terceros que tienen su propia Política de Privacidad sobre el tratamiento de datos. A continuación encontrará los enlaces a la Política de Privacidad de los proveedores de servicios externos utilizados por la Aplicación:
-
-*   [Google Play Services](https://www.google.com/policies/privacy/)
-*   [AdMob](https://support.google.com/admob/answer/6128543?hl=en)
-*   [Google Analytics for Firebase](https://firebase.google.com/support/privacy)
-*   [Firebase Crashlytics](https://firebase.google.com/support/privacy/)
-*   [One Signal](https://onesignal.com/privacy_policy)
-
-El Proveedor de Servicios puede divulgar la Información proporcionada por el usuario y la Información recopilada automáticamente:
-
-*   cuando así lo exija la ley, por ejemplo, para cumplir una citación judicial o un proceso legal similar;
-*   cuando crean de buena fe que la divulgación es necesaria para proteger sus derechos, proteger su seguridad o la de otros, investigar un fraude o responder a una solicitud gubernamental;
-*   con sus proveedores de servicios de confianza que trabajan en su nombre, no tienen un uso independiente de la información que les revelamos y han acordado cumplir las normas establecidas en esta declaración de privacidad.
+Actualmente, no se comparten datos con servicios de terceros. En caso de integrar servicios adicionales en el futuro, se proporcionará una actualización de esta política detallando qué información se recopila y cómo se utiliza.
 
 #### Derecho de exclusión
 
-Puede detener la recopilación de información por parte de la Aplicación fácilmente desinstalándola. Puede utilizar los procesos de desinstalación estándar disponibles en su dispositivo móvil o a través del mercado o la red de aplicaciones móviles.
+Puede dejar de utilizar la Aplicación en cualquier momento desinstalándola de su dispositivo. Para desinstalar la Aplicación, utilice los métodos estándar proporcionados por su dispositivo móvil.
 
 #### Política de conservación de datos
 
-El Proveedor de Servicios conservará los Datos Proporcionados por el Usuario mientras usted utilice la Aplicación y durante un tiempo razonable a partir de entonces. Si desea que eliminen los Datos proporcionados por el usuario que ha facilitado a través de la Aplicación, póngase en contacto con ellos en luisgamas00@gmail.com y le responderán en un plazo razonable.
+Toda la información personal que proporcione dentro de la Aplicación será almacenada localmente y no se enviará a ningún servidor. La información permanecerá en su dispositivo hasta que decida eliminarla o desinstalar la Aplicación.
 
 #### Niños
 
@@ -55,20 +40,24 @@ La Aplicación no se dirige a menores de 13 años. El Proveedor de Servicios no 
 
 #### Seguridad
 
-El Proveedor de Servicios se preocupa por salvaguardar la confidencialidad de su información. El Proveedor de Servicios proporciona salvaguardas físicas, electrónicas y de procedimiento para proteger la información que el Proveedor de Servicios procesa y mantiene.
+El Proveedor de Servicios toma la seguridad de la información seriamente. Aunque la Aplicación no transmite datos fuera del dispositivo, se han implementado medidas de seguridad dentro de la propia Aplicación para proteger la confidencialidad y la integridad de los datos personales almacenados.
 
-#### Cambios
+#### Código Abierto
 
-Esta Política de Privacidad puede ser actualizada de vez en cuando por cualquier motivo. El Proveedor de Servicios le notificará cualquier cambio en la Política de Privacidad actualizando esta página con la nueva Política de Privacidad. Le aconsejamos que consulte periódicamente esta Política de Privacidad para comprobar si se han producido cambios, ya que el uso continuado de la misma se considerará una aprobación de todos los cambios.
+Kreator Frame Dashboard es una aplicación de código abierto distribuida bajo la licencia Mozilla Public License, versión 2.0. Esto significa que el código fuente de la aplicación está disponible públicamente y puede ser revisado, modificado y distribuido de acuerdo con los términos de esta licencia.
 
-**Esta política de privacidad es efectiva a partir del 2021-04-11**
+#### Cambios a Esta Política de Privacidad
+
+Esta Política de Privacidad puede ser actualizada en cualquier momento para reflejar mejoras en la Aplicación o cambios en el manejo de los datos. Le notificaremos de cualquier cambio publicando la nueva Política de Privacidad en esta página y actualizando la fecha de "última actualización" al principio del documento. Le recomendamos revisar periódicamente esta página para mantenerse informado sobre cualquier modificación. El uso continuado de la Aplicación después de la publicación de cambios constituye su aceptación de dichos cambios.
 
 #### Su consentimiento
 
-Al utilizar la Aplicación, usted consiente el tratamiento de su información tal y como se establece en la presente Política de Privacidad y en sus modificaciones.
+Al utilizar la Aplicación, usted consiente el procesamiento de su información personal tal como se describe en esta política. El Proveedor de Servicios se compromete a tratar su información de manera segura y responsable.
 
 #### Póngase en contacto con nosotros
 
-Si tiene alguna pregunta relativa a la privacidad mientras utiliza la Aplicación, o tiene alguna duda sobre las prácticas, póngase en contacto con el Proveedor de Servicios por correo electrónico en luisgamas00@gmail.com.
+Si tiene alguna pregunta sobre esta política de privacidad o las prácticas de la Aplicación, puede ponerse en contacto con el Proveedor de Servicios en el siguiente correo electrónico: **luisgamas00@gmail.com**.
+
+**Esta política de privacidad es efectiva a partir del 2024-10-10.**
 
 

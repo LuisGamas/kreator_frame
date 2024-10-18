@@ -1,12 +1,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- #################### PERMISSIONS #################### -->
+
     <!-- You can comment all permissions out if you are not using wallpapers -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
+    <!--
+      Granular media permissions for Android 13 and newer.
+      See https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions
+      for more information.
+    -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- Permissions options for the `storage` group -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- Read storage permission for Android 12 and lower -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- #################### PERMISSIONS #################### -->
 
     <application
         android:name="${applicationName}"

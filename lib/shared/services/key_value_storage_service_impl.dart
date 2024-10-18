@@ -17,11 +17,11 @@ class KeyValueStorageServieceImpl extends KeyValueStorageService {
     final preferences = await getSharedPreferences();
 
     switch(T) {
-      case int:
+      case const (int):
         return preferences.getInt(key) as T?;
-      case String:
+      case const (String):
         return preferences.getString(key) as T?;
-      case bool:
+      case const (bool):
         return preferences.getBool(key) as T?;
       default:
         throw UnimplementedError('GET not implemented for type ${ T.runtimeType }');
@@ -40,13 +40,13 @@ class KeyValueStorageServieceImpl extends KeyValueStorageService {
     final preferences = await getSharedPreferences();
 
     switch(T) {
-      case int:
+      case const (int):
         preferences.setInt(key, value as int);
         break;
-      case String:
+      case const (String):
         preferences.setString(key, value as String);
         break;
-      case bool:
+      case const (bool):
         preferences.setBool(key, value as bool);
         break;
       default:

@@ -29,6 +29,7 @@ class KLWPScreen extends ConsumerWidget {
         return MasonryGridView.count(
           crossAxisCount: 2,
           itemCount: data.length,
+          addAutomaticKeepAlives: true,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {

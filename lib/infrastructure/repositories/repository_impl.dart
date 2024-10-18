@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:kreator_frame/domain/domain.dart';
 
 class RepositoryImpl extends Repository {
-
   final DataSource dataSource;
 
   RepositoryImpl(this.dataSource);
@@ -34,5 +33,9 @@ class RepositoryImpl extends Repository {
   FutureBuilder<String> getOfficialData(String nameFolder, String nameFile) {
     return dataSource.getOfficialData(nameFolder, nameFile);
   }
-
+  
+  @override
+  Future<List<LicenseEntity>> getLicenses() {
+    return dataSource.getLicenses();
+  }
 }

@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 
 class ThemeModeEntity {
-  
   final ThemeMode themeMode;
-  final String title;
+  final String Function(BuildContext) title;
   final IconData icon;
 
   ThemeModeEntity({
@@ -12,5 +11,4 @@ class ThemeModeEntity {
     required this.title,
     required this.icon
   });
-
 }

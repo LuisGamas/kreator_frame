@@ -1,74 +1,62 @@
-This privacy policy applies to the Kreator Frame Dashboard app (hereby referred to as "Application") for mobile devices that was created by Luis Donaldo Gamas Vazquez (hereby referred to as "Service Provider") as a Commercial service. This service is intended for use "AS IS".
+This privacy policy applies to the **Kreator Frame Dashboard** application (hereinafter, the “Application”), developed by **Luis Donaldo Gamas Vazquez** (hereinafter, the “Service Provider”). The Application is an open source dashboard that allows content creators to share Android widgets compatible with the Kustom Maker applications (KWLP and KWGT).
+
+This policy describes how information collected from users is handled and how that information is protected. The Application is provided as is, without modification by users.
 
 #### Information Collection and Use
 
-The Application collects information when you download and use it. This information may include information such as
+Currently, the Application **does not** collect precise information about the location of your mobile device. However, in future updates, the Service Provider may begin collecting location data to enhance the App's features, such as content personalization and recommendations. These changes will be notified in this policy prior to implementation.
 
-*   Your device's Internet Protocol address (e.g. IP address)
-*   The pages of the Application that you visit, the time and date of your visit, the time spent on those pages
-*   The time spent on the Application
-*   The operating system you use on your mobile device
+The Application stores certain information **locally** on your device for authentication purposes and to enhance your user experience. This information includes, but is not limited to:
 
-The Application does not gather precise information about the location of your mobile device.
+* Email address
+* Name
+* Username, initially generated from the name provided, but which the user may change at a later date.
 
-The Application collects your device's location, which helps the Service Provider determine your approximate geographical location and make use of in below ways:
+This information is not shared with third parties or stored on external servers. All data processing and storage occurs on your device.
 
-*   Geolocation Services: The Service Provider utilizes location data to provide features such as personalized content, relevant recommendations, and location-based services.
-*   Analytics and Improvements: Aggregated and anonymized location data helps the Service Provider to analyze user behavior, identify trends, and improve the overall performance and functionality of the Application.
-*   Third-Party Services: Periodically, the Service Provider may transmit anonymized location data to external services. These services assist them in enhancing the Application and optimizing their offerings.
+#### Tracking and Advertising Services
 
-The Service Provider may use the information you provided to contact you from time to time to provide you with important information, required notices and marketing promotions.
+The Application **does not use cookies** or tracking services at this time. There are also no advertising platforms used within the Application. 
 
-For a better experience, while using the Application, the Service Provider may require you to provide us with certain personally identifiable information, including but not limited to luisgamas00@gmail.com. The information that the Service Provider request will be retained by them and used as described in this privacy policy.
+The Service Provider intends to keep the Application free of advertising as long as **donations** are sufficient to sustain development. If after one year no donation support is received, consideration will be given to include advertising in the project. In that event, this privacy policy will be updated to reflect any relevant changes.
 
 #### Third Party Access
 
-Only aggregated, anonymized data is periodically transmitted to external services to aid the Service Provider in improving the Application and their service. The Service Provider may share your information with third parties in the ways that are described in this privacy statement.
+Currently, no data is shared with third party services. Should additional services be integrated in the future, an update to this policy will be provided detailing what information is collected and how it is used.
 
-Please note that the Application utilizes third-party services that have their own Privacy Policy about handling data. Below are the links to the Privacy Policy of the third-party service providers used by the Application:
+#### Right to opt-out
 
-*   [Google Play Services](https://www.google.com/policies/privacy/)
-*   [AdMob](https://support.google.com/admob/answer/6128543?hl=en)
-*   [Google Analytics for Firebase](https://firebase.google.com/support/privacy)
-*   [Firebase Crashlytics](https://firebase.google.com/support/privacy/)
-*   [One Signal](https://onesignal.com/privacy_policy)
-
-The Service Provider may disclose User Provided and Automatically Collected Information:
-
-*   as required by law, such as to comply with a subpoena, or similar legal process;
-*   when they believe in good faith that disclosure is necessary to protect their rights, protect your safety or the safety of others, investigate fraud, or respond to a government request;
-*   with their trusted services providers who work on their behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement.
-
-#### Opt-Out Rights
-
-You can stop all collection of information by the Application easily by uninstalling it. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.
+You may stop using the Application at any time by uninstalling it from your device. To uninstall the Application, use the standard methods provided by your mobile device.
 
 #### Data Retention Policy
 
-The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. If you'd like them to delete User Provided Data that you have provided via the Application, please contact them at luisgamas00@gmail.com and they will respond in a reasonable time.
+All personal information you provide within the Application will be stored locally and will not be sent to any server. The information will remain on your device until you choose to delete it or uninstall the Application.
 
 #### Children
 
-The Service Provider does not use the Application to knowingly solicit data from or market to children under the age of 13.
+Service Provider does not use the Application to knowingly solicit data from or market to children under the age of 13.
 
-The Application does not address anyone under the age of 13\. The Service Provider does not knowingly collect personally identifiable information from children under 13 years of age. In the case the Service Provider discover that a child under 13 has provided personal information, the Service Provider will immediately delete this from their servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact the Service Provider (luisgamas00@gmail.com) so that they will be able to take the necessary actions.
+The Application is not directed to children under the age of 13. Service Provider does not knowingly collect personally identifiable information from children under the age of 13. In the event that Service Provider discovers that a child under the age of 13 has provided personally identifiable information, it will immediately delete such information from its servers. If you are a parent or guardian and become aware that your child has provided us with personal information, please contact Service Provider (luisgamas00@gmail.com) so that Service Provider can take appropriate action.
 
 #### Security
 
-The Service Provider is concerned about safeguarding the confidentiality of your information. The Service Provider provides physical, electronic, and procedural safeguards to protect information the Service Provider processes and maintains.
+Service Provider takes information security seriously. Although the Application does not transmit data outside the device, security measures have been implemented within the Application itself to protect the confidentiality and integrity of stored personal data.
 
-#### Changes
+#### Open Source
 
-This Privacy Policy may be updated from time to time for any reason. The Service Provider will notify you of any changes to the Privacy Policy by updating this page with the new Privacy Policy. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.
+Kreator Frame Dashboard is an open source application distributed under the Mozilla Public License, version 2.0. This means that the source code of the application is publicly available and may be reviewed, modified and distributed in accordance with the terms of this license.
 
-**This privacy policy is effective as of 2021-04-11**
+#### Changes to This Privacy Policy
+
+This Privacy Policy may be updated at any time to reflect improvements to the Application or changes in data handling. We will notify you of any changes by posting the new Privacy Policy on this page and updating the “last updated” date at the top of the document. We encourage you to periodically review this page to stay informed of any modifications. Your continued use of the Application following the posting of changes constitutes your acceptance of those changes.
 
 #### Your Consent
 
-By using the Application, you are consenting to the processing of your information as set forth in this Privacy Policy now and as amended by us.
+By using the Application, you consent to the processing of your personal information as described in this policy. The Service Provider is committed to treating your information securely and responsibly.
 
 #### Contact Us
 
-If you have any questions regarding privacy while using the Application, or have questions about the practices, please contact the Service Provider via email at luisgamas00@gmail.com.
+If you have any questions about this privacy policy or the practices of the Application, you may contact Service Provider at the following email: **luisgamas00@gmail.com**.
 
+**This privacy policy is effective as of 2024-10-10.**
 

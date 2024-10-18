@@ -1,36 +1,60 @@
-Estos términos y condiciones se aplican a la aplicación Kreator Frame Dashboard (en adelante, la «Aplicación») para dispositivos móviles creada por Luis Donaldo Gamas Vázquez (en adelante, el «Proveedor de Servicios») como un servicio comercial.
+Bienvenido a **Kreator Frame Dashboard**. Estos Términos y Condiciones rigen el uso de nuestra aplicación móvil (en adelante, la "Aplicación"). Al utilizar la Aplicación, usted acepta estos términos en su totalidad. Si no está de acuerdo con estos términos, por favor no utilice la Aplicación.
 
-Al descargar o utilizar la Aplicación, usted acepta automáticamente las siguientes condiciones. Se recomienda encarecidamente que lea detenidamente y comprenda estos términos antes de utilizar la Aplicación. Queda terminantemente prohibida la copia o modificación no autorizada de la Aplicación, de cualquier parte de la misma o de nuestras marcas comerciales. Queda prohibido cualquier intento de extraer el código fuente de la Aplicación, traducir la Aplicación a otros idiomas o crear versiones derivadas. Todas las marcas comerciales, derechos de autor, derechos de bases de datos y otros derechos de propiedad intelectual relacionados con la Aplicación siguen siendo propiedad del Proveedor de Servicios.
+#### Aceptación de los Términos
 
-El Proveedor de Servicios se esfuerza por garantizar que la Aplicación sea lo más beneficiosa y eficaz posible. Por ello, se reserva el derecho a modificar la Aplicación o a cobrar por sus servicios en cualquier momento y por cualquier motivo. El Proveedor de Servicios le asegura que cualquier cargo por la Aplicación o sus servicios le será comunicado claramente.
+Al descargar, instalar o utilizar la Aplicación, usted indica que ha leído, entendido y aceptado estos Términos y Condiciones, así como nuestra Política de Privacidad.
 
-La Aplicación almacena y procesa los datos personales que usted ha facilitado al Proveedor de Servicios con el fin de prestar el Servicio. Es su responsabilidad mantener la seguridad de su teléfono y el acceso a la Aplicación. El Proveedor de Servicios desaconseja encarecidamente realizar jailbreaking o rooting en su teléfono, lo que implica eliminar las restricciones y limitaciones de software impuestas por el sistema operativo oficial de su dispositivo. Tales acciones podrían exponer su teléfono a malware, virus, programas maliciosos, comprometer las funciones de seguridad de su teléfono y hacer que la Aplicación no funcione correctamente o no funcione en absoluto.
+#### Descripción del Servicio
 
-Tenga en cuenta que la Aplicación utiliza servicios de terceros que tienen sus propios Términos y Condiciones. A continuación encontrará los enlaces a los Términos y Condiciones de los proveedores de servicios de terceros utilizados por la Aplicación:
+Kreator Frame Dashboard es una aplicación móvil de código abierto desarrollada en Flutter que funciona como un dashboard para creadores de contenido. La Aplicación permite a los usuarios compartir widgets para Android que son compatibles con las aplicaciones Kustom Maker (KWLP y KWGT). Es importante destacar que Kreator Frame Dashboard solo se utiliza para mostrar y distribuir estos widgets; la modificación o edición de los widgets requiere el uso de las aplicaciones oficiales de Kustom.
 
-*   [Google Play Services](https://policies.google.com/terms)
-*   [AdMob](https://developers.google.com/admob/terms)
-*   [Google Analytics for Firebase](https://www.google.com/analytics/terms/)
-*   [Firebase Crashlytics](https://firebase.google.com/terms/crashlytics)
-*   [One Signal](https://onesignal.com/tos)
+#### Registro y Cuenta de Usuario
 
-Tenga en cuenta que el Proveedor de Servicios no asume la responsabilidad de determinados aspectos. Algunas funciones de la Aplicación requieren una conexión activa a Internet, que puede ser Wi-Fi o proporcionada por su proveedor de red móvil. El Proveedor de Servicios no se hace responsable si la Aplicación no funciona a pleno rendimiento debido a la falta de acceso a Wi-Fi o si ha agotado su asignación de datos.
+* Para utilizar ciertas funciones de la Aplicación, es posible que deba proporcionar información como su correo electrónico y nombre.
 
-Si utiliza la aplicación fuera de una zona Wi-Fi, tenga en cuenta que se seguirán aplicando las condiciones del contrato de su proveedor de red móvil. En consecuencia, es posible que su proveedor de telefonía móvil le cobre por el uso de datos durante la conexión a la aplicación, o que le cobre otros cargos de terceros. Al utilizar la aplicación, usted acepta la responsabilidad de dichos cargos, incluidos los cargos por datos en itinerancia si utiliza la aplicación fuera de su territorio (es decir, región o país) sin desactivar la itinerancia de datos. Si usted no es el pagador de la factura del dispositivo en el que está utilizando la aplicación, el Proveedor de Servicios asume que usted ha obtenido el permiso del pagador de la factura.
+* Usted es responsable de mantener la confidencialidad de su información de cuenta y de todas las actividades que ocurran bajo su cuenta.
 
-Del mismo modo, el proveedor de servicios no siempre puede asumir la responsabilidad del uso que usted haga de la aplicación. Por ejemplo, es responsabilidad suya asegurarse de que su dispositivo permanece cargado. Si su dispositivo se queda sin batería y usted no puede acceder al Servicio, el Proveedor de Servicios no podrá ser considerado responsable.
+#### Uso Aceptable
 
-En cuanto a la responsabilidad del Proveedor de Servicios por el uso que usted haga de la aplicación, es importante señalar que, aunque se esfuerza por garantizar que esté actualizada y sea precisa en todo momento, depende de terceros que le proporcionan información para poder ponerla a su disposición. El Proveedor de Servicios no acepta ninguna responsabilidad por cualquier pérdida, directa o indirecta, que usted sufra como resultado de confiar enteramente en esta funcionalidad de la aplicación.
+* Usted se compromete a utilizar la Aplicación solo para fines legales y de una manera que no infrinja los derechos de terceros.
 
-Es posible que el Proveedor de Servicios desee actualizar la aplicación en algún momento. Los requisitos para el sistema operativo (y para cualquier sistema adicional al que decidan ampliar la disponibilidad de la aplicación) pueden cambiar, y usted deberá descargar las actualizaciones si desea seguir utilizando la aplicación. El Proveedor de Servicios no garantiza que siempre actualizará la aplicación para que sea relevante para usted y/o compatible con la versión concreta del sistema operativo instalado en su dispositivo. No obstante, usted se compromete a aceptar siempre las actualizaciones de la aplicación que se le ofrezcan. El Proveedor de Servicios también puede dejar de proporcionar la aplicación y puede poner fin a su uso en cualquier momento sin notificárselo a usted. A menos que le informen de lo contrario, tras cualquier rescisión, (a) finalizarán los derechos y licencias que se le conceden en estas condiciones; (b) deberá dejar de utilizar la aplicación y (si es necesario) eliminarla de su dispositivo.
+* No debe intentar acceder, alterar o interferir con el funcionamiento de la Aplicación de ninguna manera no autorizada.
 
-#### Modificaciones de las presentes Condiciones
+#### Propiedad Intelectual
 
-El Proveedor de Servicios puede actualizar periódicamente sus Términos y Condiciones. Por lo tanto, le recomendamos que consulte esta página con regularidad para comprobar si se han producido cambios. El Proveedor de Servicios le notificará cualquier cambio publicando los nuevos Términos y Condiciones en esta página.
+* La Aplicación y todo su contenido original son propiedad de Luis Donaldo Gamas Vázquez y están protegidos por las leyes de propiedad intelectual aplicables.
 
-**Estas condiciones son efectivas a partir del 2021-04-11**
+* La Aplicación es de código abierto y está bajo la licencia Mozilla Public License, version 2.0. Su uso, modificación y distribución están sujetos a los términos de esta licencia.
+
+#### Privacidad y Protección de Datos
+
+* El uso de sus datos personales está regido por nuestra Política de Privacidad, que forma parte integral de estos Términos y Condiciones.
+
+* Toda la información que proporcione se almacena localmente en su dispositivo y no se comparte con terceros.
+
+#### Limitación de Responsabilidad
+
+* La Aplicación se proporciona "tal cual" y "según disponibilidad", sin garantías de ningún tipo, ya sean expresas o implícitas.
+
+* No nos hacemos responsables de cualquier daño directo, indirecto, incidental, consecuente o especial que surja del uso o la imposibilidad de usar la Aplicación.
+
+* No somos responsables del contenido, funcionalidad o soporte de los widgets de terceros distribuidos a través de nuestra Aplicación.
+
+#### Modificaciones de la Aplicación y los Términos
+
+* Nos reservamos el derecho de modificar o discontinuar la Aplicación en cualquier momento, con o sin previo aviso.
+
+* Estos Términos y Condiciones pueden ser actualizados ocasionalmente. La versión más reciente siempre estará disponible en la Aplicación.
+
+#### Ley Aplicable
+
+Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes de México, sin tener en cuenta sus disposiciones sobre conflicto de leyes.
 
 #### Póngase en contacto con nosotros
 
-Si tiene alguna pregunta o sugerencia sobre las Condiciones, no dude en ponerse en contacto con el Proveedor de Servicios en luisgamas00@gmail.com.
+* Si tiene alguna duda o pregunta sobre los términos y condiciones de la Aplicación, puede ponerse en contacto con el Proveedor de Servicios en el siguiente correo electrónico: **luisgamas00@gmail.com**.
+
+* Al utilizar la Aplicación, usted reconoce que ha leído, entendido y aceptado estos Términos y Condiciones.
+
+**Estas condiciones son efectivas a partir del 2024-10-10**
 

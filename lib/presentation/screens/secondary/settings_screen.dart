@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
@@ -9,6 +10,8 @@ import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
+import 'package:kreator_frame/domain/domain.dart';
+import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
@@ -55,7 +58,6 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 class _SettingsSliverList extends StatelessWidget {
-
   final String packageName;
   final String packageVersion;
 
@@ -67,22 +69,18 @@ class _SettingsSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // * Variables
-    final textStyles = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
-
     return SliverList(
       delegate: SliverChildListDelegate([
+
+        // * Banner for donations
+        Dismissible(
+          key: UniqueKey(),
+          child: const _DonationChildDimissible(),
+        ),
     
         // * First part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsAppearance,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsAppearance,
         ),
     
         _CustomListTile(
@@ -95,14 +93,8 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Second part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsAbout,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsAbout,
         ),
     
         _CustomListTile(
@@ -122,14 +114,8 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Third part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsLegal,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsLegal,
         ),
     
         _CustomListTile(
@@ -149,51 +135,28 @@ class _SettingsSliverList extends StatelessWidget {
         const Gap(25),
     
         // * Fourth part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsLicences,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsLicences,
         ),
-    
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(AppLocalizations.of(context)!.settingsLicencesLT1),
-          subtitle: Text(AppLocalizations.of(context)!.settingsLicencesLST1),
-          leading: const Icon(Hicon.award2Bold),
-          trailing: const Icon(Hicon.right2Bold),
-          onTap: () => showLicensePage(
-            context: context,
-            applicationName: Environment.dashName,
-            applicationLegalese: 'Dashboard',
-            applicationIcon: const Icon(
-              Hicon.graphBold,
-              size: 40,
-            ),
-            applicationVersion: Environment.dashVersion,
-          ),
+
+        _CustomListTile(
+          title: AppLocalizations.of(context)!.settingsLicencesLT1,
+          subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
+          location: '/licenses-screen',
+          leadingWidget: const Icon(Hicon.award2Bold),
         ),
     
         const Gap(25),
     
         // * Fifth part
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          child: Text(
-            AppLocalizations.of(context)!.settingsVersions,
-            style: textStyles.titleLarge!.copyWith(
-              color: colors.onSurface,
-            )
-          ),
+        _TitleListTile(
+          title: AppLocalizations.of(context)!.settingsVersions
         ),
     
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(packageName), // AQUI
-          subtitle: Text(packageVersion), // AQUI
+          title: Text(packageName),
+          subtitle: Text(packageVersion),
           leading: const Icon(Hicon.informationCircleBold),
         ),
     
@@ -205,6 +168,32 @@ class _SettingsSliverList extends StatelessWidget {
         ),
     
       ])
+    );
+  }
+}
+
+// * Title Widget
+class _TitleListTile extends StatelessWidget {
+  final String title;
+
+  const _TitleListTile({
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+    return FadeIn(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: Text(
+          title,
+          style: textStyles.titleLarge!.copyWith(
+            color: colors.onSurface,
+          )
+        ),
+      ),
     );
   }
 }
@@ -225,26 +214,92 @@ class _CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-      splashColor: colors.secondaryContainer,
-      textColor: colors.onSurface,
-      title: Text(title),
-      titleTextStyle: textStyles.titleMedium,
-      subtitle: Text(subTitle),
-      subtitleTextStyle: textStyles.bodySmall,
-      leading: leadingWidget,
-      trailing: Icon(
-        Hicon.right2Bold,
-        color: colors.onSurface,
+    return FadeIn(
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        splashColor: colors.secondaryContainer,
+        textColor: colors.onSurface,
+        title: Text(title),
+        titleTextStyle: textStyles.titleMedium,
+        subtitle: Text(subTitle),
+        subtitleTextStyle: textStyles.bodySmall,
+        leading: leadingWidget,
+        trailing: Icon(
+          Hicon.right2Bold,
+          color: colors.onSurface,
+        ),
+        onTap: location == null 
+        ? null
+        : () => context.push(location!),
       ),
-      onTap: location == null 
-      ? null
-      : () => context.push(location!),
+    );
+  }
+}
+
+// * Dimissible Child Donation
+class _DonationChildDimissible extends StatelessWidget {
+  const _DonationChildDimissible();
+
+
+  @override
+  Widget build(BuildContext context) {
+    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        color: colors.primaryContainer,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            Icon(
+              Hicon.heart2Bold,
+              color: colors.onPrimaryContainer,
+            ),
+
+            const Gap(16),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              
+                  Text(
+                    AppLocalizations.of(context)!.donations,
+                    style: textStyles.titleMedium!.copyWith(
+                      color: colors.onPrimaryContainer,
+                    ),
+                  ),
+
+                  Text(
+                    AppLocalizations.of(context)!.donationsNote,
+                    style: textStyles.bodySmall!.copyWith(
+                      color: colors.onPrimaryContainer,
+                    ),
+                  ),
+
+                  const Gap(10),
+
+                  CustomOutlineButton(
+                    color: colors.onPrimaryContainer,
+                    text: AppLocalizations.of(context)!.donationsButton,
+                    onPressed: () => repository.launchExternalApp('https://buymeacoffee.com/luisgamas'),
+                  ),
+              
+                ],
+              ),
+            ),
+
+          ],
+        ),
+      ),
     );
   }
 }

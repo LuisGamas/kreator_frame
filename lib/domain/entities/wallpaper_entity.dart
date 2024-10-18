@@ -1,5 +1,4 @@
 class WallpaperEntity {
-
   final String name;
   final String author;
   final String url;

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:kreator_frame/domain/domain.dart';
 
 class RepositoryImpl extends Repository {
-
   final DataSource dataSource;
 
   RepositoryImpl(this.dataSource);
@@ -39,5 +38,4 @@ class RepositoryImpl extends Repository {
   Future<List<LicenseEntity>> getLicenses() {
     return dataSource.getLicenses();
   }
-
 }

@@ -54,7 +54,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
                       color: colors.onSurface,
                     ),
                     const SizedBox(height: 2),
-                    Text(appThemesSelector[index].title,
+                    Text(appThemesSelector[index].title(context),
                         style: textStyles.titleSmall)
                   ],
                 ),

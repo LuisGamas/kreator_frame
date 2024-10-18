@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
 
 class LicenseMapper {

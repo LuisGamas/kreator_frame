@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 class WidgetEntity {
-  
   final String nameWidget;
   final String nameDeveloper;
   final Uint8List widgetThumbnail;
@@ -12,5 +11,4 @@ class WidgetEntity {
     required this.nameDeveloper,
     required this.widgetThumbnail
   });
-  
 }

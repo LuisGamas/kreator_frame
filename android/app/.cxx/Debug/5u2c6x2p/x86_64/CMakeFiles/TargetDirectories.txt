@@ -1,0 +1,2 @@
+/home/luisgamas/Documentos/GitHub/kreator_frame/android/app/.cxx/Debug/5u2c6x2p/x86_64/CMakeFiles/edit_cache.dir
+/home/luisgamas/Documentos/GitHub/kreator_frame/android/app/.cxx/Debug/5u2c6x2p/x86_64/CMakeFiles/rebuild_cache.dir

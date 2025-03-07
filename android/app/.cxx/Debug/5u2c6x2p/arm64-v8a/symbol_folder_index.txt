@@ -1,0 +1,1 @@
+/home/luisgamas/Documentos/GitHub/kreator_frame/build/app/intermediates/cxx/Debug/5u2c6x2p/obj/arm64-v8a

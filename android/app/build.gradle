@@ -24,8 +24,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "io.github.luisgamas.kreator_frame"
-    compileSdk 34
-    ndkVersion flutter.ndkVersion
+    compileSdk flutter.compileSdkVersion
+    ndkVersion "27.0.12077973"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -38,7 +38,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -49,9 +49,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
-        aaptOptions {
-            noCompress 'zip', 'komp', 'klwp', 'kwgt', 'klck', 'kwch', 'kntf'
-        }
+//        aaptOptions {
+//            noCompress 'zip', 'komp', 'klwp', 'kwgt', 'klck', 'kwch', 'kntf'
+//        }
     }
 }
 

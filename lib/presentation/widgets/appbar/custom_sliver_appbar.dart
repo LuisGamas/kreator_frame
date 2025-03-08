@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -50,9 +51,10 @@ class CustomSliverAppBar extends ConsumerWidget {
       bottom: tabsBar.when(
         data: (data) {
           return TabBar(
-            labelStyle: textStyles.labelMedium,
-            labelColor: colors.primary,
-            indicatorColor: colors.primary,
+            labelStyle: textStyles.labelLarge,
+            unselectedLabelStyle: textStyles.labelMedium,
+            labelColor: colors.secondary,
+            indicatorColor: colors.secondary,
             unselectedLabelColor: colors.outline,
             splashBorderRadius: BorderRadius.circular(10),
             tabs: data.map((tabEntity) => tabEntity.tabBar).toList(),
@@ -97,20 +99,24 @@ class _AppBarWidgets extends ConsumerWidget {
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ZoomIn(
-          child: Container(
-            height: 65,
-            width: 65,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
+          child: SizedBox(
+            height: 70,
+            width: 70,
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              color: colors.surfaceContainer,
+              elevation: 0,
+              clipBehavior: Clip.hardEdge,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              child: Image(
                 image: AssetImage('assets/logo/app_logo.png'),
                 fit: BoxFit.cover,
-              ),
+              )
             ),
-          ),
+          )
         ),
         ZoomIn(
           child: Column(

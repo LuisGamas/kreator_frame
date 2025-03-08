@@ -14,12 +14,8 @@ class CustomSliverAppBarScreens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // * Variables
-    final colors = Theme.of(context).colorScheme;
-
     // * Widget
     return SliverAppBar.large(
-        backgroundColor: colors.surface,
         pinned: true,
         leading: IconButton(
             onPressed: () => context.pop(),

@@ -1,2 +1,0 @@
-/home/luisgamas/Documentos/GitHub/kreator_frame/android/app/.cxx/Debug/h2ry2p40/x86/CMakeFiles/edit_cache.dir
-/home/luisgamas/Documentos/GitHub/kreator_frame/android/app/.cxx/Debug/h2ry2p40/x86/CMakeFiles/rebuild_cache.dir

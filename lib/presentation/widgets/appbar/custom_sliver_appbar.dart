@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -31,7 +30,7 @@ class CustomSliverAppBar extends ConsumerWidget {
     // * Widget
     return SliverAppBar(
       backgroundColor: colors.surface,
-      expandedHeight: size.height * 0.18,
+      expandedHeight: 150,
       pinned: true,
       floating: true,
       snap: true,

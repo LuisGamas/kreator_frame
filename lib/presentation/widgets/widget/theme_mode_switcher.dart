@@ -19,8 +19,8 @@ class ThemeModeSwitcher extends ConsumerWidget {
 
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
+        crossAxisSpacing: 6,
+        mainAxisSpacing: 6,
         crossAxisCount: appThemesSelector.length,
       ),
       delegate: SliverChildBuilderDelegate(
@@ -34,10 +34,10 @@ class ThemeModeSwitcher extends ConsumerWidget {
                     .read(appThemeModeProvider.notifier)
                     .setSelectedThemeMode(appThemesSelector[index].themeMode),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
                 color: colors.surface,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(28),
                 border: Border.all(
                   color: isSelectedThemeMode ? colors.primary : colors.surface,
                   width: 3,
@@ -50,7 +50,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
                   children: [
                     Icon(
                       appThemesSelector[index].icon,
-                      size: 35,
+                      size: 28,
                       color: colors.onSurface,
                     ),
                     const SizedBox(height: 2),

@@ -42,7 +42,7 @@ class KWGTScreen extends ConsumerWidget {
                   image: widget.widgetThumbnail,
                   topText: widget.nameWidget,
                   bottomText: widget.nameDeveloper,
-                  heightPreview: 150,
+                  heightPreview: 200,
                   fitPreview: BoxFit.scaleDown,
                   addPadding: true,
                   onTap: () => repository.launchExternalApp('https://play.google.com/store/apps/details?id=org.kustom.widget'),

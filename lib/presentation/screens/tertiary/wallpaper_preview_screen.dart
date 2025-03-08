@@ -278,10 +278,10 @@ class _BottomCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.36,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             AppLocalizations.of(context)!.bottomWallSelectorTitle,
@@ -312,6 +312,7 @@ class _BottomCardContent extends StatelessWidget {
             wallpaperEntity: wallpaperEntity,
             screenLocation: WallpaperManager.BOTH_SCREEN,
           ),
+          const Gap(16),
         ],
       ),
     );

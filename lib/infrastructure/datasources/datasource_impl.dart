@@ -13,7 +13,6 @@ import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:tex_markdown/tex_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
@@ -79,7 +78,7 @@ class DataSourceImpl extends DataSource {
       widgets.add(WidgetEntity(
         nameWidget: zipFileName.replaceAll('.$filesExt', ''),
         nameDeveloper: Environment.developerName,
-        widgetThumbnail: thumbFile.content as Uint8List,
+        widgetThumbnail: thumbFile.content,
       ));
     }
 
@@ -98,22 +97,12 @@ class DataSourceImpl extends DataSource {
 
   // * Obtains official data from the assets folder and renders it using TexMarkdown.
   @override
-  FutureBuilder<String> getOfficialData(String nameFolder, String nameFile) {
-    return FutureBuilder(
-      future: rootBundle.loadString('assets/$nameFolder/$nameFile'),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return TexMarkdown(
-              snapshot.data.toString(),
-            );
-          } else if (snapshot.hasError) {
-            return const Text('''Well isn't this embarrassing? We can't seem to find what you're looking for''');
-          }
-        }
-        return const Center(child: CircularProgressIndicator(strokeWidth: 2));
-      }
-    );
+  Future<String> getOfficialData(String nameFolder, String nameFile) async {
+    try {
+      return await rootBundle.loadString('assets/$nameFolder/$nameFile');
+    } catch (e) {
+      throw Exception("Error loading file: $e");
+    }
   }
 
   // * Obtains a list of licenses in the project

@@ -47,7 +47,7 @@ class LicensesScreen extends StatelessWidget {
                     return FadeIn(
                       child: _CustomListTile(
                         title: license.name,
-                        subTitle: '${license.licenseCount} License',
+                        subTitle: '${license.licenseCount} License${license.licenseCount == 1 ? '' : 's'}',
                         onTap: () => context.push(
                           '/license-detail-screen',
                           extra: license,

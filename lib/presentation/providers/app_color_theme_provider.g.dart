@@ -12,15 +12,16 @@ String _$appColorThemeHash() => r'a9cfa695eeea72d77acbe8f88aa1efd4d4b94904';
 @ProviderFor(AppColorTheme)
 final appColorThemeProvider =
     AutoDisposeNotifierProvider<AppColorTheme, Color>.internal(
-  AppColorTheme.new,
-  name: r'appColorThemeProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$appColorThemeHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AppColorTheme.new,
+      name: r'appColorThemeProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$appColorThemeHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AppColorTheme = AutoDisposeNotifier<Color>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

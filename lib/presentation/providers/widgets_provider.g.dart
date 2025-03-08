@@ -39,21 +39,15 @@ class GetWidgetsFamily extends Family<AsyncValue<List<WidgetEntity>>> {
   const GetWidgetsFamily();
 
   /// See also [getWidgets].
-  GetWidgetsProvider call(
-    String widgetExt,
-  ) {
-    return GetWidgetsProvider(
-      widgetExt,
-    );
+  GetWidgetsProvider call(String widgetExt) {
+    return GetWidgetsProvider(widgetExt);
   }
 
   @override
   GetWidgetsProvider getProviderOverride(
     covariant GetWidgetsProvider provider,
   ) {
-    return call(
-      provider.widgetExt,
-    );
+    return call(provider.widgetExt);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -74,24 +68,19 @@ class GetWidgetsFamily extends Family<AsyncValue<List<WidgetEntity>>> {
 /// See also [getWidgets].
 class GetWidgetsProvider extends FutureProvider<List<WidgetEntity>> {
   /// See also [getWidgets].
-  GetWidgetsProvider(
-    String widgetExt,
-  ) : this._internal(
-          (ref) => getWidgets(
-            ref as GetWidgetsRef,
-            widgetExt,
-          ),
-          from: getWidgetsProvider,
-          name: r'getWidgetsProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getWidgetsHash,
-          dependencies: GetWidgetsFamily._dependencies,
-          allTransitiveDependencies:
-              GetWidgetsFamily._allTransitiveDependencies,
-          widgetExt: widgetExt,
-        );
+  GetWidgetsProvider(String widgetExt)
+    : this._internal(
+        (ref) => getWidgets(ref as GetWidgetsRef, widgetExt),
+        from: getWidgetsProvider,
+        name: r'getWidgetsProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$getWidgetsHash,
+        dependencies: GetWidgetsFamily._dependencies,
+        allTransitiveDependencies: GetWidgetsFamily._allTransitiveDependencies,
+        widgetExt: widgetExt,
+      );
 
   GetWidgetsProvider._internal(
     super._createNotifier, {
@@ -142,17 +131,21 @@ class GetWidgetsProvider extends FutureProvider<List<WidgetEntity>> {
   }
 }
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 mixin GetWidgetsRef on FutureProviderRef<List<WidgetEntity>> {
   /// The parameter `widgetExt` of this provider.
   String get widgetExt;
 }
 
 class _GetWidgetsProviderElement
-    extends FutureProviderElement<List<WidgetEntity>> with GetWidgetsRef {
+    extends FutureProviderElement<List<WidgetEntity>>
+    with GetWidgetsRef {
   _GetWidgetsProviderElement(super.provider);
 
   @override
   String get widgetExt => (origin as GetWidgetsProvider).widgetExt;
 }
+
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
@@ -18,6 +19,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
     final Repository repository = RepositoryImpl(DataSourceImpl());
     final Locale locale = Localizations.localeOf(context);
 
+    final futureFile = locale.languageCode == 'es'
+        ? repository.getOfficialData('official', 'privacy_policy_es.md')
+        : repository.getOfficialData('official', 'privacy_policy_en.md');
+
     // * Widget view
     return Scaffold(
       body: CustomScrollView(
@@ -31,10 +36,38 @@ class PrivacyPolicyScreen extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             sliver: SliverToBoxAdapter(
-              child: SizedBox(
-                child: locale.languageCode == 'en'
-                    ? repository.getOfficialData('official' ,'privacy_policy_en.md')
-                    : repository.getOfficialData('official' ,'privacy_policy_es.md'),
+              child: FutureBuilder<String>(
+                future: futureFile,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.errorMessage
+                      )
+                    );
+                  } else if (snapshot.hasData) {
+                    return MarkdownBody(
+                      styleSheet: MarkdownStyleSheet(
+                        a: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      data: snapshot.data!,
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.errorMessage
+                      )
+                    );
+                  }
+                },
               ),
             ),
           ),

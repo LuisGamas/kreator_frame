@@ -30,7 +30,7 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  FutureBuilder<String> getOfficialData(String nameFolder, String nameFile) {
+  Future<String> getOfficialData(String nameFolder, String nameFile) {
     return dataSource.getOfficialData(nameFolder, nameFile);
   }
   

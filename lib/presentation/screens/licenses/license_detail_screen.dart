@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:tex_markdown/tex_markdown.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
@@ -59,7 +59,9 @@ class _CustomLicenseBody extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       splashColor: colors.secondaryContainer,
       textColor: colors.onSurface,
-      title: TexMarkdown(title),
+      title: MarkdownBody(
+        data: title,
+      ),
       titleTextStyle: textStyles.titleMedium,
       subtitleTextStyle: textStyles.bodySmall,
       subtitle: const Divider(

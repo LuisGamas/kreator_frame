@@ -7,7 +7,7 @@ part of 'package_info_provider.dart';
 // **************************************************************************
 
 String _$getAsyncEnvironmentHash() =>
-    r'92c41fbf191e9ce3105ab948ee447346cea863cd';
+    r'b5852c48411f9eed16977c33ff6a393927f46237';
 
 /// See also [getAsyncEnvironment].
 @ProviderFor(getAsyncEnvironment)

@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 📦 Package imports:
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +14,7 @@ import 'package:kreator_frame/presentation/screens/screens.dart';
 part 'tabs_bar_app_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<List<TabBarEntity>>  getTabs(GetTabsRef ref) async {
+Future<List<TabBarEntity>>  getTabs(Ref ref) async {
   final Repository repository = RepositoryImpl(DataSourceImpl());
   final kwgt = await repository.getListOfWidgets('kwgt', 'preset_thumb_portrait.jpg');
   final klwp = await repository.getListOfWidgets('klwp', 'preset_thumb_portrait.jpg');

@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 📦 Package imports:
 import 'package:go_router/go_router.dart';
@@ -12,7 +13,7 @@ import 'package:kreator_frame/presentation/screens/screens.dart';
 part 'app_router.g.dart';
 
 @riverpod
-GoRouter appRouter(AppRouterRef ref) {
+GoRouter appRouter(Ref ref) {
   return GoRouter(routes: [
     // * Primary Screens
     _createRoute('/', const HomeScreen()),

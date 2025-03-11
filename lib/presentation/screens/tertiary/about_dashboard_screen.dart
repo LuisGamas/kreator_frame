@@ -52,7 +52,7 @@ class AboutDashboardScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: const DecorationImage(
-                            image: AssetImage('assets/logo/dashboard_logo.png'),
+                            image: AssetImage(Environment.dashProfileImage),
                             fit: BoxFit.cover,
                           ),
                         ),

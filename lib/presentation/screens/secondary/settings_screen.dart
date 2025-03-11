@@ -290,7 +290,7 @@ class _DonationChildDimissible extends StatelessWidget {
                   CustomOutlineButton(
                     color: colors.onPrimaryContainer,
                     text: AppLocalizations.of(context)!.donationsButton,
-                    onPressed: () => repository.launchExternalApp('https://buymeacoffee.com/luisgamas'),
+                    onPressed: () => repository.launchExternalApp(Environment.externalLinkBuyMeACoffe),
                   ),
               
                 ],

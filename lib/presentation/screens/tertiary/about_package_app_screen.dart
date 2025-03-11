@@ -91,7 +91,7 @@ class _SliverAboutPackage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/logo/app_logo.png'),
+                      image: AssetImage(Environment.packageProfileImage),
                       fit: BoxFit.cover,
                     ),
                   ),

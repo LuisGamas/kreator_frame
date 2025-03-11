@@ -6,6 +6,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:kreator_frame/config/config.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
@@ -45,7 +46,7 @@ class KLWPScreen extends ConsumerWidget {
                   bottomText: widget.nameDeveloper,
                   heightPreview: 290,
                   fitPreview: BoxFit.cover,
-                  onTap: () => repository.launchExternalApp('https://play.google.com/store/apps/details?id=org.kustom.wallpaper'),
+                  onTap: () => repository.launchExternalApp(Environment.externalLinkKLWP),
                 ),
               ),
             );

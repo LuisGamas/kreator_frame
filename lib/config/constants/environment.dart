@@ -11,13 +11,20 @@ class Environment {
   static String googlePlayStoreUrl = dotenv.env['GOOGLE_PLAY_STORE'] ?? 'Error GOOGLE_PLAY_STORE';
 
   // * Variables of SharedPreference **DO NOT REMOVE**
-  static String keyThemeMode = 'ThemeMode';
-  static String keyColorTheme = 'ColorTheme';
+  static const String keyThemeMode = 'ThemeMode';
+  static const String keyColorTheme = 'ColorTheme';
 
   // * Variables of Dashboard Preference **DO NOT REMOVE**
-  static String dashName = 'Kreator Frame';
-  static String dashVersion = '1.1.0 β';
-  static String dashDeveloper = 'Luis Gamas';
+  static const String dashName = 'Kreator Frame';
+  static const String dashVersion = '1.1.0 β';
+  static const String dashDeveloper = 'Luis Gamas';
+
+  static const String packageProfileImage = 'assets/logo/app_logo.png';
+  static const String dashProfileImage = 'assets/logo/dashboard_logo.png';
+
+  static const String externalLinkBuyMeACoffe = 'https://buymeacoffee.com/luisgamas';
+  static const String externalLinkKLWP = 'https://play.google.com/store/apps/details?id=org.kustom.wallpaper';
+  static const String externalLinkKWGT = 'https://play.google.com/store/apps/details?id=org.kustom.widget';
 }
 
 class AsyncEnvironment {

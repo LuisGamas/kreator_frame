@@ -2,23 +2,25 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
 
-class CustomSliverAppBarScreens extends StatelessWidget {
+class CustomSliverAppBarScreens extends ConsumerWidget {
   final String tileText;
 
   const CustomSliverAppBarScreens({super.key, required this.tileText});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(appRouterProvider);
+
     // * Widget
     return SliverAppBar.large(
         pinned: true,
         leading: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: () => appRouter.pop(),
             icon: const Icon(Hicon.left1Bold)),
         title: Text(tileText));
   }

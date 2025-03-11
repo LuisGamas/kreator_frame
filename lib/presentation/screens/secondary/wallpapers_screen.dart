@@ -6,9 +6,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/config/config.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
@@ -19,6 +19,7 @@ class WallpapersScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
     final wallpapers = ref.watch( getWallpapersProvider );
+    final appRouter = ref.watch(appRouterProvider);
 
     // * Widget to show Wallpapers Web previews
     return wallpapers.when(
@@ -44,7 +45,7 @@ class WallpapersScreen extends ConsumerWidget {
                     bottomText: wallpaper.author,
                     heightPreview: 290,
                     fitPreview: BoxFit.cover,
-                    onTap: () => context.push('/wallpaper-preview', extra: wallpaper),
+                    onTap: () => appRouter.push(wallpaperPreviewRoute, extra: wallpaper),
                   ),
                 ),
               ),

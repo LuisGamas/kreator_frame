@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -12,12 +12,13 @@ import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
-class LicensesScreen extends StatelessWidget {
+class LicensesScreen extends ConsumerWidget {
   const LicensesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Repository repository = RepositoryImpl(DataSourceImpl());
+    final appRouter = ref.watch(appRouterProvider);
 
     return Scaffold(
       body: FutureBuilder<List<LicenseEntity>>(
@@ -48,8 +49,8 @@ class LicensesScreen extends StatelessWidget {
                       child: _CustomListTile(
                         title: license.name,
                         subTitle: '${license.licenseCount} License${license.licenseCount == 1 ? '' : 's'}',
-                        onTap: () => context.push(
-                          '/license-detail-screen',
+                        onTap: () => appRouter.push(
+                          licenseDetailRoute,
                           extra: license,
                         ),
                       ),

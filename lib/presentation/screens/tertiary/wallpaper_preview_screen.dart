@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -348,8 +347,10 @@ class _ModalButton extends ConsumerWidget {
 
   void _applyWallpaper(BuildContext context, WidgetRef ref) {
     final Repository repository = RepositoryImpl(DataSourceImpl());
+    final appRouter = ref.watch(appRouterProvider);
+
     ref.read(setWallpaperProvider.notifier).changeState();
-    context.pop();
+    appRouter.pop();
     repository
         .setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.of(context).size)
         .whenComplete(() => ref.read(setWallpaperProvider.notifier).changeState());

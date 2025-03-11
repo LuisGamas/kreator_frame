@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 📦 Package imports:
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,35 +12,52 @@ import 'package:kreator_frame/presentation/screens/screens.dart';
 
 part 'app_router.g.dart';
 
+// * Routes Names
+// Primary Routes
+const homeRoute = '/';
+// Secondary Routes
+const settingsRoute = '/settings';
+// Tertiary Routes
+const wallpaperPreviewRoute = '/wallpaper-preview';
+const appearanceThemeRoute = '/theme-selector';
+const aboutPackageRoute = '/kustom-app-information';
+const aboutDashboardRoute = '/dashboard-information';
+const legalTermsConditionsRoute = '/terms-and-conditions';
+const legalPrivacyPolicyRoute = '/privacy-policy';
+// Licenses Routes
+const licensesOpenSourceRoute = '/licenses-screen';
+const licenseDetailRoute = '/license-detail-screen';
+
+// * This is the router
 @riverpod
 GoRouter appRouter(Ref ref) {
   return GoRouter(routes: [
-    // * Primary Screens
-    _createRoute('/', const HomeScreen()),
+    // Primary Screens
+    _createRoute(homeRoute, const HomeScreen()),
 
-    // * Secondary Screens
-    _createRoute('/settings', const SettingsScreen()),
+    // Secondary Screens
+    _createRoute(settingsRoute, const SettingsScreen()),
 
-    // * Tertiary Screens
+    // Tertiary Screens
     GoRoute(
-      path: '/wallpaper-preview',
+      path: wallpaperPreviewRoute,
       builder: (context, state) {
         WallpaperEntity wallpaperEntity = state.extra as WallpaperEntity;
         return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
       },
     ),
 
-    _createRoute('/theme-selector', const ThemeSelectorScreen()),
-    _createRoute('/kustom-app-information', const AboutPackageAppScreen()),
-    _createRoute('/dashboard-information', const AboutDashboardScreen()),
-    _createRoute('/terms-and-conditions', const TermsAndConditionsScreen()),
-    _createRoute('/privacy-policy', const PrivacyPolicyScreen()),
+    _createRoute(appearanceThemeRoute, const ThemeSelectorScreen()),
+    _createRoute(aboutPackageRoute, const AboutPackageAppScreen()),
+    _createRoute(aboutDashboardRoute, const AboutDashboardScreen()),
+    _createRoute(legalTermsConditionsRoute, const TermsAndConditionsScreen()),
+    _createRoute(legalPrivacyPolicyRoute, const PrivacyPolicyScreen()),
 
-    // * Other Screens
-    _createRoute('/licenses-screen', const LicensesScreen()),
+    // Other Screens
+    _createRoute(licensesOpenSourceRoute, const LicensesScreen()),
 
     GoRoute(
-      path: '/license-detail-screen',
+      path: licenseDetailRoute,
       pageBuilder: (context, state) {
         LicenseEntity  licenseEntity = state.extra as LicenseEntity ;
         return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));

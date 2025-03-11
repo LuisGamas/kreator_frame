@@ -6,7 +6,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -95,6 +94,7 @@ class _AppBarWidgets extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
     final asyncEnvironment = ref.watch(getAsyncEnvironmentProvider);
+    final appRouter = ref.watch(appRouterProvider);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,7 +182,7 @@ class _AppBarWidgets extends ConsumerWidget {
         ZoomIn(
           child: SizedBox(
             child: CustomFilledIconButton(
-              onPressed: () => context.push('/settings'),
+              onPressed: () => appRouter.push(settingsRoute),
               buttonColor: colors.secondary,
               icon: Icon(
                 Hicon.categoryBold,

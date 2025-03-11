@@ -6,7 +6,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -86,7 +85,7 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsAppearanceLT1,
           subTitle: AppLocalizations.of(context)!.settingsAppearanceLST1,
-          location: '/theme-selector',
+          location: appearanceThemeRoute,
           leadingWidget: const Icon(Hicon.paletteBold),
         ),
     
@@ -100,14 +99,14 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: packageName,
           subTitle: AppLocalizations.of(context)!.settingsAboutLST1,
-          location: '/kustom-app-information',
+          location: aboutPackageRoute,
           leadingWidget: const Icon(Hicon.stickerBold),
         ),
     
         _CustomListTile(
           title: Environment.dashName,
           subTitle: AppLocalizations.of(context)!.settingsAboutLST2,
-          location: '/dashboard-information',
+          location: aboutDashboardRoute,
           leadingWidget: const Icon(Hicon.graphBold),
         ),
     
@@ -121,14 +120,14 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLegalLT1,
           subTitle: AppLocalizations.of(context)!.settingsLegalLST1,
-          location: '/terms-and-conditions',
+          location: legalTermsConditionsRoute,
           leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
         ),
     
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLegalLT2,
           subTitle: AppLocalizations.of(context)!.settingsLegalLST2,
-          location: '/privacy-policy',
+          location: legalPrivacyPolicyRoute,
           leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
         ),
     
@@ -142,7 +141,7 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLicencesLT1,
           subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
-          location: '/licenses-screen',
+          location: licensesOpenSourceRoute,
           leadingWidget: const Icon(Hicon.award2Bold),
         ),
     
@@ -199,7 +198,7 @@ class _TitleListTile extends StatelessWidget {
 }
 
 // * Custom ListTile widget
-class _CustomListTile extends StatelessWidget {
+class _CustomListTile extends ConsumerWidget {
   final String title;
   final String subTitle;
   final String? location;
@@ -213,9 +212,10 @@ class _CustomListTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
+    final appRouter = ref.watch(appRouterProvider);
 
     return FadeIn(
       child: ListTile(
@@ -233,7 +233,7 @@ class _CustomListTile extends StatelessWidget {
         ),
         onTap: location == null 
         ? null
-        : () => context.push(location!),
+        : () => appRouter.push(location!),
       ),
     );
   }

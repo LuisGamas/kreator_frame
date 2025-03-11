@@ -42,7 +42,7 @@ class ThemeSelectorScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             sliver: DecoratedSliver(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(28),
                 color: colors.surfaceContainerHighest),
               sliver: const SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -68,7 +68,7 @@ class ThemeSelectorScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             sliver: DecoratedSliver(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(28),
                   color: colors.surfaceContainerHighest),
               sliver: const SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),

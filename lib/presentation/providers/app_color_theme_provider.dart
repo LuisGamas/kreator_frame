@@ -18,7 +18,7 @@ class AppColorTheme extends _$AppColorTheme {
   @override
   Color build() {
     _updateColorTheme();
-    return AppThemeColors.primaryColor.first;
+    return AppThemeColors.primaryColor[3];
   }
 
   void setColorTheme(Color color) async {

@@ -20,8 +20,8 @@ class TermsAndConditionsScreen extends StatelessWidget {
     final Locale locale = Localizations.localeOf(context);
 
     final futureFile = locale.languageCode == 'es'
-        ? repository.getOfficialData('official', 'terms_conditions_es.md')
-        : repository.getOfficialData('official', 'terms_conditions_en.md');
+        ? repository.getOfficialData('official', 'terms_and_conditions_es.md')
+        : repository.getOfficialData('official', 'terms_and_conditions_en.md');
 
     // * Widget view
     return Scaffold(

@@ -4,29 +4,39 @@ import 'package:flutter/material.dart';
 class CustomFilledIconTextButton extends StatelessWidget {
   final void Function()? onPressed;
   final Widget icon;
-  final Widget label;
+  final String text;
+  final Color? textColor;
   final Color? buttonColor;
+  final double radius;
 
   const CustomFilledIconTextButton({
     super.key,
     required this.onPressed,
     required this.icon,
-    required this.label,
+    required this.text,
+    required this.textColor,
     required this.buttonColor,
+    this.radius = 20,
   });
 
   @override
+  /// Builds a filled button with an icon and a text label.
+  ///
+  /// The button is colored with the given [buttonColor], and the text is
+  /// colored with the given [textColor]. The button has a circular border
+  /// of the given [radius].
+  ///
+  /// The button is pressed with the given [onPressed] function.
   Widget build(BuildContext context) {
-    const radius = Radius.circular(10);
-    return TextButton.icon(
+    return FilledButton.icon(
       onPressed: onPressed,
-      style: TextButton.styleFrom(
+      style: FilledButton.styleFrom(
         backgroundColor: buttonColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(radius),
-        )),
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      )),
       icon: icon,
-      label: label,
+      label: Text(text, style: TextStyle(color: textColor))
     );
   }
 }

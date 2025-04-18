@@ -90,7 +90,7 @@ class _SliverAboutPackage extends StatelessWidget {
                   height: 80,
                   width: 80,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
                       image: AssetImage(Environment.packageProfileImage),
                       fit: BoxFit.cover,
@@ -160,99 +160,76 @@ class _SliverAboutPackage extends StatelessWidget {
           const Gap(35),
 
           // * Social Apps
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            alignment: WrapAlignment.center,
-            runAlignment: WrapAlignment.center,
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-
-              // Social app 1
-              SizedBox(
-                height: 45,
-                width: 120,
-                child: CustomFilledIconTextButton(
-                  onPressed: () {
-                    Environment.twitterUrl != 'NA' && Environment.twitterUrl != 'Error TWITTER'
-                    ? repository.launchExternalApp(Environment.twitterUrl)
-                    : AppHelpers.showSnackbarError(
-                      context: context,
-                      message: AppLocalizations.of(context)!.errorMessage,
-                      color: colors
-                    );
-                  },
-                  buttonColor: colors.secondary,
-                  icon: Icon(
-                    Hicon.twitterBold,
-                    color: colors.onSecondary,
-                    size: 17,
-                  ),
-                  label: Text(
-                    'Twitter',
-                    style: TextStyle(color: colors.onSecondary),
-                  ),
-                ),
+          SizedBox(
+            height: 48,
+            child: CustomOutlineIconTextButton(
+              text: 'Twitter',
+              color: colors.primary,
+              icon: Icon(
+                Hicon.twitterBold,
+                size: 18,
               ),
-
-              const Gap(20),
-              // Social app 2
-              SizedBox(
-                height: 45,
-                width: 120,
-                child: CustomFilledIconTextButton(
-                  onPressed: () {
-                    Environment.instagramUrl != 'NA' && Environment.instagramUrl != 'Error INSTAGRAM'
-                    ? repository.launchExternalApp(Environment.instagramUrl)
-                    : AppHelpers.showSnackbarError(
-                      context: context,
-                      message: AppLocalizations.of(context)!.errorMessage,
-                      color: colors
-                    );
-                  },
-                  buttonColor: colors.secondary,
-                  icon: Icon(
-                    Hicon.instagramBold,
-                    color: colors.onSecondary,
-                    size: 17,
-                  ),
-                  label: Text(
-                    'Instagram',
-                    style: TextStyle(color: colors.onSecondary),
-                  ),
-                ),
-              ),
-
-              const Gap(20),
-
-              // Social app 3
-              SizedBox(
-                height: 45,
-                child: CustomFilledIconTextButton(
-                  onPressed: () {
-                    Environment.googlePlayStoreUrl != 'NA' && Environment.googlePlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
-                    ? repository.launchExternalApp(Environment.googlePlayStoreUrl)
-                    : AppHelpers.showSnackbarError(
-                      context: context,
-                      message: AppLocalizations.of(context)!.errorMessage,
-                      color: colors
-                    );
-                  },
-                  buttonColor: colors.secondary,
-                  icon: Icon(
-                    Hicon.bag1Bold,
-                    color: colors.onSecondary,
-                    size: 17,
-                  ),
-                  label: Text(
-                    'Google Play',
-                    style: TextStyle(color: colors.onSecondary),
-                  ),
-                ),
-              ),
-
-            ],
+              onPressed: () {
+                Environment.twitterUrl != 'NA' && Environment.twitterUrl != 'Error TWITTER'
+                ? repository.launchExternalApp(Environment.twitterUrl)
+                : AppHelpers.showSnackbarError(
+                  context: context,
+                  message: AppLocalizations.of(context)!.errorMessage,
+                  color: colors
+                );
+              },
+            ),
           ),
+          
+          const Gap(8),
+          // Social app 2
+          SizedBox(
+            height: 48,
+            child: CustomOutlineIconTextButton(
+              text: 'Instagram',
+              color: colors.primary,
+              icon: Icon(
+                Hicon.instagramBold,
+                size: 18,
+              ),
+              onPressed: () {
+                Environment.instagramUrl != 'NA' && Environment.instagramUrl != 'Error INSTAGRAM'
+                ? repository.launchExternalApp(Environment.instagramUrl)
+                : AppHelpers.showSnackbarError(
+                  context: context,
+                  message: AppLocalizations.of(context)!.errorMessage,
+                  color: colors
+                );
+              },
+            ),
+          ),
+          
+          const Gap(8),
+          
+          // Social app 3
+          SizedBox(
+            height: 48,
+            child: CustomFilledIconTextButton(
+              text: 'Web Page',
+              buttonColor: colors.primary,
+              textColor: colors.onPrimary,
+              icon: Icon(
+                Hicon.websiteBold,
+                size: 18,
+              ),
+              onPressed: () {
+                Environment.googlePlayStoreUrl != 'NA' && Environment.googlePlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
+                ? repository.launchExternalApp(Environment.googlePlayStoreUrl)
+                : AppHelpers.showSnackbarError(
+                  context: context,
+                  message: AppLocalizations.of(context)!.errorMessage,
+                  color: colors
+                );
+              },
+            ),
+          ),
+
+          const Gap(16),
       
         ])
       ),

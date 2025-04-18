@@ -109,7 +109,7 @@ class _AppBarWidgets extends ConsumerWidget {
               color: colors.surfaceContainer,
               elevation: 0,
               clipBehavior: Clip.hardEdge,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               child: Image(
                 image: AssetImage('assets/logo/app_logo.png'),
                 fit: BoxFit.cover,

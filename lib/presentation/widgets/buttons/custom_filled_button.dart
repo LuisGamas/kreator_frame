@@ -18,7 +18,7 @@ class CustomFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const radius = Radius.circular(10);
+    const radius = Radius.circular(20);
     return FilledButton(
       onPressed: onPressed, 
       style: FilledButton.styleFrom(

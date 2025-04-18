@@ -15,7 +15,7 @@ class CustomFilledIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const radius = Radius.circular(10);
+    const radius = Radius.circular(13);
     return IconButton(
       onPressed: onPressed,
       style: IconButton.styleFrom(

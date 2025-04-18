@@ -50,7 +50,7 @@ class AboutDashboardScreen extends StatelessWidget {
                         height: 80,
                         width: 80,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(20),
                           image: const DecorationImage(
                             image: AssetImage(Environment.dashProfileImage),
                             fit: BoxFit.cover,
@@ -114,75 +114,50 @@ class AboutDashboardScreen extends StatelessWidget {
                 const Gap(35),
 
                 // * Social Apps
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-
-                    // Social app 1
-                    SizedBox(
-                      height: 45,
-                      width: 120,
-                      child: CustomFilledIconTextButton(
-                        onPressed: () => repository.launchExternalApp('https://twitter.com/ErsteUomo'),
-                        buttonColor: colors.secondary,
-                        icon: Icon(
-                          Hicon.twitterBold,
-                          color: colors.onSecondary,
-                          size: 17,
-                        ),
-                        label: Text(
-                          'Twitter',
-                          style: TextStyle(color: colors.onSecondary),
-                        ),
-                      ),
+                SizedBox(
+                  height: 48,
+                  child: CustomOutlineIconTextButton(
+                    text: 'Twitter',
+                    color: colors.primary,
+                    icon: Icon(
+                      Hicon.twitterBold,
+                      size: 18,
                     ),
-
-                    const Gap(20),
-                    // Social app 2
-                    SizedBox(
-                      height: 45,
-                      width: 120,
-                      child: CustomFilledIconTextButton(
-                        onPressed: () => repository.launchExternalApp('https://www.instagram.com/ersteuomo/'),
-                        buttonColor: colors.secondary,
-                        icon: Icon(
-                          Hicon.instagramBold,
-                          color: colors.onSecondary,
-                          size: 17,
-                        ),
-                        label: Text(
-                          'Instagram',
-                          style: TextStyle(color: colors.onSecondary),
-                        ),
-                      ),
+                    onPressed: () => repository.launchExternalApp('https://twitter.com/ErsteUomo'),
+                  ),
+                ),
+                
+                const Gap(8),
+                // Social app 2
+                SizedBox(
+                  height: 48,
+                  child: CustomOutlineIconTextButton(
+                    text: 'Instagram',
+                    color: colors.primary,
+                    icon: Icon(
+                      Hicon.instagramBold,
+                      size: 18,
                     ),
-
-                    const Gap(20),
-
-                    // Social app 3
-                    SizedBox(
-                      height: 45,
-                      width: 120,
-                      child: CustomFilledIconTextButton(
-                        onPressed: () => repository.launchExternalApp('https://kutt.it/gamas-dev'),
-                        buttonColor: colors.secondary,
-                        icon: Icon(
-                          Hicon.websiteBold,
-                          color: colors.onSecondary,
-                          size: 17,
-                        ),
-                        label: Text(
-                          'Web Page',
-                          style: TextStyle(color: colors.onSecondary),
-                        ),
-                      ),
+                    onPressed: () => repository.launchExternalApp('https://www.instagram.com/ersteuomo/'),
+                  ),
+                ),
+                
+                const Gap(8),
+                
+                // Social app 3
+                SizedBox(
+                  height: 48,
+                  child: CustomFilledIconTextButton(
+                    text: 'Web Page',
+                    buttonColor: colors.primary,
+                    textColor: colors.onPrimary,
+                    icon: Icon(
+                      Hicon.websiteBold,
+                      color: colors.onPrimary,
+                      size: 18,
                     ),
-
-                  ],
+                    onPressed: () => repository.launchExternalApp('https://kutt.it/gamas-dev'),
+                  ),
                 ),
 
                 const Gap(35),
@@ -193,6 +168,8 @@ class AboutDashboardScreen extends StatelessWidget {
                   style: textStyles.titleSmall,
                   textAlign: TextAlign.center,
                 ),
+
+                const Gap(16),
             
               ])
             ),

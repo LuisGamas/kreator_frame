@@ -50,7 +50,7 @@ class ColorThemeSwitcher extends ConsumerWidget {
                           horizontal: 5, vertical: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: colors.onPrimary.withOpacity(0.7),
+                        color: colors.onPrimary.withValues(alpha: 0.7),
                       ),
                       child: const Icon(
                         Hicon.tickBold,

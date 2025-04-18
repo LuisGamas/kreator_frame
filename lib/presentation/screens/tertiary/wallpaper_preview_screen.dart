@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -201,15 +199,15 @@ class _DownloadButton extends ConsumerWidget {
 
     return asyncEnvironment.when(
       data: (data) => progressDownloader != 0
-          ? const CircularProgressIndicator(strokeWidth: 2)
+          ? _replaceButtonWithCircularProgress()
           : IconButton(
               onPressed: () => permissions.storageGranted 
                 ? _downloadWallpaper(context, ref, data.packageName, colors)
                 : ref.read(permissionsProvider.notifier).requestPhotoLibrary(),
               icon: const Icon(Hicon.downloadOutline, color: Colors.white),
             ),
-      error: (_, __) => const CircularProgressIndicator(strokeWidth: 2),
-      loading: () => const CircularProgressIndicator(strokeWidth: 2),
+      error: (_, __) => _replaceButtonWithCircularProgress(),
+      loading: () => _replaceButtonWithCircularProgress(),
     );
   }
 
@@ -239,6 +237,26 @@ class _DownloadButton extends ConsumerWidget {
       },
     );
   }
+
+  /// Replaces the download button with a [CircularProgressIndicator].
+  ///
+  /// This is used when the wallpaper is being downloaded or the package info
+  /// is loading. The button is disabled while the progress indicator is shown.
+  ///
+  /// The progress indicator is 24 logical pixels in size and is styled with
+  /// the current theme's color scheme.
+  IconButton _replaceButtonWithCircularProgress() {
+    return const IconButton(
+      onPressed: null,
+      icon: SizedBox(
+        height: 24,
+        width: 24,
+        child: CircularProgressIndicator(
+          strokeWidth: 2
+        ),
+      ),
+    );
+  }
 }
 
 // ##
@@ -255,20 +273,34 @@ class _ApplyWallpaperButton extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: setWallpaperState ? null : () => _showBottomCard(
+      onTap: setWallpaperState
+      ? null
+      : () => _showBottomCard(
         context: context,
         ref: ref,
         colors: colors
       ),
-      child: ClipOval(
-        child: Container(
+      child: Container(
+        decoration: const BoxDecoration(
           color: Colors.white,
-          height: 60,
-          width: 60,
-          child: setWallpaperState
-              ? const Center(child: CircularProgressIndicator(strokeWidth: 2))
-              : const Icon(Hicon.send1Outline, color: Colors.black),
+          shape: BoxShape.circle
         ),
+        height: 56,
+        width: 56,
+        child: setWallpaperState
+          ? const Center(
+            child: SizedBox(
+              height: 28,
+              width: 28,
+              child: CircularProgressIndicator(
+                strokeWidth: 2
+              ),
+            )
+          )
+          : const Icon(
+            Hicon.send1Outline,
+            color: Colors.black
+          ),
       ),
     );
   }
@@ -359,9 +391,29 @@ class _ModalButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final setWallpaperState = ref.watch(setWallpaperProvider);
     final colors = Theme.of(context).colorScheme;
 
-    return SizedBox(
+    return setWallpaperState 
+    ? Container(
+      width: double.infinity,
+      height: 56,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: colors.primary
+        ),
+        child: Center(
+          child: SizedBox(
+            height: 28,
+            width: 28,
+            child: CircularProgressIndicator(
+              color: colors.onPrimary,
+              strokeCap: StrokeCap.round
+            ),
+          ),
+        ),
+      )
+    : SizedBox(
       width: double.infinity,
       height: 55,
       child: CustomFilledButton(
@@ -373,27 +425,32 @@ class _ModalButton extends ConsumerWidget {
     );
   }
 
-  void _applyWallpaper(BuildContext context, WidgetRef ref) {
+  void _applyWallpaper(BuildContext context, WidgetRef ref) async {
     final Repository repository = RepositoryImpl(DataSourceImpl());
     final appRouter = ref.watch(appRouterProvider);
-    final completer = Completer<void>();
+    final colors = Theme.of(context).colorScheme;
 
     ref.read(setWallpaperProvider.notifier).changeState();
-    appRouter.pop();
-    repository.setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.sizeOf(context))
-      .then((_) {
-      if (!context.mounted) {
-        completer.complete();
+
+    final result = await repository.setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.sizeOf(context));
+
+    if (context.mounted) {
+      ref.read(setWallpaperProvider.notifier).changeState();
+      if (result) {
+        AppHelpers.showSnackbarSuccess(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedOk,
+          color: colors
+        );
+      } else {
+        AppHelpers.showSnackbarError(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedError,
+          color: colors
+        );
       }
-    }).catchError((error) {
-      if (!context.mounted) {
-        completer.completeError(error);
-      }
-    }).whenComplete(() async {
-      await Future.delayed(const Duration(seconds: 1));
-      if (!context.mounted) {
-        ref.read(setWallpaperProvider.notifier).changeState();
-      }
-    });
+      appRouter.pop();
+    }
+    
   }
 }

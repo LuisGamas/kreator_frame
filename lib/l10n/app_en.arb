@@ -8,6 +8,8 @@
   "bottomWallSelectorLS": "Set as Lock Screen",
   "bottomWallSelectorBS": "Set as Both Screen",
 
+  "appliedOk": "Wallpaper successfully applied!",
+  "appliedError": "Error when applying wallpaper :(",
   "errorMessage": "Well isn't this embarrassing? We can't seem to find what you're looking for",
   "noFunction": "Function not available at the moment",
   "downloadOk": "Successfully downloaded",

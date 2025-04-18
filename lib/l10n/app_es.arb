@@ -8,6 +8,8 @@
   "bottomWallSelectorLS": "Pantalla de bloqueo",
   "bottomWallSelectorBS": "Pantallas de bloqueo y principal",
 
+  "appliedOk": "Wallpaper aplicado con exito!",
+  "appliedError": "Error al aplicar wallpaper :(",
   "errorMessage": "¿No es vergonzoso? Parece que no podemos encontrar lo que buscas",
   "noFunction": "Función no disponible por el momento",
   "downloadOk": "Descargado con éxito",

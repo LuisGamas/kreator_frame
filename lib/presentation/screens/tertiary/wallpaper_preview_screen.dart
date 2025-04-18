@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -16,30 +18,55 @@ import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
+import 'package:kreator_frame/shared/utils/utils.dart';
 
 class WallpaperPreviewScreen extends ConsumerWidget {
   final WallpaperEntity wallpaperEntity;
 
-  const WallpaperPreviewScreen({super.key, required this.wallpaperEntity});
+  const WallpaperPreviewScreen({
+    super.key,
+    required this.wallpaperEntity
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
-    final textStyles = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
-
     return Scaffold(
       body: Stack(
         children: [
-          _buildHeroImage(size),
-          _buildGradientOverlay(),
-          _buildBottomContent(context, ref, size, textStyles, colors),
+         _HeroImagePreview(wallpaperEntity: wallpaperEntity),
+          
+          const SizedBox.expand(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.70, 1.0],
+                  colors: [Colors.transparent, Colors.black87],
+                ),
+              ),
+            ),
+          ),
+
+          _BottomContentData(wallpaperEntity: wallpaperEntity),
         ],
       ),
     );
   }
+}
 
-  Widget _buildHeroImage(Size size) {
+// ##
+class _HeroImagePreview extends StatelessWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _HeroImagePreview({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     return Hero(
       tag: wallpaperEntity,
       child: Image(
@@ -64,103 +91,113 @@ class WallpaperPreviewScreen extends ConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildGradientOverlay() {
-    return const SizedBox.expand(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.70, 1.0],
-            colors: [Colors.transparent, Colors.black87],
-          ),
-        ),
-      ),
-    );
-  }
+// ##
+class _BottomContentData extends StatelessWidget {
+  final WallpaperEntity wallpaperEntity;
 
-  Widget _buildBottomContent(BuildContext context, WidgetRef ref, Size size, TextTheme textStyles, ColorScheme colors) {
+  const _BottomContentData({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyles = Theme.of(context).textTheme;
+    
     return Positioned(
       bottom: 20,
       left: 16,
       right: 16,
       child: FadeIn(
         delay: Durations.medium4,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildWallpaperInfo(textStyles),
-                  _buildActionButtons(context, ref, colors),
+                  Text(
+                    wallpaperEntity.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyles.headlineSmall?.copyWith(
+                      color: Colors.white
+                    ),
+                  ),
+                  Text(
+                    wallpaperEntity.author,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyles.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _NoFunctionButton(icon: Hicon.heart2Outline),
+                  const Gap(5),
+                  _NoFunctionButton(icon: Hicon.paletteOutline),
+                  const Gap(5),
+                  _DownloadButton(wallpaperEntity: wallpaperEntity),
+                  const Spacer(),
+                  _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildWallpaperInfo(TextTheme textStyles) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          wallpaperEntity.name,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: textStyles.headlineSmall?.copyWith(color: Colors.white),
-        ),
-        Text(
-          wallpaperEntity.author,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: textStyles.titleMedium?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.w200,
-          ),
-        ),
-      ],
-    );
-  }
+}
 
-  Widget _buildActionButtons(BuildContext context, WidgetRef ref, ColorScheme colors) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _buildIconButton(context, Hicon.heart2Outline, colors, AppLocalizations.of(context)!.noFunction),
-        const Gap(5),
-        _buildIconButton(context, Hicon.paletteOutline, colors, AppLocalizations.of(context)!.noFunction),
-        const Gap(5),
-        _buildDownloadButton(context, ref, colors),
-        const Spacer(),
-        _buildApplyWallpaperButton(context, ref, colors),
-      ],
-    );
-  }
+// ##
+class _NoFunctionButton extends StatelessWidget {
+  final IconData icon;
 
-  Widget _buildIconButton(BuildContext context, IconData icon, ColorScheme colors, String message) {
+  const _NoFunctionButton({
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return IconButton(
-      onPressed: () => _showCustomSnackbar(
+      onPressed: () => AppHelpers.showSnackbarError(
         context: context,
-        message: message,
-        backgroundColor: colors.secondaryContainer,
-        colorText: colors.onSecondaryContainer,
+        message: AppLocalizations.of(context)!.noFunction,
+        color: colors
       ),
       icon: Icon(icon, color: Colors.white),
     );
   }
+}
 
-  Widget _buildDownloadButton(BuildContext context, WidgetRef ref, ColorScheme colors) {
+// ##
+class _DownloadButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _DownloadButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final progressDownloader = ref.watch(progressDownloaderProvider);
     final asyncEnvironment = ref.watch(getAsyncEnvironmentProvider);
     final permissions = ref.watch(permissionsProvider);
+    final colors = Theme.of(context).colorScheme;
 
     return asyncEnvironment.when(
       data: (data) => progressDownloader != 0
@@ -185,31 +222,44 @@ class WallpaperPreviewScreen extends ConsumerWidget {
         ref.read(progressDownloaderProvider.notifier).changeProgress(progress);
       },
       onDownloadCompleted: (_) {
-        _showCustomSnackbar(
+        AppHelpers.showSnackbarSuccess(
           context: context,
           message: AppLocalizations.of(context)!.downloadOk,
-          backgroundColor: colors.secondaryContainer,
-          colorText: colors.onSecondaryContainer,
+          color: colors
         );
         ref.read(progressDownloaderProvider.notifier).changeProgress(0);
       },
       onDownloadError: (_) {
-        _showCustomSnackbar(
+        AppHelpers.showSnackbarError(
           context: context,
           message: AppLocalizations.of(context)!.downloadError,
-          backgroundColor: colors.errorContainer,
-          colorText: colors.onErrorContainer,
+          color: colors
         );
         ref.read(progressDownloaderProvider.notifier).changeProgress(0);
       },
     );
   }
+}
 
-  Widget _buildApplyWallpaperButton(BuildContext context, WidgetRef ref, ColorScheme colors) {
+// ##
+class _ApplyWallpaperButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _ApplyWallpaperButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final setWallpaperState = ref.watch(setWallpaperProvider);
+    final colors = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: setWallpaperState ? null : () => _showBottomCard(context: context, ref: ref, colors: colors),
+      onTap: setWallpaperState ? null : () => _showBottomCard(
+        context: context,
+        ref: ref,
+        colors: colors
+      ),
       child: ClipOval(
         child: Container(
           color: Colors.white,
@@ -221,30 +271,6 @@ class WallpaperPreviewScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _showCustomSnackbar({
-    required BuildContext context,
-    required String message,
-    required Color? backgroundColor,
-    required Color? colorText,
-  }) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        elevation: 5,
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: backgroundColor,
-        showCloseIcon: true,
-        closeIconColor: colorText,
-        content: Text(
-          message,
-          style: TextStyle(color: colorText),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          softWrap: true,
-        ),
-      ));
   }
 
   void _showBottomCard({
@@ -265,6 +291,7 @@ class WallpaperPreviewScreen extends ConsumerWidget {
   }
 }
 
+// ##
 class _BottomCardContent extends StatelessWidget {
   final WallpaperEntity wallpaperEntity;
   final ColorScheme colors;
@@ -318,6 +345,7 @@ class _BottomCardContent extends StatelessWidget {
   }
 }
 
+// ##
 class _ModalButton extends ConsumerWidget {
   final WallpaperEntity wallpaperEntity;
   final String textButton;
@@ -348,11 +376,24 @@ class _ModalButton extends ConsumerWidget {
   void _applyWallpaper(BuildContext context, WidgetRef ref) {
     final Repository repository = RepositoryImpl(DataSourceImpl());
     final appRouter = ref.watch(appRouterProvider);
+    final completer = Completer<void>();
 
     ref.read(setWallpaperProvider.notifier).changeState();
     appRouter.pop();
-    repository
-        .setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.of(context).size)
-        .whenComplete(() => ref.read(setWallpaperProvider.notifier).changeState());
+    repository.setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.sizeOf(context))
+      .then((_) {
+      if (!context.mounted) {
+        completer.complete();
+      }
+    }).catchError((error) {
+      if (!context.mounted) {
+        completer.completeError(error);
+      }
+    }).whenComplete(() async {
+      await Future.delayed(const Duration(seconds: 1));
+      if (!context.mounted) {
+        ref.read(setWallpaperProvider.notifier).changeState();
+      }
+    });
   }
 }

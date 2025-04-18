@@ -13,6 +13,7 @@ import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
+import 'package:kreator_frame/shared/utils/utils.dart';
 
 class AboutPackageAppScreen extends ConsumerWidget {
   const AboutPackageAppScreen({super.key});
@@ -175,7 +176,11 @@ class _SliverAboutPackage extends StatelessWidget {
                   onPressed: () {
                     Environment.twitterUrl != 'NA' && Environment.twitterUrl != 'Error TWITTER'
                     ? repository.launchExternalApp(Environment.twitterUrl)
-                    : _showCustomSnackbar(context);
+                    : AppHelpers.showSnackbarError(
+                      context: context,
+                      message: AppLocalizations.of(context)!.errorMessage,
+                      color: colors
+                    );
                   },
                   buttonColor: colors.secondary,
                   icon: Icon(
@@ -199,7 +204,11 @@ class _SliverAboutPackage extends StatelessWidget {
                   onPressed: () {
                     Environment.instagramUrl != 'NA' && Environment.instagramUrl != 'Error INSTAGRAM'
                     ? repository.launchExternalApp(Environment.instagramUrl)
-                    : _showCustomSnackbar(context);
+                    : AppHelpers.showSnackbarError(
+                      context: context,
+                      message: AppLocalizations.of(context)!.errorMessage,
+                      color: colors
+                    );
                   },
                   buttonColor: colors.secondary,
                   icon: Icon(
@@ -223,7 +232,11 @@ class _SliverAboutPackage extends StatelessWidget {
                   onPressed: () {
                     Environment.googlePlayStoreUrl != 'NA' && Environment.googlePlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
                     ? repository.launchExternalApp(Environment.googlePlayStoreUrl)
-                    : _showCustomSnackbar(context);
+                    : AppHelpers.showSnackbarError(
+                      context: context,
+                      message: AppLocalizations.of(context)!.errorMessage,
+                      color: colors
+                    );
                   },
                   buttonColor: colors.secondary,
                   icon: Icon(
@@ -245,26 +258,4 @@ class _SliverAboutPackage extends StatelessWidget {
       ),
     );
   }
-
-  // * Callback for Snackbar
-  void _showCustomSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      elevation: 5,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      showCloseIcon: true,
-      closeIconColor: Theme.of(context).colorScheme.onPrimary,
-      content: Text(
-        AppLocalizations.of(context)!.errorMessage,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        softWrap: true,
-      ),
-    ));
-  }
-
 }

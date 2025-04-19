@@ -66,12 +66,13 @@ class _HeroImagePreview extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
 
     return Hero(
-      tag: wallpaperEntity,
+      tag: wallpaperEntity.url,
       child: Image(
         image: CachedNetworkImageProvider(wallpaperEntity.url),
-        width: double.infinity,
+        width: size.width,
         height: size.height,
         fit: BoxFit.fitHeight,
+        filterQuality: FilterQuality.high,
         loadingBuilder: (context, child, loadingProgress) {
           return loadingProgress == null
           ? child
@@ -109,49 +110,42 @@ class _BottomContentData extends StatelessWidget {
       right: 16,
       child: FadeIn(
         delay: Durations.medium4,
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    wallpaperEntity.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: textStyles.headlineSmall?.copyWith(
-                      color: Colors.white
-                    ),
-                  ),
-                  Text(
-                    wallpaperEntity.author,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: textStyles.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w200,
-                    ),
-                  ),
-                ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            
+            Text(
+              wallpaperEntity.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: textStyles.headlineSmall?.copyWith(
+                color: Colors.white
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _NoFunctionButton(icon: Hicon.heart2Outline),
-                  const Gap(5),
-                  _NoFunctionButton(icon: Hicon.paletteOutline),
-                  const Gap(5),
-                  _DownloadButton(wallpaperEntity: wallpaperEntity),
-                  const Spacer(),
-                  _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
-                ],
+            ),
+            Text(
+              wallpaperEntity.author,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textStyles.titleMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w200,
               ),
-            ],
-          ),
+            ),
+        
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _NoFunctionButton(icon: Hicon.heart2Outline),
+                const Gap(5),
+                _NoFunctionButton(icon: Hicon.paletteOutline),
+                const Gap(5),
+                _DownloadButton(wallpaperEntity: wallpaperEntity),
+                const Spacer(),
+                _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
+              ],
+            ),
+          ],
         ),
       ),
     );

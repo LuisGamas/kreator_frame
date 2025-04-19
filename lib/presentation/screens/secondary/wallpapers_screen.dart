@@ -37,7 +37,7 @@ class WallpapersScreen extends ConsumerWidget {
             return ZoomIn(
               child: FadeIn(
                 child: Hero(
-                  tag: wallpaper,
+                  tag: wallpaper.url,
                   child: CustomCardPreviews(
                     isUrlImage: true,
                     imageUrl: wallpaper.url,

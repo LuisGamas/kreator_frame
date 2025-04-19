@@ -16,7 +16,7 @@ class Environment {
 
   // * Variables of Dashboard Preference **DO NOT REMOVE**
   static const String dashName = 'Kreator Frame';
-  static const String dashVersion = '1.2.0 β';
+  static const String dashVersion = '1.2.1 β';
   static const String dashDeveloper = 'Luis Gamas';
 
   static const String packageProfileImage = 'assets/logo/app_logo.png';

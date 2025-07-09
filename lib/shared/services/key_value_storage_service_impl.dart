@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // 🌎 Project imports:
 import 'key_value_storae_service.dart';
 
-class KeyValueStorageServieceImpl extends KeyValueStorageService {
+class KeyValueStorageServicesImpl extends KeyValueStorageServices {
 
   //! Starts the SharedPreference instance
   Future<SharedPreferences> getSharedPreferences() async {

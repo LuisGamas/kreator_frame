@@ -1,5 +1,4 @@
-export 'app_color_theme_provider.dart';
-export 'app_theme_mode_provider.dart';
+export 'app_values_preferences_provider.dart';
 export 'package_info_provider.dart';
 export 'permissions_provider.dart';
 export 'progress_downloader_provider.dart';

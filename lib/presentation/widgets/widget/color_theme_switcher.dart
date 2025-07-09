@@ -14,7 +14,7 @@ class ColorThemeSwitcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorSwitcher = ref.watch(appColorThemeProvider);
+    final appValuesFromPreference = ref.watch(appValuesPreferencesProvider);
     final colors = Theme.of(context).colorScheme;
 
     return SliverGrid(
@@ -25,18 +25,19 @@ class ColorThemeSwitcher extends ConsumerWidget {
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          final isSelectedColor =
-              AppThemeColors.primaryColor[index] == colorSwitcher;
+
+          final isSelectedColor = AppHelpers.primaryColor[index] 
+            == appValuesFromPreference.colorAccentForTheme;
+
           return GestureDetector(
             onTap: isSelectedColor
                 ? null
-                : () => ref
-                    .read(appColorThemeProvider.notifier)
-                    .setColorTheme(AppThemeColors.primaryColor[index]),
+                  : () => ref.read(appValuesPreferencesProvider.notifier)
+                      .setPreferenceForColorAccent(AppHelpers.primaryColor[index]),
             child: Container(
               height: 50,
               decoration: BoxDecoration(
-                color: AppThemeColors.primaryColor[index],
+                color: AppHelpers.primaryColor[index],
                 borderRadius: BorderRadius.circular(25),
               ),
               child: AnimatedOpacity(
@@ -62,7 +63,7 @@ class ColorThemeSwitcher extends ConsumerWidget {
             ),
           );
         },
-        childCount: AppThemeColors.primaryColor.length,
+        childCount: AppHelpers.primaryColor.length,
       ),
     );
   }

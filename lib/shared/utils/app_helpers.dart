@@ -1,7 +1,32 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kreator_frame/config/config.dart';
+import 'package:kreator_frame/domain/domain.dart';
+import 'package:kreator_frame/l10n/app_localizations.dart';
 
 class AppHelpers {
+  // List of available colors for app themes
+  static const List<Color> primaryColor = Colors.accents;
+
+  // List of available themes for the app
+  static final List<ThemeModeEntity> appThemesSelector = [
+    ThemeModeEntity(
+      themeMode: ThemeMode.system,
+      title: (context) => AppLocalizations.of(context)!.themeSystem,
+      icon: Hicon.situation2Outline,
+    ),
+    ThemeModeEntity(
+      themeMode: ThemeMode.light,
+      title: (context) => AppLocalizations.of(context)!.themeLight,
+      icon: Hicon.sun1Outline,
+    ),
+    ThemeModeEntity(
+      themeMode: ThemeMode.dark,
+      title: (context) => AppLocalizations.of(context)!.themeDark,
+      icon: Hicon.moonOutline,
+    ),
+  ];
+  
   /// Shows a success snackbar with the given message and color scheme.
   ///
   /// A snackbar with a green background color and white text is shown. The

@@ -25,16 +25,15 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    final themeMode = ref.watch(appThemeModeProvider);
-    final primaryColorTheme = ref.watch(appColorThemeProvider);
+    final appValuesFromPreference = ref.watch(appValuesPreferencesProvider);
 
     return MaterialApp.router(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: appRouter,
-      themeMode: themeMode,
-      theme: AppTheme(primaryColor: primaryColorTheme).getLightTheme(),
-      darkTheme: AppTheme(primaryColor: primaryColorTheme).getDarkTheme(),
+      themeMode: appValuesFromPreference.themeModeForApp,
+      theme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).getLightTheme(),
+      darkTheme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).getDarkTheme(),
     );
   }
 }

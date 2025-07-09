@@ -13,7 +13,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeSwitcher = ref.watch(appThemeModeProvider);
+    final appValuesFromPreference = ref.watch(appValuesPreferencesProvider);
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 
@@ -21,18 +21,19 @@ class ThemeModeSwitcher extends ConsumerWidget {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisSpacing: 6,
         mainAxisSpacing: 6,
-        crossAxisCount: appThemesSelector.length,
+        crossAxisCount: AppHelpers.appThemesSelector.length,
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          final isSelectedThemeMode =
-              appThemesSelector[index].themeMode == themeSwitcher;
+          
+          final isSelectedThemeMode = AppHelpers.appThemesSelector[index].themeMode 
+                == appValuesFromPreference.themeModeForApp;
+                
           return GestureDetector(
             onTap: isSelectedThemeMode
                 ? null
-                : () => ref
-                    .read(appThemeModeProvider.notifier)
-                    .setSelectedThemeMode(appThemesSelector[index].themeMode),
+                  : () => ref.read(appValuesPreferencesProvider.notifier)
+                          .setPreferenceForThemeMode(AppHelpers.appThemesSelector[index].themeMode),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
@@ -49,12 +50,12 @@ class ThemeModeSwitcher extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      appThemesSelector[index].icon,
+                      AppHelpers.appThemesSelector[index].icon,
                       size: 28,
                       color: colors.onSurface,
                     ),
                     const SizedBox(height: 2),
-                    Text(appThemesSelector[index].title(context),
+                    Text(AppHelpers.appThemesSelector[index].title(context),
                         style: textStyles.titleSmall)
                   ],
                 ),
@@ -62,7 +63,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
             ),
           );
         },
-        childCount: appThemesSelector.length,
+        childCount: AppHelpers.appThemesSelector.length,
       ),
     );
   }

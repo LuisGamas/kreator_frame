@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
 class ThemeSelectorScreen extends StatelessWidget {

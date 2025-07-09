@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
+import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 
 void main() async {

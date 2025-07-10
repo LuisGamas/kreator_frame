@@ -34,6 +34,7 @@ class CustomSliverAppBar extends ConsumerWidget {
       floating: true,
       snap: true,
       flexibleSpace: FlexibleSpaceBar(
+        collapseMode: CollapseMode.pin,
         background: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

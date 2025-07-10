@@ -52,7 +52,7 @@ class AboutDashboardScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           image: const DecorationImage(
-                            image: AssetImage(Environment.dashProfileImage),
+                            image: AssetImage(Environment.iconDashboardLogo),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -123,7 +123,7 @@ class AboutDashboardScreen extends StatelessWidget {
                       Hicon.twitterBold,
                       size: 18,
                     ),
-                    onPressed: () => repository.launchExternalApp('https://twitter.com/ErsteUomo'),
+                    onPressed: () => repository.launchExternalApp(Environment.externalLinkTwitter),
                   ),
                 ),
                 
@@ -138,7 +138,7 @@ class AboutDashboardScreen extends StatelessWidget {
                       Hicon.instagramBold,
                       size: 18,
                     ),
-                    onPressed: () => repository.launchExternalApp('https://www.instagram.com/ersteuomo/'),
+                    onPressed: () => repository.launchExternalApp(Environment.externalLinkInstagram),
                   ),
                 ),
                 
@@ -156,7 +156,7 @@ class AboutDashboardScreen extends StatelessWidget {
                       color: colors.onPrimary,
                       size: 18,
                     ),
-                    onPressed: () => repository.launchExternalApp('https://kutt.it/gamas-dev'),
+                    onPressed: () => repository.launchExternalApp(Environment.externalLinkWebsite),
                   ),
                 ),
 

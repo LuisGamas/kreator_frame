@@ -111,7 +111,7 @@ class _AppBarWidgets extends ConsumerWidget {
               clipBehavior: Clip.hardEdge,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               child: Image(
-                image: AssetImage('assets/logo/app_logo.png'),
+                image: AssetImage(Environment.iconPackageLogo),
                 fit: BoxFit.cover,
               )
             ),
@@ -150,32 +150,28 @@ class _AppBarWidgets extends ConsumerWidget {
                   );
                 },
               ),
-              Environment.developerName == Environment.dashDeveloper
-              ? Row(
+
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.byDeveloper(Environment.developerName),
+                    AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
                     style: textStyles.bodySmall!.copyWith(
                       color: colors.onSurface,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
-                  const Gap(2),
-                  Icon(
-                    Hicon.verifiedBold,
-                    color: colors.primary,
-                    size: 10,
-                  ),
+                  if (Environment.userDeveloperName == Environment.dashDeveloper) ...[
+                    const Gap(2),
+                    Icon(
+                      Hicon.verifiedBold,
+                      color: colors.primary,
+                      size: 10,
+                    ),
+                  ]
                 ],
               )
-              : Text(
-                AppLocalizations.of(context)!.byDeveloper(Environment.developerName),
-                style: textStyles.bodySmall!.copyWith(
-                  color: colors.onSurface,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
+              
             ],
           ),
         ),

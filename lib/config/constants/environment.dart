@@ -3,25 +3,33 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Environment {
-  // * Declaration of static environment variables for non-instance access of the class
-  static String developerName = dotenv.env['DEVELOPER_NAME'] ?? 'Error DEVELOPER_NAME';
-  static String wallpapersUrl = dotenv.env['WALLPAPERS_URL'] ?? 'Error WALLPAPERS_URL';
-  static String twitterUrl = dotenv.env['TWITTER'] ?? 'Error TWITTER';
-  static String instagramUrl = dotenv.env['INSTAGRAM'] ?? 'Error INSTAGRAM';
-  static String googlePlayStoreUrl = dotenv.env['GOOGLE_PLAY_STORE'] ?? 'Error GOOGLE_PLAY_STORE';
+  // * Declaration of static environment variables for non-instance access of the class **DO NOT REMOVE**
+  static String userDeveloperName = dotenv.env['DEVELOPER_NAME'] ?? 'Error DEVELOPER_NAME';
+  static String userWallpapersUrl = dotenv.env['WALLPAPERS_URL'] ?? 'Error WALLPAPERS_URL';
+  static String userTwitterUrl = dotenv.env['TWITTER'] ?? 'Error TWITTER';
+  static String userInstagramUrl = dotenv.env['INSTAGRAM'] ?? 'Error INSTAGRAM';
+  static String userPlayStoreUrl = dotenv.env['GOOGLE_PLAY_STORE'] ?? 'Error GOOGLE_PLAY_STORE';
 
   // * Variables of SharedPreference **DO NOT REMOVE**
   static const String keyThemeMode = 'ThemeMode';
   static const String keyColorTheme = 'ColorTheme';
+  // static const keyMinimalGrid = 'MinimalGridKey';
 
   // * Variables of Dashboard Preference **DO NOT REMOVE**
   static const String dashName = 'Kreator Frame';
   static const String dashVersion = '1.2.1 β';
   static const String dashDeveloper = 'Luis Gamas';
 
-  static const String packageProfileImage = 'assets/logo/app_logo.png';
-  static const String dashProfileImage = 'assets/logo/dashboard_logo.png';
+  // * Variables for assets **DO NOT REMOVE**
+  static const String iconPackageLogo = 'assets/logo/app_logo.png';
+  static const String iconDashboardLogo = 'assets/logo/dashboard_logo.png';
 
+  // * Variables for external links **DO NOT REMOVE**
+  static const String externalLinkTwitter = 'https://kutt.it/TwitterGamas';
+  static const String externalLinkInstagram = 'https://kutt.it/InstagramGamas';
+  static const String externalLinkWebsite = 'https://kutt.it/gamas-dev';
+  static const String externalLinkPrivacyPolicy = 'https://kutt.it/gamas-dev-privacy-policy';
+  static const String externalLinkTermsAndConditions = 'https://kutt.it/gamas-dev-terms-conditions';
   static const String externalLinkBuyMeACoffe = 'https://buymeacoffee.com/luisgamas';
   static const String externalLinkKLWP = 'https://play.google.com/store/apps/details?id=org.kustom.wallpaper';
   static const String externalLinkKWGT = 'https://play.google.com/store/apps/details?id=org.kustom.widget';

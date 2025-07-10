@@ -38,7 +38,7 @@ Future<List<TabBarEntity>>  getTabs(Ref ref) async {
     );
   }
 
-  if (Environment.wallpapersUrl != 'NA' && Environment.wallpapersUrl != 'Error WALLPAPERS_URL') {
+  if (Environment.userWallpapersUrl != 'NA' && Environment.userWallpapersUrl != 'Error WALLPAPERS_URL') {
     tabList.add(
       TabBarEntity(
         tabBarView: const WallpapersScreen(),

@@ -38,7 +38,7 @@ class DataSourceImpl extends DataSource {
   // * Obtains a list of wallpapers from a remote API.
   @override
   Future<List<WallpaperEntity>> getListOfWallpapers() async {
-    final response = await dio.get(Environment.wallpapersUrl);
+    final response = await dio.get(Environment.userWallpapersUrl);
     final wallpaperModel = WallpaperModel.fromJson(response.data);
 
     final List<WallpaperEntity> wallpapersEntities = wallpaperModel.wallpapers
@@ -77,7 +77,7 @@ class DataSourceImpl extends DataSource {
       // Uint8List thumbBytes = thumbFile.content as Uint8List;
       widgets.add(WidgetEntity(
         nameWidget: zipFileName.replaceAll('.$filesExt', ''),
-        nameDeveloper: Environment.developerName,
+        nameDeveloper: Environment.userDeveloperName,
         widgetThumbnail: thumbFile.content,
       ));
     }

@@ -92,7 +92,7 @@ class _SliverAboutPackage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
-                      image: AssetImage(Environment.packageProfileImage),
+                      image: AssetImage(Environment.iconPackageLogo),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -114,34 +114,26 @@ class _SliverAboutPackage extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                 
-                    Environment.developerName == Environment.dashDeveloper
-                    ? Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.byDeveloper(Environment.developerName),
-                          style: textStyles.titleSmall,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
+                          style: textStyles.bodySmall!.copyWith(
+                            color: colors.onSurface,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
-
-                        const Gap(5),
-
-                        Icon(
-                          Hicon.verifiedBold,
-                          color: colors.primary,
-                          size: 10,
-                        ),
-
+                        if (Environment.userDeveloperName == Environment.dashDeveloper) ...[
+                          const Gap(2),
+                          Icon(
+                            Hicon.verifiedBold,
+                            color: colors.primary,
+                            size: 10,
+                          ),
+                        ]
                       ],
-
                     )
-                    : Text(
-                      AppLocalizations.of(context)!.byDeveloper(Environment.developerName),
-                      style: textStyles.titleSmall,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
                 
                   ],
                 ),
@@ -154,7 +146,7 @@ class _SliverAboutPackage extends StatelessWidget {
 
           // * About Package App
           Text(
-            AppLocalizations.of(context)!.aboutPackage(Environment.developerName, packageName),
+            AppLocalizations.of(context)!.aboutPackage(Environment.userDeveloperName, packageName),
           ),
 
           const Gap(35),
@@ -170,8 +162,8 @@ class _SliverAboutPackage extends StatelessWidget {
                 size: 18,
               ),
               onPressed: () {
-                Environment.twitterUrl != 'NA' && Environment.twitterUrl != 'Error TWITTER'
-                ? repository.launchExternalApp(Environment.twitterUrl)
+                Environment.userTwitterUrl != 'NA' && Environment.userTwitterUrl != 'Error TWITTER'
+                ? repository.launchExternalApp(Environment.userTwitterUrl)
                 : AppHelpers.showSnackbarError(
                   context: context,
                   message: AppLocalizations.of(context)!.errorMessage,
@@ -193,8 +185,8 @@ class _SliverAboutPackage extends StatelessWidget {
                 size: 18,
               ),
               onPressed: () {
-                Environment.instagramUrl != 'NA' && Environment.instagramUrl != 'Error INSTAGRAM'
-                ? repository.launchExternalApp(Environment.instagramUrl)
+                Environment.userInstagramUrl != 'NA' && Environment.userInstagramUrl != 'Error INSTAGRAM'
+                ? repository.launchExternalApp(Environment.userInstagramUrl)
                 : AppHelpers.showSnackbarError(
                   context: context,
                   message: AppLocalizations.of(context)!.errorMessage,
@@ -218,8 +210,8 @@ class _SliverAboutPackage extends StatelessWidget {
                 size: 18,
               ),
               onPressed: () {
-                Environment.googlePlayStoreUrl != 'NA' && Environment.googlePlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
-                ? repository.launchExternalApp(Environment.googlePlayStoreUrl)
+                Environment.userPlayStoreUrl != 'NA' && Environment.userPlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
+                ? repository.launchExternalApp(Environment.userPlayStoreUrl)
                 : AppHelpers.showSnackbarError(
                   context: context,
                   message: AppLocalizations.of(context)!.errorMessage,

@@ -67,9 +67,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
         }
-        aaptOptions {
-            noCompress 'zip', 'klwp', 'kwgt'
-        }
+        // aaptOptions {
+        //     noCompress 'zip', 'klwp', 'kwgt'
+        // }
     }
 }
 

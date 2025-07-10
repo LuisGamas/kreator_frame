@@ -96,7 +96,6 @@ flutter:
   assets:
     - .env
     - assets/logo/
-    - assets/official/
     - android/app/src/main/assets/widgets/
     - android/app/src/main/assets/wallpapers/
   #   - images/a_dot_ham.jpeg

@@ -9,6 +9,5 @@ abstract class Repository {
   Future<List<WallpaperEntity>> getListOfWallpapers();
   Future<List<WidgetEntity>> getListOfWidgets(String filesExt, String thumbName);
   Future<void> launchExternalApp(String url);
-  Future<String> getOfficialData(String nameFolder, String nameFile);
   Future<List<LicenseEntity>> getLicenses();
 }

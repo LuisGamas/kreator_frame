@@ -95,16 +95,6 @@ class DataSourceImpl extends DataSource {
     }
   }
 
-  // * Obtains official data from the assets folder and renders it using TexMarkdown.
-  @override
-  Future<String> getOfficialData(String nameFolder, String nameFile) async {
-    try {
-      return await rootBundle.loadString('assets/$nameFolder/$nameFile');
-    } catch (e) {
-      throw Exception("Error loading file: $e");
-    }
-  }
-
   // * Obtains a list of licenses in the project
   @override
   Future<List<LicenseEntity>> getLicenses() async {

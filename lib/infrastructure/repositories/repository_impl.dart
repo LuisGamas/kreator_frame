@@ -28,11 +28,6 @@ class RepositoryImpl extends Repository {
   Future<void> launchExternalApp(String url) {
     return dataSource.launchExternalApp(url);
   }
-
-  @override
-  Future<String> getOfficialData(String nameFolder, String nameFile) {
-    return dataSource.getOfficialData(nameFolder, nameFile);
-  }
   
   @override
   Future<List<LicenseEntity>> getLicenses() {

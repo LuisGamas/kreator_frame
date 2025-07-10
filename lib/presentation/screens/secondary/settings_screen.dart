@@ -56,7 +56,7 @@ class SettingsScreen extends ConsumerWidget {
 
 }
 
-class _SettingsSliverList extends StatelessWidget {
+class _SettingsSliverList extends ConsumerWidget {
   final String packageName;
   final String packageVersion;
 
@@ -67,7 +67,10 @@ class _SettingsSliverList extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final appRouter = ref.watch(appRouterProvider);
+
     return SliverList(
       delegate: SliverChildListDelegate([
 
@@ -85,8 +88,8 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsAppearanceLT1,
           subTitle: AppLocalizations.of(context)!.settingsAppearanceLST1,
-          location: appearanceThemeRoute,
           leadingWidget: const Icon(Hicon.paletteBold),
+          onTap: () => appRouter.push(appearanceThemeRoute),
         ),
     
         const Gap(25),
@@ -99,15 +102,15 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: packageName,
           subTitle: AppLocalizations.of(context)!.settingsAboutLST1,
-          location: aboutPackageRoute,
           leadingWidget: const Icon(Hicon.stickerBold),
+          onTap: () => appRouter.push(aboutPackageRoute),
         ),
     
         _CustomListTile(
           title: Environment.dashName,
           subTitle: AppLocalizations.of(context)!.settingsAboutLST2,
-          location: aboutDashboardRoute,
           leadingWidget: const Icon(Hicon.graphBold),
+          onTap: () => appRouter.push(aboutDashboardRoute),
         ),
     
         const Gap(25),
@@ -120,15 +123,17 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLegalLT1,
           subTitle: AppLocalizations.of(context)!.settingsLegalLST1,
-          location: legalTermsConditionsRoute,
           leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
+          trailingIcon: Hicon.linkBold,
+          onTap: () => repository.launchExternalApp(Environment.externalLinkTermsAndConditions),
         ),
     
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLegalLT2,
           subTitle: AppLocalizations.of(context)!.settingsLegalLST2,
-          location: legalPrivacyPolicyRoute,
           leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
+          trailingIcon: Hicon.linkBold,
+          onTap: () => repository.launchExternalApp(Environment.externalLinkPrivacyPolicy),
         ),
     
         const Gap(25),
@@ -141,8 +146,8 @@ class _SettingsSliverList extends StatelessWidget {
         _CustomListTile(
           title: AppLocalizations.of(context)!.settingsLicencesLT1,
           subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
-          location: licensesOpenSourceRoute,
           leadingWidget: const Icon(Hicon.award2Bold),
+          onTap: () => appRouter.push(licensesOpenSourceRoute),
         ),
     
         const Gap(25),
@@ -198,24 +203,25 @@ class _TitleListTile extends StatelessWidget {
 }
 
 // * Custom ListTile widget
-class _CustomListTile extends ConsumerWidget {
+class _CustomListTile extends StatelessWidget {
   final String title;
   final String subTitle;
-  final String? location;
+  final void Function()? onTap;
   final Widget? leadingWidget;
+  final IconData? trailingIcon;
 
   const _CustomListTile({
     required this.title,
     required this.subTitle,
-    this.location,
+    this.onTap,
     this.leadingWidget,
+    this.trailingIcon,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
-    final appRouter = ref.watch(appRouterProvider);
 
     return FadeIn(
       child: ListTile(
@@ -228,12 +234,10 @@ class _CustomListTile extends ConsumerWidget {
         subtitleTextStyle: textStyles.bodySmall,
         leading: leadingWidget,
         trailing: Icon(
-          Hicon.right2Bold,
+          trailingIcon ?? Hicon.right2Bold,
           color: colors.onSurface,
         ),
-        onTap: location == null 
-        ? null
-        : () => appRouter.push(location!),
+        onTap: onTap,
       ),
     );
   }

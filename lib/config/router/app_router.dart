@@ -22,8 +22,6 @@ const wallpaperPreviewRoute = '/wallpaper-preview';
 const appearanceThemeRoute = '/theme-selector';
 const aboutPackageRoute = '/kustom-app-information';
 const aboutDashboardRoute = '/dashboard-information';
-const legalTermsConditionsRoute = '/terms-and-conditions';
-const legalPrivacyPolicyRoute = '/privacy-policy';
 // Licenses Routes
 const licensesOpenSourceRoute = '/licenses-screen';
 const licenseDetailRoute = '/license-detail-screen';
@@ -50,8 +48,6 @@ GoRouter appRouter(Ref ref) {
     _createRoute(appearanceThemeRoute, const ThemeSelectorScreen()),
     _createRoute(aboutPackageRoute, const AboutPackageAppScreen()),
     _createRoute(aboutDashboardRoute, const AboutDashboardScreen()),
-    _createRoute(legalTermsConditionsRoute, const TermsAndConditionsScreen()),
-    _createRoute(legalPrivacyPolicyRoute, const PrivacyPolicyScreen()),
 
     // Other Screens
     _createRoute(licensesOpenSourceRoute, const LicensesScreen()),

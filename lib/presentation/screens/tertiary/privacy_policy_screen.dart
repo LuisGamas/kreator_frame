@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';

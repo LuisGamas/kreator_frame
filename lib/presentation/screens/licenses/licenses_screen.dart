@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
@@ -17,30 +16,25 @@ class LicensesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final repository = ref.watch(repositoryProvider);
+    final licensesOss = ref.watch(licensesOssProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return Scaffold(
-      body: FutureBuilder<List<LicenseEntity>>(
-        future: repository.getLicenses(),
-        builder: (context, snapshot) {
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(strokeWidth: 2));
-          } else if (snapshot.hasError) {
-            return Center(child: Text(AppLocalizations.of(context)!.errorMessage));
-          }
-
-          final licenses = snapshot.data ?? [];
-
-          return CustomScrollView(
+      body: licensesOss.when(
+        loading: () => const Center(
+          child: CircularProgressIndicator(
+            strokeCap: StrokeCap.round,
+          )
+        ),
+        data: (licenses) => CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
-              // * App Bar
+              // App Bar
               CustomSliverAppBarScreens(
                 tileText: AppLocalizations.of(context)!.settingsLicencesLT1,
               ),
 
+              // Body Data
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -60,8 +54,17 @@ class LicensesScreen extends ConsumerWidget {
                 ),
               ),
             ],
-          );
-        },
+          ),
+        error: (_, __) => Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Text(
+            AppLocalizations.of(context)!.errorMessage,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+          ),
+        ),
+      ),
       ),
     );
 

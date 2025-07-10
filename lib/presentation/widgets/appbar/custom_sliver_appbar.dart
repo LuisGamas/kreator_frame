@@ -21,7 +21,7 @@ class CustomSliverAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final tabsBar = ref.watch(getTabsProvider);
+    final tabsBar = ref.watch(tabsBarAppProvider);
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
@@ -93,7 +93,7 @@ class _AppBarWidgets extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final asyncEnvironment = ref.watch(getAsyncEnvironmentProvider);
+    final asyncEnvironment = ref.watch(packageInfoProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return Row(

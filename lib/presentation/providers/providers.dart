@@ -2,6 +2,7 @@ export 'app_values_preferences_provider.dart';
 export 'package_info_provider.dart';
 export 'permissions_provider.dart';
 export 'progress_downloader_provider.dart';
+export 'repository_provider.dart';
 export 'set_wallpaper_provider.dart';
 export 'tabs_bar_app_provider.dart';
 export 'wallpapers_provider.dart';

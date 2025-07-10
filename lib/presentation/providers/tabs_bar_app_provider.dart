@@ -8,14 +8,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
 import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
+import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/screens/screens.dart';
 
 part 'tabs_bar_app_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<List<TabBarEntity>>  getTabs(Ref ref) async {
-  final Repository repository = RepositoryImpl(DataSourceImpl());
+Future<List<TabBarEntity>>  tabsBarApp(Ref ref) async {
+  final repository = ref.watch(repositoryProvider);
   final kwgt = await repository.getListOfWidgets('kwgt', 'preset_thumb_portrait.jpg');
   final klwp = await repository.getListOfWidgets('klwp', 'preset_thumb_portrait.jpg');
   List<TabBarEntity> tabList = [];

@@ -8,8 +8,6 @@ import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
@@ -20,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final asyncEnvironment = ref.watch(getAsyncEnvironmentProvider);
+    final asyncEnvironment = ref.watch(packageInfoProvider);
 
     // * Widget view
     return Scaffold(
@@ -68,7 +66,7 @@ class _SettingsSliverList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final repository = ref.watch(repositoryProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return SliverList(
@@ -244,13 +242,13 @@ class _CustomListTile extends StatelessWidget {
 }
 
 // * Dimissible Child Donation
-class _DonationChildDimissible extends StatelessWidget {
+class _DonationChildDimissible extends ConsumerWidget {
   const _DonationChildDimissible();
 
 
   @override
-  Widget build(BuildContext context) {
-    final Repository repository = RepositoryImpl(DataSourceImpl());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final repository = ref.watch(repositoryProvider);
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 

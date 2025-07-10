@@ -8,6 +8,6 @@ import 'package:kreator_frame/config/config.dart';
 part 'package_info_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<AsyncEnvironment> getAsyncEnvironment(Ref ref) async {
+Future<AsyncEnvironment> packageInfo(Ref ref) async {
   return await AsyncEnvironment.instance;
 }

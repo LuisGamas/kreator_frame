@@ -8,8 +8,6 @@ import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
@@ -21,7 +19,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final asyncEnvironment = ref.watch(getAsyncEnvironmentProvider);
+    final asyncEnvironment = ref.watch(packageInfoProvider);
 
     // * Widget view
     return Scaffold(
@@ -57,7 +55,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
   }
 }
 
-class _SliverAboutPackage extends StatelessWidget {
+class _SliverAboutPackage extends ConsumerWidget {
   final String packageName;
   final String packageVersion;
 
@@ -67,9 +65,9 @@ class _SliverAboutPackage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final repository = ref.watch(repositoryProvider);
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 

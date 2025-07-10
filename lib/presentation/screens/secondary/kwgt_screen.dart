@@ -8,8 +8,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
@@ -20,7 +18,7 @@ class KWGTScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final repository = ref.watch(repositoryProvider);
     final widgets = ref.watch( getWidgetsProvider('kwgt') );
 
     // * Widget to show KWGT widgets

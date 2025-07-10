@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
+import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
-class AboutDashboardScreen extends StatelessWidget {
+class AboutDashboardScreen extends ConsumerWidget {
   const AboutDashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final Repository repository = RepositoryImpl(DataSourceImpl());
+    final repository = ref.watch(repositoryProvider);
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
 

@@ -4,13 +4,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/infrastructure/infrastructure.dart';
+import 'package:kreator_frame/presentation/providers/providers.dart';
 
 part 'widgets_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<List<WidgetEntity>> getWidgets(Ref ref, String widgetExt) async {
-  final Repository repository = RepositoryImpl(DataSourceImpl());
+  final repository = ref.watch(repositoryProvider);
   final widgetsList = await repository.getListOfWidgets(widgetExt, 'preset_thumb_portrait.jpg');
   return widgetsList;
 }

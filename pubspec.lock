@@ -448,6 +448,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_upgrade_version:
+    dependency: "direct main"
+    description:
+      name: flutter_upgrade_version
+      sha256: "50b7469a7514e1bdf37f5b45c425feddc54f06c19f07a3de38cb8cbe087f0280"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.8"
   flutter_wallpaper_manager:
     dependency: "direct main"
     description:
@@ -701,22 +709,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  package_info_plus:
-    dependency: "direct main"
-    description:
-      name: package_info_plus
-      sha256: "7976bfe4c583170d6cdc7077e3237560b364149fcd268b5f53d95a991963b191"
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.3.0"
-  package_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: package_info_plus_platform_interface
-      sha256: "6c935fb612dff8e3cc9632c2b301720c77450a126114126ffaafe28d2e87956c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.0"
   path:
     dependency: transitive
     description:

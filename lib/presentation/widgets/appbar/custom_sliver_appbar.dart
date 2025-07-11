@@ -94,7 +94,7 @@ class _AppBarWidgets extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final asyncEnvironment = ref.watch(packageInfoProvider);
+    final packageAppInfo = ref.watch(packageInfoProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return Row(
@@ -122,10 +122,10 @@ class _AppBarWidgets extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              asyncEnvironment.when(
+              packageAppInfo.when(
                 data: (data) {
                   return Text(
-                    data.packageName,
+                    data.appName,
                     style: textStyles.headlineSmall!.copyWith(
                       color: colors.onSurface,
                       fontWeight: FontWeight.bold,

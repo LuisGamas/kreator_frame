@@ -10,6 +10,11 @@ class RepositoryImpl extends Repository {
   RepositoryImpl(this.dataSource);
 
   @override
+  Future<AppInfoEntity> getAppInformation() {
+    return dataSource.getAppInformation();
+  }
+
+  @override
   Future<bool> setWallpaper(String url, int location, Size size) {
     return dataSource.setWallpaper(url, location, size);
   }

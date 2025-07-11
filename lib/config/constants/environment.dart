@@ -1,6 +1,5 @@
 // 📦 Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class Environment {
   // * Declaration of static environment variables for non-instance access of the class **DO NOT REMOVE**
@@ -33,32 +32,4 @@ class Environment {
   static const String externalLinkBuyMeACoffe = 'https://buymeacoffee.com/luisgamas';
   static const String externalLinkKLWP = 'https://play.google.com/store/apps/details?id=org.kustom.wallpaper';
   static const String externalLinkKWGT = 'https://play.google.com/store/apps/details?id=org.kustom.widget';
-}
-
-class AsyncEnvironment {
-  late final String packageName;
-  late final String packageVersion;
-  bool _initialized = false;
-  
-  static final AsyncEnvironment _instance = AsyncEnvironment._internal();
-  static Future<AsyncEnvironment> get instance async {
-    await _instance._initialize();
-    return _instance;
-  }
-
-  AsyncEnvironment._internal();
-
-  Future<void> _initialize() async {
-    if (!_initialized) {
-      try {
-        PackageInfo packageInfo = await PackageInfo.fromPlatform();
-        packageName = packageInfo.appName;
-        packageVersion = packageInfo.version;
-      } catch (e) {
-        packageName = 'Error PACKAGE_NAME';
-        packageVersion = 'Error PACKAGE_VERSION';
-      }
-      _initialized = true;
-    }
-  }
 }

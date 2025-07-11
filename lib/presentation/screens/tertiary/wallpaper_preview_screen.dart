@@ -186,16 +186,16 @@ class _DownloadButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final progressDownloader = ref.watch(progressDownloaderProvider);
-    final asyncEnvironment = ref.watch(packageInfoProvider);
+    final packageAppInfo = ref.watch(packageInfoProvider);
     final permissions = ref.watch(permissionsProvider);
     final colors = Theme.of(context).colorScheme;
 
-    return asyncEnvironment.when(
+    return packageAppInfo.when(
       data: (data) => progressDownloader != 0
           ? _replaceButtonWithCircularProgress()
           : IconButton(
               onPressed: () => permissions.storageGranted 
-                ? _downloadWallpaper(context, ref, data.packageName, colors)
+                ? _downloadWallpaper(context, ref, data.appName, colors)
                 : ref.read(permissionsProvider.notifier).requestPhotoLibrary(),
               icon: const Icon(Hicon.downloadOutline, color: Colors.white),
             ),

@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 // 📦 Package imports:
 import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +22,28 @@ import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/infrastructure/infrastructure.dart';
 
 class DataSourceImpl extends DataSource {
+  final InAppUpdateManager _inAppUpdateManager = InAppUpdateManager();
   final dio = Dio();
+
+  @override
+  Future<AppInfoEntity> getAppInformation() async {
+    try {
+      final appInfo = await PackageManager.getPackageInfo();
+      return AppInfoEntity(
+        appName: appInfo.appName,
+        packageName: appInfo.packageName,
+        packageVersion: appInfo.version,
+        buildNumber: appInfo.buildNumber
+      );
+    } catch (e) {
+      return AppInfoEntity(
+        appName: 'Error appName',
+        packageName: 'Error packageName',
+        packageVersion: 'Error version',
+        buildNumber: 'Erro buildNumberr'
+      );
+    }
+  }
 
   // * Set wallpaper as home screen, lock screen, or both
   @override
@@ -200,6 +222,5 @@ class DataSourceImpl extends DataSource {
     } catch (e) {
       return null;
     }
-  }
-  
+  }  
 }

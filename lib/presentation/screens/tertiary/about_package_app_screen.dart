@@ -19,7 +19,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
-    final asyncEnvironment = ref.watch(packageInfoProvider);
+    final packageAppInfo = ref.watch(packageInfoProvider);
 
     // * Widget view
     return Scaffold(
@@ -33,9 +33,9 @@ class AboutPackageAppScreen extends ConsumerWidget {
           ),
 
           // * Data
-          asyncEnvironment.when(
+          packageAppInfo.when(
             data: (data) => _SliverAboutPackage(
-              packageName: data.packageName,
+              packageName: data.appName,
               packageVersion: data.packageVersion,
             ),
             error: (error, stackTrace) => const _SliverAboutPackage(

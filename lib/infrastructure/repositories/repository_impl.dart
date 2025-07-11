@@ -15,6 +15,16 @@ class RepositoryImpl extends Repository {
   }
 
   @override
+  Future<String> checkAppForUpdates() {
+    return dataSource.checkAppForUpdates();
+  }
+  
+  @override
+  Future<String> executeImmediateAppUpdate() {
+    return dataSource.executeImmediateAppUpdate();
+  }
+
+  @override
   Future<bool> setWallpaper(String url, int location, Size size) {
     return dataSource.setWallpaper(url, location, size);
   }

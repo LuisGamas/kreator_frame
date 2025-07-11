@@ -45,6 +45,36 @@ class DataSourceImpl extends DataSource {
     }
   }
 
+  @override
+  Future<String> checkAppForUpdates() async {
+    // * return values => 'recovered', 'updateAvailable', 'notAvailable', 'error'
+    try {
+      final appUpdateInfo = await _inAppUpdateManager.checkForUpdate();
+      
+      if (appUpdateInfo == null) return 'notAvailable';
+      
+      if (appUpdateInfo.updateAvailability == UpdateAvailability.developerTriggeredUpdateInProgress) {
+        await _inAppUpdateManager.startAnUpdate(type: AppUpdateType.immediate);
+        return 'recovered';
+      }
+    
+      return 'updateAvailable';
+    } catch (e) {
+      return 'error';
+    }
+  }
+  
+  @override
+  Future<String> executeImmediateAppUpdate() async {
+    // * return values => 'upToDate', 'error'
+    try {
+      await _inAppUpdateManager.startAnUpdate(type: AppUpdateType.immediate);
+      return 'upToDate';
+    } catch (e) {
+      return 'error';
+    }
+  }
+
   // * Set wallpaper as home screen, lock screen, or both
   @override
   Future<bool> setWallpaper(String url, int location, Size size) async{

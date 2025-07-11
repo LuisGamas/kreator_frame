@@ -6,6 +6,8 @@ import 'package:kreator_frame/domain/domain.dart';
 
 abstract class Repository {
   Future<AppInfoEntity> getAppInformation();
+  Future<String> checkAppForUpdates();
+  Future<String> executeImmediateAppUpdate();
   Future<bool> setWallpaper(String url, int location, Size size);
   Future<List<WallpaperEntity>> getListOfWallpapers();
   Future<List<WidgetEntity>> getListOfWidgets(String filesExt, String thumbName);

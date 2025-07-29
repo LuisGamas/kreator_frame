@@ -28,7 +28,7 @@ class WallpapersScreen extends ConsumerWidget {
           crossAxisCount: 2,
           itemCount: data.length,
           addAutomaticKeepAlives: true,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
 

@@ -47,18 +47,16 @@ class AppHelpers {
       ..hideCurrentSnackBar()
       ..showSnackBar(
           SnackBar(
-            elevation: 5,
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: color.primaryContainer,
-            showCloseIcon: true,
-            closeIconColor: color.onPrimaryContainer,
-            content: Text(
-              message,
-              style: TextStyle(color: color.onPrimaryContainer),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-            ),
+          backgroundColor: color.primaryContainer,
+          showCloseIcon: true,
+          closeIconColor: color.onPrimaryContainer,
+          content: Text(
+            message,
+            style: TextStyle(color: color.onPrimaryContainer),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+          ),
         )
       );
   }
@@ -82,18 +80,16 @@ class AppHelpers {
       ..hideCurrentSnackBar()
       ..showSnackBar(
           SnackBar(
-            elevation: 5,
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: color.errorContainer,
-            showCloseIcon: true,
-            closeIconColor: color.onErrorContainer,
-            content: Text(
-              message,
-              style: TextStyle(color: color.onErrorContainer),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-            ),
+          backgroundColor: color.errorContainer,
+          showCloseIcon: true,
+          closeIconColor: color.onErrorContainer,
+          content: Text(
+            message,
+            style: TextStyle(color: color.onErrorContainer),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+          ),
         )
       );
   }

@@ -155,7 +155,7 @@ class _SliverAboutPackage extends ConsumerWidget {
             child: CustomOutlineIconTextButton(
               text: 'Twitter',
               color: colors.primary,
-              icon: Icon(
+              icon: const Icon(
                 Hicon.twitterBold,
                 size: 18,
               ),
@@ -178,7 +178,7 @@ class _SliverAboutPackage extends ConsumerWidget {
             child: CustomOutlineIconTextButton(
               text: 'Instagram',
               color: colors.primary,
-              icon: Icon(
+              icon: const Icon(
                 Hicon.instagramBold,
                 size: 18,
               ),
@@ -203,7 +203,7 @@ class _SliverAboutPackage extends ConsumerWidget {
               text: 'Web Page',
               buttonColor: colors.primary,
               textColor: colors.onPrimary,
-              icon: Icon(
+              icon: const Icon(
                 Hicon.websiteBold,
                 size: 18,
               ),

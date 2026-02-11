@@ -162,11 +162,11 @@ class _SettingsSliverList extends ConsumerWidget {
           leading: const Icon(Hicon.informationCircleBold),
         ),
     
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        const ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
           title: Text(Environment.dashName),
           subtitle: Text(Environment.dashVersion),
-          leading: const Icon(Hicon.informationCircleBold),
+          leading: Icon(Hicon.informationCircleBold),
         ),
     
       ])

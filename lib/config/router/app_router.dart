@@ -29,7 +29,9 @@ const licenseDetailRoute = '/license-detail-screen';
 // * This is the router
 @riverpod
 GoRouter appRouter(Ref ref) {
-  return GoRouter(routes: [
+  return GoRouter(
+    initialLocation: homeRoute,
+    routes: [
     // Primary Screens
     _createRoute(homeRoute, const HomeScreen()),
 

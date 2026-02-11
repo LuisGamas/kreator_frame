@@ -119,7 +119,7 @@ class AboutDashboardScreen extends ConsumerWidget {
                   child: CustomOutlineIconTextButton(
                     text: 'Twitter',
                     color: colors.primary,
-                    icon: Icon(
+                    icon: const Icon(
                       Hicon.twitterBold,
                       size: 18,
                     ),
@@ -134,7 +134,7 @@ class AboutDashboardScreen extends ConsumerWidget {
                   child: CustomOutlineIconTextButton(
                     text: 'Instagram',
                     color: colors.primary,
-                    icon: Icon(
+                    icon: const Icon(
                       Hicon.instagramBold,
                       size: 18,
                     ),

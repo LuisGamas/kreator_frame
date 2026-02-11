@@ -55,7 +55,7 @@ class LicensesScreen extends ConsumerWidget {
               ),
             ],
           ),
-        error: (_, __) => Center(
+        error: (_, _) => Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Text(

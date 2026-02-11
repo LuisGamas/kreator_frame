@@ -36,7 +36,7 @@ class DataSourceImpl extends DataSource {
         buildNumber: appInfo.buildNumber
       );
     } catch (e) {
-      return AppInfoEntity(
+      return const AppInfoEntity(
         appName: 'Error appName',
         packageName: 'Error packageName',
         packageVersion: 'Error version',

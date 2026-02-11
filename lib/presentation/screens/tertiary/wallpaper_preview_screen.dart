@@ -135,9 +135,9 @@ class _BottomContentData extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _NoFunctionButton(icon: Hicon.heart2Outline),
+                const _NoFunctionButton(icon: Hicon.heart2Outline),
                 const Gap(5),
-                _NoFunctionButton(icon: Hicon.paletteOutline),
+                const _NoFunctionButton(icon: Hicon.paletteOutline),
                 const Gap(5),
                 _DownloadButton(wallpaperEntity: wallpaperEntity),
                 const Spacer(),
@@ -199,7 +199,7 @@ class _DownloadButton extends ConsumerWidget {
                 : ref.read(permissionsProvider.notifier).requestPhotoLibrary(),
               icon: const Icon(Hicon.downloadOutline, color: Colors.white),
             ),
-      error: (_, __) => _replaceButtonWithCircularProgress(),
+      error: (_, _) => _replaceButtonWithCircularProgress(),
       loading: () => _replaceButtonWithCircularProgress(),
     );
   }

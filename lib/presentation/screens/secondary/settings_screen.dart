@@ -19,6 +19,8 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // * Variables
     final packageAppInfo = ref.watch(packageInfoProvider);
+    final repository = ref.watch(repositoryProvider);
+    final appRouter = ref.watch(appRouterProvider);
 
     // * Widget view
     return Scaffold(
@@ -31,145 +33,111 @@ class SettingsScreen extends ConsumerWidget {
             tileText: AppLocalizations.of(context)!.settingsAppBarTitle
           ),
 
-          // * Data
-          packageAppInfo.when(
-            data: (data) => _SettingsSliverList(
-              packageName: data.appName,
-              packageVersion: data.packageVersion,
+         SliverList(
+          delegate: SliverChildListDelegate([
+
+            // * Banner for donations
+            Dismissible(
+              key: UniqueKey(),
+              child: const _DonationChildDimissible(),
             ),
-            error: (error, stackTrace) => const _SettingsSliverList(
-              packageName: 'Error Package Name',
-              packageVersion: 'Error Package Version',
+        
+            // * First part
+            _TitleListTile(
+              title: AppLocalizations.of(context)!.settingsAppearance,
             ),
-            loading: () => const _SettingsSliverList(
-              packageName: 'Loading...',
-              packageVersion: 'Loading...',
+        
+            _CustomListTile(
+              title: AppLocalizations.of(context)!.settingsAppearanceLT1,
+              subTitle: AppLocalizations.of(context)!.settingsAppearanceLST1,
+              leadingWidget: const Icon(Hicon.paletteBold),
+              onTap: () => appRouter.push(appearanceThemeRoute),
             ),
-          )
+        
+            const Gap(25),
+        
+            // * Second part
+            _TitleListTile(
+              title: AppLocalizations.of(context)!.settingsAbout,
+            ),
+        
+            _CustomListTile(
+              title: packageAppInfo.value?.appName ?? 'Error Package Name',
+              subTitle: AppLocalizations.of(context)!.settingsAboutLST1,
+              leadingWidget: const Icon(Hicon.stickerBold),
+              onTap: () => appRouter.push(aboutPackageRoute),
+            ),
+        
+            _CustomListTile(
+              title: Environment.dashName,
+              subTitle: AppLocalizations.of(context)!.settingsAboutLST2,
+              leadingWidget: const Icon(Hicon.graphBold),
+              onTap: () => appRouter.push(aboutDashboardRoute),
+            ),
+        
+            const Gap(25),
+        
+            // * Third part
+            _TitleListTile(
+              title: AppLocalizations.of(context)!.settingsLegal,
+            ),
+        
+            _CustomListTile(
+              title: AppLocalizations.of(context)!.settingsLegalLT1,
+              subTitle: AppLocalizations.of(context)!.settingsLegalLST1,
+              leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
+              trailingIcon: Hicon.linkBold,
+              onTap: () => repository.launchExternalApp(Environment.externalLinkTermsAndConditions),
+            ),
+        
+            _CustomListTile(
+              title: AppLocalizations.of(context)!.settingsLegalLT2,
+              subTitle: AppLocalizations.of(context)!.settingsLegalLST2,
+              leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
+              trailingIcon: Hicon.linkBold,
+              onTap: () => repository.launchExternalApp(Environment.externalLinkPrivacyPolicy),
+            ),
+        
+            const Gap(25),
+        
+            // * Fourth part
+            _TitleListTile(
+              title: AppLocalizations.of(context)!.settingsLicences,
+            ),
+
+            _CustomListTile(
+              title: AppLocalizations.of(context)!.settingsLicencesLT1,
+              subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
+              leadingWidget: const Icon(Hicon.award2Bold),
+              onTap: () => appRouter.push(licensesOpenSourceRoute),
+            ),
+        
+            const Gap(25),
+        
+            // * Fifth part
+            _TitleListTile(
+              title: AppLocalizations.of(context)!.settingsVersions
+            ),
+        
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              title: Text(packageAppInfo.value?.appName ?? 'Error Package Name'),
+              subtitle: Text(packageAppInfo.value?.packageVersion ?? 'Error Package Version'),
+              leading: const Icon(Hicon.informationCircleBold),
+            ),
+        
+            const ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              title: Text(Environment.dashName),
+              subtitle: Text(Environment.dashVersion),
+              leading: Icon(Hicon.informationCircleBold),
+            ),
+        
+          ])
+        )
 
         ],
       ),
-    );
-  }
-
-}
-
-class _SettingsSliverList extends ConsumerWidget {
-  final String packageName;
-  final String packageVersion;
-
-  const _SettingsSliverList({
-    required this.packageName,
-    required this.packageVersion,
-  });
-
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final repository = ref.watch(repositoryProvider);
-    final appRouter = ref.watch(appRouterProvider);
-
-    return SliverList(
-      delegate: SliverChildListDelegate([
-
-        // * Banner for donations
-        Dismissible(
-          key: UniqueKey(),
-          child: const _DonationChildDimissible(),
-        ),
-    
-        // * First part
-        _TitleListTile(
-          title: AppLocalizations.of(context)!.settingsAppearance,
-        ),
-    
-        _CustomListTile(
-          title: AppLocalizations.of(context)!.settingsAppearanceLT1,
-          subTitle: AppLocalizations.of(context)!.settingsAppearanceLST1,
-          leadingWidget: const Icon(Hicon.paletteBold),
-          onTap: () => appRouter.push(appearanceThemeRoute),
-        ),
-    
-        const Gap(25),
-    
-        // * Second part
-        _TitleListTile(
-          title: AppLocalizations.of(context)!.settingsAbout,
-        ),
-    
-        _CustomListTile(
-          title: packageName,
-          subTitle: AppLocalizations.of(context)!.settingsAboutLST1,
-          leadingWidget: const Icon(Hicon.stickerBold),
-          onTap: () => appRouter.push(aboutPackageRoute),
-        ),
-    
-        _CustomListTile(
-          title: Environment.dashName,
-          subTitle: AppLocalizations.of(context)!.settingsAboutLST2,
-          leadingWidget: const Icon(Hicon.graphBold),
-          onTap: () => appRouter.push(aboutDashboardRoute),
-        ),
-    
-        const Gap(25),
-    
-        // * Third part
-        _TitleListTile(
-          title: AppLocalizations.of(context)!.settingsLegal,
-        ),
-    
-        _CustomListTile(
-          title: AppLocalizations.of(context)!.settingsLegalLT1,
-          subTitle: AppLocalizations.of(context)!.settingsLegalLST1,
-          leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
-          trailingIcon: Hicon.linkBold,
-          onTap: () => repository.launchExternalApp(Environment.externalLinkTermsAndConditions),
-        ),
-    
-        _CustomListTile(
-          title: AppLocalizations.of(context)!.settingsLegalLT2,
-          subTitle: AppLocalizations.of(context)!.settingsLegalLST2,
-          leadingWidget: const Icon(Hicon.documentAlignLeft4Bold),
-          trailingIcon: Hicon.linkBold,
-          onTap: () => repository.launchExternalApp(Environment.externalLinkPrivacyPolicy),
-        ),
-    
-        const Gap(25),
-    
-        // * Fourth part
-        _TitleListTile(
-          title: AppLocalizations.of(context)!.settingsLicences,
-        ),
-
-        _CustomListTile(
-          title: AppLocalizations.of(context)!.settingsLicencesLT1,
-          subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
-          leadingWidget: const Icon(Hicon.award2Bold),
-          onTap: () => appRouter.push(licensesOpenSourceRoute),
-        ),
-    
-        const Gap(25),
-    
-        // * Fifth part
-        _TitleListTile(
-          title: AppLocalizations.of(context)!.settingsVersions
-        ),
-    
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(packageName),
-          subtitle: Text(packageVersion),
-          leading: const Icon(Hicon.informationCircleBold),
-        ),
-    
-        const ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-          title: Text(Environment.dashName),
-          subtitle: Text(Environment.dashVersion),
-          leading: Icon(Hicon.informationCircleBold),
-        ),
-    
-      ])
     );
   }
 }

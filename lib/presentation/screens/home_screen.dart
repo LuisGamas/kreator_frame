@@ -29,7 +29,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // * Variables
     final tabsBar = ref.watch(tabsBarAppProvider);
     final textStyles = Theme.of(context).textTheme;
 
@@ -80,7 +79,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         return const Scaffold(
           body: Center(
             child: CircularProgressIndicator(
-              strokeWidth: 2,
+              strokeCap: StrokeCap.round
             )
           ),
         );

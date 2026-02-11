@@ -76,7 +76,7 @@ class _HeroImagePreview extends StatelessWidget {
           return loadingProgress == null
           ? child
           : const Center(
-            child: CircularProgressIndicator(strokeWidth: 2),
+            child: CircularProgressIndicator(strokeCap: StrokeCap.round),
           );
         },
         errorBuilder: (context, error, stackTrace) {
@@ -245,7 +245,7 @@ class _DownloadButton extends ConsumerWidget {
         height: 24,
         width: 24,
         child: CircularProgressIndicator(
-          strokeWidth: 2
+          strokeCap: StrokeCap.round
         ),
       ),
     );
@@ -286,7 +286,7 @@ class _ApplyWallpaperButton extends ConsumerWidget {
               height: 28,
               width: 28,
               child: CircularProgressIndicator(
-                strokeWidth: 2
+                strokeCap: StrokeCap.round
               ),
             )
           )
@@ -395,12 +395,11 @@ class _ModalButton extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20),
           color: colors.primary
         ),
-        child: Center(
+        child: const Center(
           child: SizedBox(
             height: 28,
             width: 28,
             child: CircularProgressIndicator(
-              color: colors.onPrimary,
               strokeCap: StrokeCap.round
             ),
           ),

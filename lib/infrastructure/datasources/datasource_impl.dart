@@ -1,5 +1,4 @@
 // 🎯 Dart imports:
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -181,13 +180,11 @@ class DataSourceImpl extends DataSource {
 
   // * Obtains a list of .zip files in the assets folder with a specified file extension.
   Future<List<String>> _listZipFiles(String filesExt) async {
-    // Get the list of application assets
-    List<String> assetList = await rootBundle
-      .loadStructuredData<List<String>>('AssetManifest.json', (jsonStr) async {
-        Map<String, dynamic> manifestMap = json.decode(jsonStr);
-        return manifestMap.keys.toList();
-      },
-    );
+    // Load the asset manifest
+    final AssetManifest assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    // List all assets
+    final List<String> assetList = assetManifest.listAssets();
+
     // Filter .zip files in the assets folder
     List<String> zipFiles = assetList.where((asset) => asset.endsWith('.$filesExt')).toList();
     // Remove path prefix and file extension

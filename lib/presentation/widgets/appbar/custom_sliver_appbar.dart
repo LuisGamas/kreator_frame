@@ -72,7 +72,7 @@ class CustomSliverAppBar extends ConsumerWidget {
             preferredSize: Size.fromHeight( size.height * 0.2),
             child: const Center(
               child: CircularProgressIndicator(
-                strokeWidth: 2,
+                strokeCap: StrokeCap.round,
               ),
             )
           );

@@ -58,7 +58,7 @@ class KWGTScreen extends ConsumerWidget {
           textAlign: TextAlign.center,
         ),
       )),
-      loading: () => const Center(child: CircularProgressIndicator( strokeWidth: 2 )),
+      loading: () => const Center(child: CircularProgressIndicator( strokeCap: StrokeCap.round )),
     );
 
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/presentation/providers/providers.dart';
@@ -54,7 +55,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
                       size: 28,
                       color: colors.onSurface,
                     ),
-                    const SizedBox(height: 2),
+                    const Gap(2),
                     Text(AppHelpers.appThemesSelector[index].title(context),
                         style: textStyles.titleSmall)
                   ],

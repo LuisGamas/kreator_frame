@@ -6,27 +6,22 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:gap/gap.dart';
+import 'package:kreator_frame/config/config.dart';
 
 /// Custom card widget optimized to display image previews
 /// with additional information and enhanced visual effects.
 /// 
 /// Supports both images from URLs and from memory (Uint8List).
 class CustomCardPreviews extends StatelessWidget {
-  // === IMAGE PROPERTIES ===
   final Uint8List? image;
   final String? imageUrl;
   final bool isUrlImage;
   final bool addPadding;
-  
-  // === CONTENT PROPERTIES ===
   final String topText;
   final String bottomText;
-  
-  // === PRESENTATION PROPERTIES ===
   final double? heightPreview;
   final BoxFit? fitPreview;
-  
-  // === INTERACTION PROPERTIES ===
   final VoidCallback? onTap;
 
   const CustomCardPreviews({
@@ -44,69 +39,29 @@ class CustomCardPreviews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _CardContainer(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _ImagePreviewSection(
-            image: image,
-            imageUrl: imageUrl,
-            isUrlImage: isUrlImage,
-            addPadding: addPadding,
-            heightPreview: heightPreview,
-            fitPreview: fitPreview,
-          ),
-          _TextContentSection(
-            topText: topText,
-            bottomText: bottomText,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Main card container with enhanced visual effects
-class _CardContainer extends StatelessWidget {
-  final Widget child;
-  final VoidCallback? onTap;
-
-  const _CardContainer({
-    required this.child,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    
-    return Container(
-      margin: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: colors.shadow.withValues(alpha: 0.08),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-          BoxShadow(
-            color: colors.shadow.withValues(alpha: 0.04),
-            blurRadius: 1,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Material(
-        color: colors.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
-          splashColor: colors.primary.withValues(alpha: 0.08),
-          highlightColor: colors.primary.withValues(alpha: 0.04),
-          child: child,
+
+    return Card.filled(
+      color: colors.surfaceContainerLowest,
+      elevation: 2,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _ImagePreviewSection(
+              image: image,
+              imageUrl: imageUrl,
+              isUrlImage: isUrlImage,
+              addPadding: addPadding,
+              heightPreview: heightPreview,
+              fitPreview: fitPreview,
+            ),
+            _TextContentSection(
+              topText: topText,
+              bottomText: bottomText,
+            ),
+          ],
         ),
       ),
     );
@@ -133,6 +88,8 @@ class _ImagePreviewSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(12),
@@ -141,7 +98,7 @@ class _ImagePreviewSection extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: heightPreview,
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        color: colors.surfaceContainerHigh,
         child: _buildImageWidget(),
       ),
     );
@@ -182,7 +139,11 @@ class _NetworkImageWidget extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl!,
       fit: fitPreview,
-      placeholder: (context, url) => const _LoadingPlaceholder(),
+      placeholder: (context, url) => const Center(
+        child: CircularProgressIndicator(
+          strokeCap: StrokeCap.round,
+        ),
+      ),
       errorWidget: (context, url, error) => const _ErrorPlaceholder(),
     );
   }
@@ -213,46 +174,11 @@ class _MemoryImageWidget extends StatelessWidget {
     );
 
     return addPadding
-        ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            child: imageWidget,
-          )
-        : imageWidget;
-  }
-}
-
-/// Loading placeholder with improved animation
-class _LoadingPlaceholder extends StatelessWidget {
-  const _LoadingPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    
-    return Container(
-      color: colors.surfaceContainerHigh,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              strokeWidth: 2.5,
-              color: colors.primary,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              // TODO: add localization
-              'Cargando...',
-              style: TextStyle(
-                color: colors.onSurfaceVariant,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+      ? Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: imageWidget,
+        )
+      : imageWidget;
   }
 }
 
@@ -271,16 +197,15 @@ class _ErrorPlaceholder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.image_not_supported_outlined,
+              Hicon.linkBold,
               size: 32,
-              color: colors.error.withValues(alpha: 0.7),
+              color: colors.onErrorContainer,
             ),
-            const SizedBox(height: 8),
+           const Gap(8),
             Text(
-              // TODO: add localization
-              'Error al cargar',
+              'Error',
               style: TextStyle(
-                color: colors.error.withValues(alpha: 0.8),
+                color: colors.onErrorContainer,
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
               ),
@@ -325,20 +250,16 @@ class _TextContentSection extends StatelessWidget {
             topText,
             style: textStyles.titleSmall?.copyWith(
               color: colors.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
-              height: 1.2,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 2),
+          const Gap(2),
           // Secondary text with subtle opacity
           Text(
             bottomText,
             style: textStyles.bodySmall?.copyWith(
               color: colors.onSurfaceVariant.withValues(alpha: 0.8),
-              fontWeight: FontWeight.w400,
-              height: 1.3,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

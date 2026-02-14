@@ -40,7 +40,7 @@ class DataSourceImpl extends DataSource {
         appName: 'Error appName',
         packageName: 'Error packageName',
         packageVersion: 'Error version',
-        buildNumber: 'Erro buildNumberr'
+        buildNumber: 'Error buildNumber'
       );
     }
   }

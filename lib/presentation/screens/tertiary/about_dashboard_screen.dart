@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
@@ -20,7 +19,6 @@ class AboutDashboardScreen extends ConsumerWidget {
     // * Variables
     final repository = ref.watch(repositoryProvider);
     final textStyles = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
 
     // * Widget view
     return Scaffold(
@@ -38,70 +36,13 @@ class AboutDashboardScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-            
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
 
-                    // * Dashboard profile Image
-                    ZoomIn(
-                      child: Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: const DecorationImage(
-                            image: AssetImage(Environment.iconDashboardLogo),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const Gap(15),
-
-                    // * Dashboard Data
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                      
-                              Text(
-                                Environment.dashName,
-                                style: textStyles.headlineSmall,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                      
-                              const Gap(5),
-                      
-                              Icon(
-                                Hicon.verifiedBold,
-                                color: colors.primary,
-                                size: 10,
-                              ),
-                      
-                            ],
-                          ),
-                      
-                          Text(
-                            'Dashboard',
-                            style: textStyles.titleSmall,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                      
-                        ],
-                      ),
-                    ),
-
-                  ],
+                // * Profile header
+                const ProfileHeader(
+                  imagePath: Environment.iconDashboardLogo,
+                  title: Environment.dashName,
+                  subtitle: 'Dashboard',
+                  showVerifiedBadge: true,
                 ),
 
                 const Gap(35),
@@ -113,51 +54,11 @@ class AboutDashboardScreen extends ConsumerWidget {
 
                 const Gap(35),
 
-                // * Social Apps
-                SizedBox(
-                  height: 48,
-                  child: CustomOutlineIconTextButton(
-                    text: 'Twitter',
-                    color: colors.primary,
-                    icon: const Icon(
-                      Hicon.twitterBold,
-                      size: 18,
-                    ),
-                    onPressed: () => repository.launchExternalApp(Environment.externalLinkTwitter),
-                  ),
-                ),
-                
-                const Gap(8),
-                // Social app 2
-                SizedBox(
-                  height: 48,
-                  child: CustomOutlineIconTextButton(
-                    text: 'Instagram',
-                    color: colors.primary,
-                    icon: const Icon(
-                      Hicon.instagramBold,
-                      size: 18,
-                    ),
-                    onPressed: () => repository.launchExternalApp(Environment.externalLinkInstagram),
-                  ),
-                ),
-                
-                const Gap(8),
-                
-                // Social app 3
-                SizedBox(
-                  height: 48,
-                  child: CustomFilledIconTextButton(
-                    text: 'Web Page',
-                    buttonColor: colors.primary,
-                    textColor: colors.onPrimary,
-                    icon: Icon(
-                      Hicon.websiteBold,
-                      color: colors.onPrimary,
-                      size: 18,
-                    ),
-                    onPressed: () => repository.launchExternalApp(Environment.externalLinkWebsite),
-                  ),
+                // * Social media links
+                SocialMediaButtonList(
+                  onTwitterPressed: () => repository.launchExternalApp(Environment.externalLinkTwitter),
+                  onInstagramPressed: () => repository.launchExternalApp(Environment.externalLinkInstagram),
+                  onWebPagePressed: () => repository.launchExternalApp(Environment.externalLinkWebsite),
                 ),
 
                 const Gap(35),
@@ -170,7 +71,7 @@ class AboutDashboardScreen extends ConsumerWidget {
                 ),
 
                 const Gap(16),
-            
+
               ])
             ),
           ),
@@ -180,5 +81,4 @@ class AboutDashboardScreen extends ConsumerWidget {
       )
     );
   }
-
 }

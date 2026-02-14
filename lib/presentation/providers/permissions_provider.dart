@@ -45,7 +45,7 @@ class PermissionsNotifier extends StateNotifier<PermissionsState> {
     _androidSdkVersion = androidInfo.version.sdkInt;
   }
 
-  // Aquí va la lista de permisos a solicitar en un array ordenado manualmente
+  // List of permissions to request, ordered manually
 
   /// Checks necessary permissions based on Android version.
   /// - Android 10+ (API 29+): No permissions needed to write to MediaStore

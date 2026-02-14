@@ -306,10 +306,10 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
     }
   }
 
-  /// Reemplaza el botón de descarga con un [CircularProgressIndicator].
+  /// Replaces the download button with a [CircularProgressIndicator].
   ///
-  /// Se usa mientras el wallpaper se está descargando. El botón está deshabilitado
-  /// mientras se muestra el indicador de progreso.
+  /// Used while the wallpaper is being downloaded. The button is disabled
+  /// while the progress indicator is shown.
   IconButton _replaceButtonWithCircularProgress() {
     return const IconButton(
       onPressed: null,

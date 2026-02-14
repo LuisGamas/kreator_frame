@@ -2,7 +2,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 🌎 Project imports:
-import 'key_value_storae_service.dart';
+import 'key_value_storage_service.dart';
 
 class KeyValueStorageServicesImpl extends KeyValueStorageServices {
 

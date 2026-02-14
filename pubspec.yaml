@@ -38,8 +38,8 @@ dependencies:
     sdk: flutter
   flutter_cache_manager: ^3.4.1
   flutter_dotenv: ^5.2.1
-  flutter_file_downloader: ^2.1.0
   flutter_hooks: ^0.21.2
+  image_gallery_saver_plus: ^4.0.1
   flutter_localizations:
     sdk: flutter
   flutter_markdown_plus: ^1.0.3

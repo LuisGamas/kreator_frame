@@ -48,4 +48,17 @@ class RepositoryImpl extends Repository {
   Future<List<LicenseEntity>> getLicenses() {
     return dataSource.getLicenses();
   }
+
+  @override
+  Future<bool> downloadWallpaper(
+    String url,
+    String fileName, {
+    void Function(double)? onProgressUpdate,
+  }) {
+    return dataSource.downloadWallpaper(
+      url,
+      fileName,
+      onProgressUpdate: onProgressUpdate,
+    );
+  }
 }

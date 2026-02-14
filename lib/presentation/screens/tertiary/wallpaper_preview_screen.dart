@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gap/gap.dart';
@@ -176,7 +175,7 @@ class _NoFunctionButton extends StatelessWidget {
 }
 
 // ##
-class _DownloadButton extends ConsumerWidget {
+class _DownloadButton extends ConsumerStatefulWidget {
   final WallpaperEntity wallpaperEntity;
 
   const _DownloadButton({
@@ -184,60 +183,133 @@ class _DownloadButton extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final progressDownloader = ref.watch(progressDownloaderProvider);
-    final packageAppInfo = ref.watch(packageInfoProvider);
+  ConsumerState<_DownloadButton> createState() => _DownloadButtonState();
+}
+
+class _DownloadButtonState extends ConsumerState<_DownloadButton> {
+  bool _isDownloading = false;
+
+  @override
+  Widget build(BuildContext context) {
     final permissions = ref.watch(permissionsProvider);
+    final progress = ref.watch(progressDownloaderProvider);
     final colors = Theme.of(context).colorScheme;
 
-    return packageAppInfo.when(
-      data: (data) => progressDownloader != 0
-          ? _replaceButtonWithCircularProgress()
-          : IconButton(
-              onPressed: () => permissions.storageGranted 
-                ? _downloadWallpaper(context, ref, data.appName, colors)
-                : ref.read(permissionsProvider.notifier).requestPhotoLibrary(),
-              icon: const Icon(Hicon.downloadOutline, color: Colors.white),
+    // Show progress indicator if downloading and progress is available
+    if (_isDownloading && progress != null && progress > 0) {
+      return _buildProgressIndicator(progress);
+    }
+
+    return _isDownloading
+        ? _replaceButtonWithCircularProgress()
+        : IconButton(
+            onPressed: () => permissions.storageGranted
+              ? _downloadWallpaper(context, ref, colors)
+              : ref.read(permissionsProvider.notifier).requestStoragePermission(),
+            icon: const Icon(Hicon.downloadOutline, color: Colors.white),
+          );
+  }
+
+  /// Builds a circular progress indicator with percentage text
+  Widget _buildProgressIndicator(double progress) {
+    final percentage = (progress * 100).toStringAsFixed(0);
+
+    return Tooltip(
+      message: '$percentage%',
+      child: SizedBox(
+        height: 48,
+        width: 48,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Circular progress indicator
+            SizedBox(
+              height: 28,
+              width: 28,
+              child: CircularProgressIndicator(
+                value: progress,
+                strokeCap: StrokeCap.round,
+                strokeWidth: 2,
+              ),
             ),
-      error: (_, _) => _replaceButtonWithCircularProgress(),
-      loading: () => _replaceButtonWithCircularProgress(),
+            // Percentage text
+            Text(
+              percentage,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  void _downloadWallpaper(BuildContext context, WidgetRef ref, String packageName, ColorScheme colors) {
-    FileDownloader.downloadFile(
-      url: wallpaperEntity.url.trim(),
-      name: wallpaperEntity.name,
-      subPath: packageName,
-      onProgress: (_, progress) {
-        ref.read(progressDownloaderProvider.notifier).changeProgress(progress);
-      },
-      onDownloadCompleted: (_) {
-        AppHelpers.showSnackbarSuccess(
-          context: context,
-          message: AppLocalizations.of(context)!.downloadOk,
-          color: colors
-        );
-        ref.read(progressDownloaderProvider.notifier).changeProgress(0);
-      },
-      onDownloadError: (_) {
+  /// Download the wallpaper using MediaStore API (Scoped Storage).
+  ///
+  /// This method does not require permissions on Android 10+ (API 29+) because it uses
+  /// MediaStore to save the image directly to the device gallery.
+  /// Only requires WRITE_EXTERNAL_STORAGE for Android 9 and earlier versions.
+  Future<void> _downloadWallpaper(
+    BuildContext context,
+    WidgetRef ref,
+    ColorScheme colors,
+  ) async {
+    setState(() => _isDownloading = true);
+
+    try {
+      final repository = ref.read(repositoryProvider);
+      final progressNotifier = ref.read(progressDownloaderProvider.notifier);
+
+      // Download and save the wallpaper using MediaStore with progress tracking
+      final success = await repository.downloadWallpaper(
+        widget.wallpaperEntity.url.trim(),
+        widget.wallpaperEntity.name,
+        onProgressUpdate: (progress) {
+          // Update the progress in the Riverpod provider (0.0 to 1.0)
+          progressNotifier.changeProgress(progress);
+        },
+      );
+
+      if (context.mounted) {
+        // Reset progress to 0
+        progressNotifier.changeProgress(0);
+
+        if (success) {
+          AppHelpers.showSnackbarSuccess(
+            context: context,
+            message: AppLocalizations.of(context)!.downloadOk,
+            color: colors,
+          );
+        } else {
+          AppHelpers.showSnackbarError(
+            context: context,
+            message: AppLocalizations.of(context)!.downloadError,
+            color: colors,
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
         AppHelpers.showSnackbarError(
           context: context,
           message: AppLocalizations.of(context)!.downloadError,
-          color: colors
+          color: colors,
         );
-        ref.read(progressDownloaderProvider.notifier).changeProgress(0);
-      },
-    );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isDownloading = false);
+      }
+    }
   }
 
-  /// Replaces the download button with a [CircularProgressIndicator].
+  /// Reemplaza el botón de descarga con un [CircularProgressIndicator].
   ///
-  /// This is used when the wallpaper is being downloaded or the package info
-  /// is loading. The button is disabled while the progress indicator is shown.
-  ///
-  /// The progress indicator is 24 logical pixels in size and is styled with
-  /// the current theme's color scheme.
+  /// Se usa mientras el wallpaper se está descargando. El botón está deshabilitado
+  /// mientras se muestra el indicador de progreso.
   IconButton _replaceButtonWithCircularProgress() {
     return const IconButton(
       onPressed: null,

@@ -6,16 +6,15 @@
     <!-- You can comment all permissions out if you are not using wallpapers -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <!--
-      Granular media permissions for Android 13 and newer.
-      See https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions
-      for more information.
+      WRITE_EXTERNAL_STORAGE is only required for Android 9 (API 28) and earlier.
+      Starting with Android 10 (API 29+), you can write to MediaStore without permissions.
+      maxSdkVersion="28" ensures that this permission is not requested in modern versions.
     -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- Permissions options for the `storage` group -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- Read storage permission for Android 12 and lower -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
 
     <!-- #################### PERMISSIONS #################### -->
 

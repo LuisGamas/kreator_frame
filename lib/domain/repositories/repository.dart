@@ -13,4 +13,9 @@ abstract class Repository {
   Future<List<WidgetEntity>> getListOfWidgets(String filesExt, String thumbName);
   Future<void> launchExternalApp(String url);
   Future<List<LicenseEntity>> getLicenses();
+  Future<bool> downloadWallpaper(
+    String url,
+    String fileName, {
+    void Function(double)? onProgressUpdate,
+  });
 }

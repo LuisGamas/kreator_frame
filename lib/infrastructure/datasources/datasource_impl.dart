@@ -12,6 +12,7 @@ import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -249,5 +250,72 @@ class DataSourceImpl extends DataSource {
     } catch (e) {
       return null;
     }
-  }  
+  }
+
+  /// Download a wallpaper from a URL and save it to the device gallery.
+  ///
+  /// This method uses the MediaStore API (Scoped Storage), which works without permissions
+  /// on Android 10+ (API 29+). It only requires WRITE_EXTERNAL_STORAGE for Android 9
+  /// and earlier versions.
+  ///
+  /// The file is saved in the Pictures folder of the device's shared storage
+  /// with the specified name.
+  ///
+  /// Parameters:
+  /// - [url]: URL of the wallpaper to download
+  /// - [fileName]: Name of the file to save (without extension)
+  ///
+  /// Returns [true] if the download and saving were successful, [false] in case of error.
+  @override
+  Future<bool> downloadWallpaper(
+    String url,
+    String fileName, {
+    void Function(double)? onProgressUpdate,
+  }) async {
+    try {
+      // 1. Download the image using Dio with progress tracking
+      final response = await dio.get(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: true,
+        ),
+        onReceiveProgress: (received, total) {
+          if (total != -1 && onProgressUpdate != null) {
+            // Calculate progress as percentage (0.0 to 1.0)
+            final progress = received / total;
+            onProgressUpdate(progress);
+          }
+        },
+      );
+
+      // 2. Save the image to the gallery using MediaStore (Scoped Storage)
+      // image_gallery_saver_plus uses MediaStore on Android 10+ without needing permissions
+      final result = await ImageGallerySaverPlus.saveImage(
+        Uint8List.fromList(response.data),
+        quality: 100,
+        name: fileName,
+      );
+
+      // 3. Verify if saving was successful
+      // result can return a Map with 'isSuccess' or directly a String with the path
+      if (result is Map && result['isSuccess'] == true) {
+        // Reset progress to 0 after completion
+        onProgressUpdate?.call(0);
+        return true;
+      } else if (result is String && result.isNotEmpty) {
+        // Reset progress to 0 after completion
+        onProgressUpdate?.call(0);
+        return true;
+      }
+
+      // Reset progress to 0 on failure
+      onProgressUpdate?.call(0);
+      return false;
+    } catch (e) {
+      // Reset progress to 0 on error
+      onProgressUpdate?.call(0);
+      return false;
+    }
+  }
 }

@@ -44,7 +44,7 @@ class WallpapersScreen extends ConsumerWidget {
                     bottomText: wallpaper.author,
                     heightPreview: 290,
                     fitPreview: BoxFit.cover,
-                    onTap: () => appRouter.push(wallpaperPreviewRoute, extra: wallpaper),
+                    onTap: () => appRouter.push(AppRoutes.wallpaperPreview, extra: wallpaper),
                   ),
                 ),
               ),

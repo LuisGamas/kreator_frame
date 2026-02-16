@@ -26,18 +26,18 @@ class ColorThemeSwitcher extends ConsumerWidget {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
 
-          final isSelectedColor = AppHelpers.primaryColor[index] 
+          final isSelectedColor = AppConstants.accentColors[index] 
             == appValuesFromPreference.colorAccentForTheme;
 
           return GestureDetector(
             onTap: isSelectedColor
                 ? null
                   : () => ref.read(appValuesPreferencesProvider.notifier)
-                      .setPreferenceForColorAccent(AppHelpers.primaryColor[index]),
+                      .setPreferenceForColorAccent(AppConstants.accentColors[index]),
             child: Container(
               height: 50,
               decoration: BoxDecoration(
-                color: AppHelpers.primaryColor[index],
+                color: AppConstants.accentColors[index],
                 borderRadius: AppRadius.radiusLg,
               ),
               child: AnimatedOpacity(
@@ -63,7 +63,7 @@ class ColorThemeSwitcher extends ConsumerWidget {
             ),
           );
         },
-        childCount: AppHelpers.primaryColor.length,
+        childCount: AppConstants.accentColors.length,
       ),
     );
   }

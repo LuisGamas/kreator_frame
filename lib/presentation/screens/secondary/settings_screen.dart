@@ -47,7 +47,7 @@ class SettingsScreen extends ConsumerWidget {
               title: AppLocalizations.of(context)!.settingsAppearanceLT1,
               subTitle: AppLocalizations.of(context)!.settingsAppearanceLST1,
               leadingWidget: const Icon(Hicon.paletteBold),
-              onTap: () => appRouter.push(appearanceThemeRoute),
+              onTap: () => appRouter.push(AppRoutes.appearanceTheme),
             ),
 
             const Gap(AppSpacing.lg),
@@ -61,14 +61,14 @@ class SettingsScreen extends ConsumerWidget {
               title: packageAppInfo.value?.appName ?? 'Error Package Name',
               subTitle: AppLocalizations.of(context)!.settingsAboutLST1,
               leadingWidget: const Icon(Hicon.stickerBold),
-              onTap: () => appRouter.push(aboutPackageRoute),
+              onTap: () => appRouter.push(AppRoutes.aboutPackage),
             ),
 
             CustomListTile(
               title: Environment.dashName,
               subTitle: AppLocalizations.of(context)!.settingsAboutLST2,
               leadingWidget: const Icon(Hicon.graphBold),
-              onTap: () => appRouter.push(aboutDashboardRoute),
+              onTap: () => appRouter.push(AppRoutes.aboutDashboard),
             ),
 
             const Gap(AppSpacing.lg),
@@ -105,7 +105,7 @@ class SettingsScreen extends ConsumerWidget {
               title: AppLocalizations.of(context)!.settingsLicencesLT1,
               subTitle: AppLocalizations.of(context)!.settingsLicencesLST1,
               leadingWidget: const Icon(Hicon.award2Bold),
-              onTap: () => appRouter.push(licensesOpenSourceRoute),
+              onTap: () => appRouter.push(AppRoutes.licensesOpenSource),
             ),
 
             const Gap(AppSpacing.lg),

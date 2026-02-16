@@ -23,19 +23,19 @@ class ThemeModeSwitcher extends ConsumerWidget {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisSpacing: AppSpacing.xs,
         mainAxisSpacing: AppSpacing.xs,
-        crossAxisCount: AppHelpers.appThemesSelector.length,
+        crossAxisCount: AppConstants.themeModeOptions.length,
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           
-          final isSelectedThemeMode = AppHelpers.appThemesSelector[index].themeMode 
+          final isSelectedThemeMode = AppConstants.themeModeOptions[index].themeMode 
                 == appValuesFromPreference.themeModeForApp;
                 
           return GestureDetector(
             onTap: isSelectedThemeMode
                 ? null
                   : () => ref.read(appValuesPreferencesProvider.notifier)
-                          .setPreferenceForThemeMode(AppHelpers.appThemesSelector[index].themeMode),
+                          .setPreferenceForThemeMode(AppConstants.themeModeOptions[index].themeMode),
             child: AnimatedContainer(
               duration: AppDurations.normal,
               decoration: BoxDecoration(
@@ -52,12 +52,12 @@ class ThemeModeSwitcher extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      AppHelpers.appThemesSelector[index].icon,
+                      AppConstants.themeModeOptions[index].icon,
                       size: AppIconSizes.md,
                       color: colors.onSurface,
                     ),
                     const Gap(AppSpacing.xxxs),
-                    Text(AppHelpers.appThemesSelector[index].title(context),
+                    Text(AppConstants.themeModeOptions[index].title(context),
                         style: textStyles.titleSmall)
                   ],
                 ),
@@ -65,7 +65,7 @@ class ThemeModeSwitcher extends ConsumerWidget {
             ),
           );
         },
-        childCount: AppHelpers.appThemesSelector.length,
+        childCount: AppConstants.themeModeOptions.length,
       ),
     );
   }

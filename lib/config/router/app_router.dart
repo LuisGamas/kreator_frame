@@ -6,53 +6,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/config/router/app_routes.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/screens/screens.dart';
 
-// * Routes Names
-// Primary Routes
-const homeRoute = '/';
-// Secondary Routes
-const settingsRoute = '/settings';
-// Tertiary Routes
-const wallpaperPreviewRoute = '/wallpaper-preview';
-const appearanceThemeRoute = '/theme-selector';
-const aboutPackageRoute = '/kustom-app-information';
-const aboutDashboardRoute = '/dashboard-information';
-// Licenses Routes
-const licensesOpenSourceRoute = '/licenses-screen';
-const licenseDetailRoute = '/license-detail-screen';
-
-/// Provider del router principal de la aplicación.
-/// Configura todas las rutas y transiciones de navegación.
+/// Provider for the main application router.
+/// Configures all routes and navigation transitions.
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: homeRoute,
+    initialLocation: AppRoutes.home,
     routes: [
       // Primary Screens
-      _createRoute(homeRoute, const HomeScreen()),
+      _createRoute(AppRoutes.home, const HomeScreen()),
 
       // Secondary Screens
-      _createRoute(settingsRoute, const SettingsScreen()),
+      _createRoute(AppRoutes.settings, const SettingsScreen()),
 
       // Tertiary Screens
       GoRoute(
-        path: wallpaperPreviewRoute,
+        path: AppRoutes.wallpaperPreview,
         builder: (context, state) {
           WallpaperEntity wallpaperEntity = state.extra as WallpaperEntity;
           return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
         },
       ),
 
-      _createRoute(appearanceThemeRoute, const ThemeSelectorScreen()),
-      _createRoute(aboutPackageRoute, const AboutPackageAppScreen()),
-      _createRoute(aboutDashboardRoute, const AboutDashboardScreen()),
+      _createRoute(AppRoutes.appearanceTheme, const ThemeSelectorScreen()),
+      _createRoute(AppRoutes.aboutPackage, const AboutPackageAppScreen()),
+      _createRoute(AppRoutes.aboutDashboard, const AboutDashboardScreen()),
 
       // Other Screens
-      _createRoute(licensesOpenSourceRoute, const LicensesScreen()),
+      _createRoute(AppRoutes.licensesOpenSource, const LicensesScreen()),
 
       GoRoute(
-        path: licenseDetailRoute,
+        path: AppRoutes.licenseDetail,
         pageBuilder: (context, state) {
           LicenseEntity licenseEntity = state.extra as LicenseEntity;
           return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));

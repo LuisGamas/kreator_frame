@@ -61,7 +61,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
                   onTwitterPressed: () {
                     Environment.userTwitterUrl != 'NA' && Environment.userTwitterUrl != 'Error TWITTER'
                     ? repository.launchExternalApp(Environment.userTwitterUrl)
-                    : AppHelpers.showSnackbarError(
+                    : SnackbarHelpers.showError(
                       context: context,
                       message: AppLocalizations.of(context)!.errorMessage,
                       color: colors
@@ -70,7 +70,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
                   onInstagramPressed: () {
                     Environment.userInstagramUrl != 'NA' && Environment.userInstagramUrl != 'Error INSTAGRAM'
                     ? repository.launchExternalApp(Environment.userInstagramUrl)
-                    : AppHelpers.showSnackbarError(
+                    : SnackbarHelpers.showError(
                       context: context,
                       message: AppLocalizations.of(context)!.errorMessage,
                       color: colors
@@ -79,7 +79,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
                   onPersonalSitePressed: () {
                     Environment.userPlayStoreUrl != 'NA' && Environment.userPlayStoreUrl != 'Error GOOGLE_PLAY_STORE'
                     ? repository.launchExternalApp(Environment.userPlayStoreUrl)
-                    : AppHelpers.showSnackbarError(
+                    : SnackbarHelpers.showError(
                       context: context,
                       message: AppLocalizations.of(context)!.errorMessage,
                       color: colors

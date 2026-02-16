@@ -163,7 +163,7 @@ class _NoFunctionButton extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return CustomIconButton(
-      onPressed: () => AppHelpers.showSnackbarError(
+      onPressed: () => SnackbarHelpers.showError(
         context: context,
         message: AppLocalizations.of(context)!.noFunction,
         color: colors
@@ -278,13 +278,13 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
         progressNotifier.changeProgress(0);
 
         if (success) {
-          AppHelpers.showSnackbarSuccess(
+          SnackbarHelpers.showSuccess(
             context: context,
             message: AppLocalizations.of(context)!.downloadOk,
             color: colors,
           );
         } else {
-          AppHelpers.showSnackbarError(
+          SnackbarHelpers.showError(
             context: context,
             message: AppLocalizations.of(context)!.downloadError,
             color: colors,
@@ -293,7 +293,7 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
       }
     } catch (e) {
       if (context.mounted) {
-        AppHelpers.showSnackbarError(
+        SnackbarHelpers.showError(
           context: context,
           message: AppLocalizations.of(context)!.downloadError,
           color: colors,
@@ -446,13 +446,13 @@ class _ModalButton extends ConsumerWidget {
     if (context.mounted) {
       ref.read(setWallpaperProvider.notifier).changeState();
       if (result) {
-        AppHelpers.showSnackbarSuccess(
+        SnackbarHelpers.showSuccess(
           context: context,
           message: AppLocalizations.of(context)!.appliedOk,
           color: colors
         );
       } else {
-        AppHelpers.showSnackbarError(
+        SnackbarHelpers.showError(
           context: context,
           message: AppLocalizations.of(context)!.appliedError,
           color: colors

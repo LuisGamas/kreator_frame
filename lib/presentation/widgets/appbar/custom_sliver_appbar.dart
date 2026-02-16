@@ -175,11 +175,9 @@ class _AppBarWidgets extends ConsumerWidget {
           ),
         ),
         ZoomIn(
-          child: SizedBox(
-            child: CustomIconButton(
-              onPressed: () => appRouter.push(settingsRoute),
-              icon: Hicon.categoryBold,
-            ),
+          child: CustomIconButton.tonal(
+            onPressed: () => appRouter.push(AppRoutes.settings),
+            icon: Hicon.categoryBold,
           ),
         )
       ],

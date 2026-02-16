@@ -21,8 +21,8 @@ class AppValuesPreferencesState {
     Color? colorAccentForTheme,
     ThemeMode? themeModeForApp,
     this.minimalViewForGrids = false,
-  })  : colorAccentForTheme = colorAccentForTheme ?? AppHelpers.primaryColor[4],
-        themeModeForApp = themeModeForApp ?? AppHelpers.appThemesSelector[0].themeMode;
+  })  : colorAccentForTheme = colorAccentForTheme ?? AppConstants.accentColors[4],
+        themeModeForApp = themeModeForApp ?? AppConstants.themeModeOptions[0].themeMode;
 
   AppValuesPreferencesState copyWith({
     Color? colorAccentForTheme,
@@ -53,16 +53,16 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
     // final showMinimalGridView = await keyValueStorageServices.getKeyValue<bool>(Environment.keyMinimalGrid);
 
     final themeMode = switch (indexThemeMode) {
-      'system' => AppHelpers.appThemesSelector[0].themeMode,
-      'light' => AppHelpers.appThemesSelector[1].themeMode,
-      'dark' => AppHelpers.appThemesSelector[2].themeMode,
+      'system' => AppConstants.themeModeOptions[0].themeMode,
+      'light' => AppConstants.themeModeOptions[1].themeMode,
+      'dark' => AppConstants.themeModeOptions[2].themeMode,
       _ => ThemeMode.system,
     };
 
     state = state.copyWith(
-      colorAccentForTheme: AppHelpers.primaryColor[
-        (indexColorAccent >= 0 && indexColorAccent < AppHelpers.primaryColor.length)
-        ? indexColorAccent 
+      colorAccentForTheme: AppConstants.accentColors[
+        (indexColorAccent >= 0 && indexColorAccent < AppConstants.accentColors.length)
+        ? indexColorAccent
         : 4 ],
       themeModeForApp: themeMode,
       // minimalViewForGrids: showMinimalGridView ?? false,
@@ -80,7 +80,7 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
 
   void setPreferenceForColorAccent(Color color) async {
     if (color != state.colorAccentForTheme) {
-      final colorIndex = AppHelpers.primaryColor.indexOf(color);
+      final colorIndex = AppConstants.accentColors.indexOf(color);
       await _keyValueStorageServices.setKeyValue(Environment.keyColorTheme, colorIndex);
       state = state.copyWith(
         colorAccentForTheme: color

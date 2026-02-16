@@ -42,7 +42,7 @@ class LicensesScreen extends ConsumerWidget {
                       title: license.name,
                       subTitle: '${license.licenseCount} License${license.licenseCount == 1 ? '' : 's'}',
                       onTap: () => appRouter.push(
-                        licenseDetailRoute,
+                        AppRoutes.licenseDetail,
                         extra: license,
                       ),
                     );

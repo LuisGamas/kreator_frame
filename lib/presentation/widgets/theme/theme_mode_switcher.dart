@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/config/config.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/shared/utils/utils.dart';
 
@@ -20,8 +21,8 @@ class ThemeModeSwitcher extends ConsumerWidget {
 
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 6,
-        mainAxisSpacing: 6,
+        crossAxisSpacing: AppSpacing.xs,
+        mainAxisSpacing: AppSpacing.xs,
         crossAxisCount: AppHelpers.appThemesSelector.length,
       ),
       delegate: SliverChildBuilderDelegate(
@@ -36,10 +37,10 @@ class ThemeModeSwitcher extends ConsumerWidget {
                   : () => ref.read(appValuesPreferencesProvider.notifier)
                           .setPreferenceForThemeMode(AppHelpers.appThemesSelector[index].themeMode),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: AppDurations.normal,
               decoration: BoxDecoration(
                 color: colors.surface,
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: AppRadius.radiusXl,
                 border: Border.all(
                   color: isSelectedThemeMode ? colors.primary : colors.surface,
                   width: 3,
@@ -52,10 +53,10 @@ class ThemeModeSwitcher extends ConsumerWidget {
                   children: [
                     Icon(
                       AppHelpers.appThemesSelector[index].icon,
-                      size: 28,
+                      size: AppIconSizes.md,
                       color: colors.onSurface,
                     ),
-                    const Gap(2),
+                    const Gap(AppSpacing.xxxs),
                     Text(AppHelpers.appThemesSelector[index].title(context),
                         style: textStyles.titleSmall)
                   ],

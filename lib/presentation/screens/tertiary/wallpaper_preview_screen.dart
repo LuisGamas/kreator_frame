@@ -103,11 +103,11 @@ class _BottomContentData extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
     
     return Positioned(
-      bottom: 20,
-      left: 16,
-      right: 16,
+      bottom: AppSpacing.lg,
+      left: AppSpacing.md,
+      right: AppSpacing.md,
       child: FadeIn(
-        delay: Durations.medium4,
+        delay: AppDurations.slow,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +117,7 @@ class _BottomContentData extends StatelessWidget {
               wallpaperEntity.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: textStyles.headlineSmall?.copyWith(
+              style: textStyles.titleLarge?.copyWith(
                 color: Colors.white
               ),
             ),
@@ -125,9 +125,8 @@ class _BottomContentData extends StatelessWidget {
               wallpaperEntity.author,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textStyles.titleMedium?.copyWith(
+              style: textStyles.labelLarge?.copyWith(
                 color: Colors.white,
-                fontWeight: FontWeight.w200,
               ),
             ),
         
@@ -135,9 +134,9 @@ class _BottomContentData extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const _NoFunctionButton(icon: Hicon.heart2Outline),
-                const Gap(5),
+                const Gap(AppSpacing.xxxs),
                 const _NoFunctionButton(icon: Hicon.paletteOutline),
-                const Gap(5),
+                const Gap(AppSpacing.xxxs),
                 _DownloadButton(wallpaperEntity: wallpaperEntity),
                 const Spacer(),
                 _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
@@ -163,13 +162,14 @@ class _NoFunctionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return IconButton(
+    return CustomIconButton(
       onPressed: () => AppHelpers.showSnackbarError(
         context: context,
         message: AppLocalizations.of(context)!.noFunction,
         color: colors
       ),
-      icon: Icon(icon, color: Colors.white),
+      icon: icon,
+      iconColor: Colors.white,
     );
   }
 }
@@ -200,14 +200,14 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
       return _buildProgressIndicator(progress);
     }
 
-    return _isDownloading
-        ? _replaceButtonWithCircularProgress()
-        : IconButton(
-            onPressed: () => permissions.storageGranted
-              ? _downloadWallpaper(context, ref, colors)
-              : ref.read(permissionsProvider.notifier).requestStoragePermission(),
-            icon: const Icon(Hicon.downloadOutline, color: Colors.white),
-          );
+    return CustomIconButton(
+      onPressed: () => permissions.storageGranted
+        ? _downloadWallpaper(context, ref, colors)
+        : ref.read(permissionsProvider.notifier).requestStoragePermission(),
+      icon: Hicon.downloadOutline,
+      iconColor: Colors.white,
+      isLoading: _isDownloading,
+    );
   }
 
   /// Builds a circular progress indicator with percentage text
@@ -229,7 +229,7 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
               child: CircularProgressIndicator(
                 value: progress,
                 strokeCap: StrokeCap.round,
-                strokeWidth: 2,
+                strokeWidth: 2.5,
               ),
             ),
             // Percentage text
@@ -305,23 +305,6 @@ class _DownloadButtonState extends ConsumerState<_DownloadButton> {
       }
     }
   }
-
-  /// Replaces the download button with a [CircularProgressIndicator].
-  ///
-  /// Used while the wallpaper is being downloaded. The button is disabled
-  /// while the progress indicator is shown.
-  IconButton _replaceButtonWithCircularProgress() {
-    return const IconButton(
-      onPressed: null,
-      icon: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(
-          strokeCap: StrokeCap.round
-        ),
-      ),
-    );
-  }
 }
 
 // ##
@@ -337,36 +320,19 @@ class _ApplyWallpaperButton extends ConsumerWidget {
     final setWallpaperState = ref.watch(setWallpaperProvider);
     final colors = Theme.of(context).colorScheme;
 
-    return GestureDetector(
-      onTap: setWallpaperState
-      ? null
-      : () => _showBottomCard(
-        context: context,
-        ref: ref,
-        colors: colors
-      ),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle
+    return CustomIconButton.filled(
+      onPressed: setWallpaperState
+        ? null
+        : () => _showBottomCard(
+          context: context,
+          ref: ref,
+          colors: colors
         ),
-        height: 56,
-        width: 56,
-        child: setWallpaperState
-          ? const Center(
-            child: SizedBox(
-              height: 28,
-              width: 28,
-              child: CircularProgressIndicator(
-                strokeCap: StrokeCap.round
-              ),
-            )
-          )
-          : const Icon(
-            Hicon.send1Outline,
-            color: Colors.black
-          ),
-      ),
+      icon: Hicon.send1Outline,
+      iconColor: Colors.black,
+      color: Colors.white,
+      isLoading: setWallpaperState,
+      buttonSize: 56,
     );
   }
 
@@ -402,7 +368,7 @@ class _BottomCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -411,31 +377,31 @@ class _BottomCardContent extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
-          const Gap(5),
+          const Gap(AppSpacing.xs),
           Text(
             AppLocalizations.of(context)!.bottomWallSelectorSubTitle,
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
-          const Gap(15),
+          const Gap(AppSpacing.md),
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorHS,
             wallpaperEntity: wallpaperEntity,
             screenLocation: WallpaperManager.HOME_SCREEN,
           ),
-          const Gap(5),
+          const Gap(AppSpacing.xs),
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorLS,
             wallpaperEntity: wallpaperEntity,
             screenLocation: WallpaperManager.LOCK_SCREEN,
           ),
-          const Gap(5),
+          const Gap(AppSpacing.xs),
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorBS,
             wallpaperEntity: wallpaperEntity,
             screenLocation: WallpaperManager.BOTH_SCREEN,
           ),
-          const Gap(16),
+          const Gap(AppSpacing.md),
         ],
       ),
     );
@@ -457,35 +423,14 @@ class _ModalButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final setWallpaperState = ref.watch(setWallpaperProvider);
-    final colors = Theme.of(context).colorScheme;
 
-    return setWallpaperState 
-    ? Container(
+    return CustomButton.tonal(
       width: double.infinity,
-      height: 56,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: colors.primary
-        ),
-        child: const Center(
-          child: SizedBox(
-            height: 28,
-            width: 28,
-            child: CircularProgressIndicator(
-              strokeCap: StrokeCap.round
-            ),
-          ),
-        ),
-      )
-    : SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: CustomFilledButton(
-        text: textButton,
-        buttonColor: colors.primary,
-        textColor: colors.onPrimary,
-        onPressed: () => _applyWallpaper(context, ref),
-      ),
+      height: 48,
+      borderRadius: AppRadius.radiusLg,
+      isLoading: setWallpaperState,
+      text: textButton,
+      onPressed: () => _applyWallpaper(context, ref),
     );
   }
 

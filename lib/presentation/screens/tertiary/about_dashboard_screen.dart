@@ -16,7 +16,6 @@ class AboutDashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final repository = ref.watch(repositoryProvider);
     final textStyles = Theme.of(context).textTheme;
 
@@ -24,8 +23,7 @@ class AboutDashboardScreen extends ConsumerWidget {
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-
+        slivers: [
           // * App Bar
           CustomSliverAppBarScreens(
             tileText: AppLocalizations.of(context)!.settingsAboutLST2
@@ -33,10 +31,9 @@ class AboutDashboardScreen extends ConsumerWidget {
 
           // * Data
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-
                 // * Profile header
                 const ProfileHeader(
                   imagePath: Environment.iconDashboardLogo,
@@ -45,23 +42,23 @@ class AboutDashboardScreen extends ConsumerWidget {
                   showVerifiedBadge: true,
                 ),
 
-                const Gap(35),
+                const Gap(AppSpacing.xl),
 
                 // * About Dashboard
                 Text(
                   AppLocalizations.of(context)!.aboutDashboard,
                 ),
 
-                const Gap(35),
+                const Gap(AppSpacing.xl),
 
                 // * Social media links
                 SocialMediaButtonList(
                   onTwitterPressed: () => repository.launchExternalApp(Environment.externalLinkTwitter),
                   onInstagramPressed: () => repository.launchExternalApp(Environment.externalLinkInstagram),
-                  onWebPagePressed: () => repository.launchExternalApp(Environment.externalLinkWebsite),
+                  onPersonalSitePressed: () => repository.launchExternalApp(Environment.externalLinkWebsite),
                 ),
 
-                const Gap(35),
+                const Gap(AppSpacing.xl),
 
                 // * Copyright
                 Text(
@@ -70,14 +67,12 @@ class AboutDashboardScreen extends ConsumerWidget {
                   textAlign: TextAlign.center,
                 ),
 
-                const Gap(16),
+                const Gap(AppSpacing.md),
 
               ])
             ),
           ),
-
         ],
-
       )
     );
   }

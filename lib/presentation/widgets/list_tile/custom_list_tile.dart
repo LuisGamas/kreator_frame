@@ -35,7 +35,7 @@ class CustomListTile extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
 
     final tile = ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       splashColor: colors.secondaryContainer,
       textColor: colors.onSurface,
       title: Text(title),

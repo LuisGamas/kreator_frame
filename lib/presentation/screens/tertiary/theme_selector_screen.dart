@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/config/config.dart';
 import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
@@ -13,7 +14,6 @@ class ThemeSelectorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // * Variables
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
 
@@ -21,8 +21,7 @@ class ThemeSelectorScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          
+        slivers: [
           // * App Bar
           CustomSliverAppBarScreens(
             tileText: AppLocalizations.of(context)!.themeAppBarTitle
@@ -31,7 +30,7 @@ class ThemeSelectorScreen extends StatelessWidget {
           // * Title & Mode Theme Selector
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: Text(
                 AppLocalizations.of(context)!.themeSelector,
                 style: textStyles.titleLarge
@@ -39,25 +38,25 @@ class ThemeSelectorScreen extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             sliver: DecoratedSliver(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: AppRadius.radiusLg,
                 color: colors.surfaceContainerHighest),
               sliver: const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.all(AppSpacing.md),
                 sliver: ThemeModeSwitcher(),
               ),
             ),
           ),
 
           // * Separator
-          const SliverGap(20),
+          const SliverGap(AppSpacing.lg),
 
           // * Title & Color Theme Selector
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: Text(
                 AppLocalizations.of(context)!.themeColorSelector,
                 style: textStyles.titleLarge
@@ -65,13 +64,13 @@ class ThemeSelectorScreen extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             sliver: DecoratedSliver(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
+                  borderRadius: AppRadius.radiusLg,
                   color: colors.surfaceContainerHighest),
               sliver: const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: EdgeInsets.all(AppSpacing.md),
                 sliver: ColorThemeSwitcher(),
               ),
             ),

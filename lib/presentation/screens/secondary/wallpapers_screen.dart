@@ -17,7 +17,6 @@ class WallpapersScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final wallpapers = ref.watch( getWallpapersProvider );
     final appRouter = ref.watch(appRouterProvider);
 
@@ -28,7 +27,7 @@ class WallpapersScreen extends ConsumerWidget {
           crossAxisCount: 2,
           itemCount: data.length,
           addAutomaticKeepAlives: true,
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          padding: const EdgeInsets.all(AppSpacing.xxs),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
 
@@ -55,7 +54,7 @@ class WallpapersScreen extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) => Center(child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         child: Text(AppLocalizations.of(context)!.errorMessage,
           textAlign: TextAlign.center,
         ),

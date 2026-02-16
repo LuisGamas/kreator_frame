@@ -42,7 +42,7 @@ class ProfileHeader extends StatelessWidget {
             height: 80,
             width: 80,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: AppRadius.radiusLg,
               image: DecorationImage(
                 image: AssetImage(imagePath),
                 fit: BoxFit.cover,
@@ -51,7 +51,7 @@ class ProfileHeader extends StatelessWidget {
           ),
         ),
 
-        const Gap(15),
+        const Gap(AppSpacing.md),
 
         // Title and subtitle
         Expanded(
@@ -65,24 +65,24 @@ class ProfileHeader extends StatelessWidget {
                   Flexible(
                     child: Text(
                       title,
-                      style: textStyles.headlineSmall,
+                      style: textStyles.titleLarge,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   if (showVerifiedBadge) ...[
-                    const Gap(5),
+                    const Gap(AppSpacing.xxs),
                     Icon(
                       Hicon.verifiedBold,
                       color: colors.primary,
-                      size: 10,
+                      size: AppIconSizes.xxxs,
                     ),
                   ],
                 ],
               ),
               Text(
                 subtitle,
-                style: textStyles.titleSmall,
+                style: textStyles.labelLarge,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

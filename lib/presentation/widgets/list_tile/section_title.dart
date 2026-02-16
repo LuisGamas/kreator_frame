@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 
+// 🌎 Project imports:
+import 'package:kreator_frame/config/config.dart';
+
 /// A styled section title widget used as a header in list-based screens.
 ///
 /// Displays a large title text with horizontal padding and an optional
@@ -25,7 +28,10 @@ class SectionTitle extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
 
     final content = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
       child: Text(
         title,
         style: textStyles.titleLarge!.copyWith(

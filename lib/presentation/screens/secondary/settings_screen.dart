@@ -16,17 +16,14 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final packageAppInfo = ref.watch(packageInfoProvider);
     final repository = ref.watch(repositoryProvider);
     final appRouter = ref.watch(appRouterProvider);
 
-    // * Widget view
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-
           // * App Bar
           CustomSliverAppBarScreens(
             tileText: AppLocalizations.of(context)!.settingsAppBarTitle
@@ -53,7 +50,7 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => appRouter.push(appearanceThemeRoute),
             ),
 
-            const Gap(25),
+            const Gap(AppSpacing.lg),
 
             // * About section
             SectionTitle(
@@ -74,7 +71,7 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => appRouter.push(aboutDashboardRoute),
             ),
 
-            const Gap(25),
+            const Gap(AppSpacing.lg),
 
             // * Legal section
             SectionTitle(
@@ -97,7 +94,7 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => repository.launchExternalApp(Environment.externalLinkPrivacyPolicy),
             ),
 
-            const Gap(25),
+            const Gap(AppSpacing.lg),
 
             // * Licenses section
             SectionTitle(
@@ -111,7 +108,7 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () => appRouter.push(licensesOpenSourceRoute),
             ),
 
-            const Gap(25),
+            const Gap(AppSpacing.lg),
 
             // * Version information section
             SectionTitle(
@@ -119,22 +116,20 @@ class SettingsScreen extends ConsumerWidget {
             ),
 
             ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               title: Text(packageAppInfo.value?.appName ?? 'Error Package Name'),
               subtitle: Text(packageAppInfo.value?.packageVersion ?? 'Error Package Version'),
               leading: const Icon(Hicon.informationCircleBold),
             ),
 
             const ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.md),
               title: Text(Environment.dashName),
               subtitle: Text(Environment.dashVersion),
               leading: Icon(Hicon.informationCircleBold),
             ),
-
           ])
         )
-
         ],
       ),
     );
@@ -152,20 +147,19 @@ class _DonationBanner extends ConsumerWidget {
     final textStyles = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 25),
+      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.all(AppSpacing.md),
         color: colors.primaryContainer,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Icon(
               Hicon.heart2Bold,
               color: colors.onPrimaryContainer,
             ),
 
-            const Gap(16),
+            const Gap(AppSpacing.md),
 
             Expanded(
               child: Column(
@@ -186,18 +180,16 @@ class _DonationBanner extends ConsumerWidget {
                     ),
                   ),
 
-                  const Gap(10),
+                  const Gap(AppSpacing.sm),
 
-                  CustomOutlineButton(
-                    color: colors.onPrimaryContainer,
+                  CustomButton.outlined(
+                    height: 48,
                     text: AppLocalizations.of(context)!.donationsButton,
                     onPressed: () => repository.launchExternalApp(Environment.externalLinkBuyMeACoffe),
                   ),
-
                 ],
               ),
             ),
-
           ],
         ),
       ),

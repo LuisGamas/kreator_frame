@@ -32,8 +32,8 @@ class MyApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: appRouter,
       themeMode: appValuesFromPreference.themeModeForApp,
-      theme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).getLightTheme(),
-      darkTheme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).getDarkTheme(),
+      theme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).lightTheme,
+      darkTheme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).darkTheme,
     );
   }
 }

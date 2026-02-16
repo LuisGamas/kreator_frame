@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:gap/gap.dart';
+
+// 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
 
 /// Custom card widget optimized to display image previews
@@ -92,8 +94,8 @@ class _ImagePreviewSection extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(12),
-        topRight: Radius.circular(12),
+        topLeft: Radius.circular(AppRadius.sm),
+        topRight: Radius.circular(AppRadius.sm),
       ),
       child: Container(
         width: double.infinity,
@@ -175,7 +177,10 @@ class _MemoryImageWidget extends StatelessWidget {
 
     return addPadding
       ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.md,
+          ),
           child: imageWidget,
         )
       : imageWidget;
@@ -188,6 +193,7 @@ class _ErrorPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     
     return Container(
@@ -198,16 +204,14 @@ class _ErrorPlaceholder extends StatelessWidget {
           children: [
             Icon(
               Hicon.linkBold,
-              size: 32,
+              size: AppIconSizes.lg,
               color: colors.onErrorContainer,
             ),
-           const Gap(8),
+           const Gap(AppSpacing.sm),
             Text(
               'Error',
-              style: TextStyle(
-                color: colors.onErrorContainer,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
+              style: textStyles.labelMedium?.copyWith(
+                color: colors.onErrorContainer
               ),
             ),
           ],
@@ -237,11 +241,11 @@ class _TextContentSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfaceContainerHighest,
         borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(12),
-          bottomRight: Radius.circular(12),
+          bottomLeft: Radius.circular(AppRadius.sm),
+          bottomRight: Radius.circular(AppRadius.sm),
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -254,7 +258,7 @@ class _TextContentSection extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const Gap(2),
+          const Gap(AppSpacing.xxxs),
           // Secondary text with subtle opacity
           Text(
             bottomText,

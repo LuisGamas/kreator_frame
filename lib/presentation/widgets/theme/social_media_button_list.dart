@@ -15,61 +15,49 @@ import 'package:kreator_frame/presentation/widgets/widgets.dart';
 class SocialMediaButtonList extends StatelessWidget {
   final VoidCallback? onTwitterPressed;
   final VoidCallback? onInstagramPressed;
-  final VoidCallback? onWebPagePressed;
+  final VoidCallback? onPersonalSitePressed;
 
   const SocialMediaButtonList({
     super.key,
     this.onTwitterPressed,
     this.onInstagramPressed,
-    this.onWebPagePressed,
+    this.onPersonalSitePressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Twitter
-        SizedBox(
-          height: 48,
-          child: CustomOutlineIconTextButton(
-            text: 'Twitter',
-            color: colors.primary,
-            icon: const Icon(Hicon.twitterBold, size: 18),
-            onPressed: onTwitterPressed,
-          ),
+        CustomIconButton.tonal(
+          buttonSize: 56,
+          iconSize: AppIconSizes.sm,
+          tooltip: 'Twitter',
+          icon: Hicon.twitterBold,
+          onPressed: onTwitterPressed,
         ),
 
-        const Gap(8),
+        const Gap(AppSpacing.sm),
 
         // Instagram
-        SizedBox(
-          height: 48,
-          child: CustomOutlineIconTextButton(
-            text: 'Instagram',
-            color: colors.primary,
-            icon: const Icon(Hicon.instagramBold, size: 18),
-            onPressed: onInstagramPressed,
-          ),
+        CustomIconButton.tonal(
+          buttonSize: 56,
+          iconSize: AppIconSizes.sm,
+          tooltip: 'Instagram',
+          icon: Hicon.instagramBold,
+          onPressed: onInstagramPressed,
         ),
 
-        const Gap(8),
+        const Gap(AppSpacing.sm),
 
         // Web Page
-        SizedBox(
-          height: 48,
-          child: CustomFilledIconTextButton(
-            text: 'Web Page',
-            buttonColor: colors.primary,
-            textColor: colors.onPrimary,
-            icon: Icon(
-              Hicon.websiteBold,
-              color: colors.onPrimary,
-              size: 18,
-            ),
-            onPressed: onWebPagePressed,
-          ),
+        CustomIconButton.tonal(
+          buttonSize: 56,
+          iconSize: AppIconSizes.sm,
+          tooltip: 'Web Page',
+          icon: Hicon.websiteBold,
+          onPressed: onPersonalSitePressed,
         ),
       ],
     );

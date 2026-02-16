@@ -19,8 +19,8 @@ class ColorThemeSwitcher extends ConsumerWidget {
 
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 6,
-        mainAxisSpacing: 6,
+        crossAxisSpacing: AppSpacing.xxs,
+        mainAxisSpacing: AppSpacing.xxs,
         crossAxisCount: 4,
       ),
       delegate: SliverChildBuilderDelegate(
@@ -38,23 +38,23 @@ class ColorThemeSwitcher extends ConsumerWidget {
               height: 50,
               decoration: BoxDecoration(
                 color: AppHelpers.primaryColor[index],
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: AppRadius.radiusLg,
               ),
               child: AnimatedOpacity(
                 opacity: isSelectedColor ? 1 : 0,
-                duration: const Duration(milliseconds: 300),
+                duration: AppDurations.normal,
                 child: Center(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadius.radiusSm,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
+                      padding: const EdgeInsets.all(AppSpacing.xs),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: AppRadius.radiusXs,
                         color: colors.onPrimary.withValues(alpha: 0.7),
                       ),
                       child: const Icon(
                         Hicon.tickBold,
+                        size: AppIconSizes.xxs,
                       ),
                     ),
                   ),

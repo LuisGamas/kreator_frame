@@ -17,18 +17,15 @@ class KWGTScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final repository = ref.watch(repositoryProvider);
     final widgets = ref.watch( getWidgetsProvider('kwgt') );
 
-    // * Widget to show KWGT widgets
     return widgets.when(
       data: (data) {
         return MasonryGridView.count(
           crossAxisCount: 2,
           itemCount: data.length,
-          addAutomaticKeepAlives: true,
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          padding: const EdgeInsets.all(AppSpacing.xxs),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             
@@ -53,7 +50,7 @@ class KWGTScreen extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) => Center(child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         child: Text(AppLocalizations.of(context)!.errorMessage,
           textAlign: TextAlign.center,
         ),

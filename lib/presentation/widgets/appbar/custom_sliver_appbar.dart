@@ -20,7 +20,6 @@ class CustomSliverAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final tabsBar = ref.watch(tabsBarAppProvider);
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
@@ -37,7 +36,7 @@ class CustomSliverAppBar extends ConsumerWidget {
         collapseMode: CollapseMode.pin,
         background: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,7 +54,7 @@ class CustomSliverAppBar extends ConsumerWidget {
             labelColor: colors.secondary,
             indicatorColor: colors.secondary,
             unselectedLabelColor: colors.outline,
-            splashBorderRadius: BorderRadius.circular(10),
+            splashBorderRadius: AppRadius.radiusSm,
             tabs: data.map((tabEntity) => tabEntity.tabBar).toList(),
           );
         },
@@ -93,7 +92,6 @@ class _AppBarWidgets extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final packageAppInfo = ref.watch(packageInfoProvider);
     final appRouter = ref.watch(appRouterProvider);
 
@@ -106,11 +104,11 @@ class _AppBarWidgets extends ConsumerWidget {
             height: 70,
             width: 70,
             child: Card(
-              margin: const EdgeInsets.all(0),
+              margin: EdgeInsets.zero,
               color: colors.surfaceContainer,
               elevation: 0,
               clipBehavior: Clip.hardEdge,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.radiusMd),
               child: const Image(
                 image: AssetImage(Environment.iconPackageLogo),
                 fit: BoxFit.cover,
@@ -163,11 +161,11 @@ class _AppBarWidgets extends ConsumerWidget {
                     ),
                   ),
                   if (Environment.userDeveloperName == Environment.dashDeveloper) ...[
-                    const Gap(2),
+                    const Gap(AppSpacing.xxxs),
                     Icon(
                       Hicon.verifiedBold,
                       color: colors.primary,
-                      size: 10,
+                      size: AppIconSizes.xxxs,
                     ),
                   ]
                 ],
@@ -178,13 +176,9 @@ class _AppBarWidgets extends ConsumerWidget {
         ),
         ZoomIn(
           child: SizedBox(
-            child: CustomFilledIconButton(
+            child: CustomIconButton(
               onPressed: () => appRouter.push(settingsRoute),
-              buttonColor: colors.secondary,
-              icon: Icon(
-                Hicon.categoryBold,
-                color: colors.onSecondary,
-              ),
+              icon: Hicon.categoryBold,
             ),
           ),
         )

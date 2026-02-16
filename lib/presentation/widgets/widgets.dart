@@ -10,3 +10,4 @@ export 'theme/color_theme_switcher.dart';
 export 'theme/profile_header.dart';
 export 'theme/social_media_button_list.dart';
 export 'theme/theme_mode_switcher.dart';
+export 'wallpaper/wallpaper_download_button.dart';

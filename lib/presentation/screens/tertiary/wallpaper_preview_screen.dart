@@ -137,7 +137,7 @@ class _BottomContentData extends StatelessWidget {
                 const Gap(AppSpacing.xxxs),
                 const _NoFunctionButton(icon: Hicon.paletteOutline),
                 const Gap(AppSpacing.xxxs),
-                _DownloadButton(wallpaperEntity: wallpaperEntity),
+                WallpaperDownloadButton(wallpaperEntity: wallpaperEntity),
                 const Spacer(),
                 _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
               ],
@@ -171,139 +171,6 @@ class _NoFunctionButton extends StatelessWidget {
       icon: icon,
       iconColor: Colors.white,
     );
-  }
-}
-
-// ##
-class _DownloadButton extends ConsumerStatefulWidget {
-  final WallpaperEntity wallpaperEntity;
-
-  const _DownloadButton({
-    required this.wallpaperEntity,
-  });
-
-  @override
-  ConsumerState<_DownloadButton> createState() => _DownloadButtonState();
-}
-
-class _DownloadButtonState extends ConsumerState<_DownloadButton> {
-  bool _isDownloading = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final permissions = ref.watch(permissionsProvider);
-    final progress = ref.watch(progressDownloaderProvider);
-    final colors = Theme.of(context).colorScheme;
-
-    // Show progress indicator if downloading and progress is available
-    if (_isDownloading && progress != null && progress > 0) {
-      return _buildProgressIndicator(progress);
-    }
-
-    return CustomIconButton(
-      onPressed: () => permissions.storageGranted
-        ? _downloadWallpaper(context, ref, colors)
-        : ref.read(permissionsProvider.notifier).requestStoragePermission(),
-      icon: Hicon.downloadOutline,
-      iconColor: Colors.white,
-      isLoading: _isDownloading,
-    );
-  }
-
-  /// Builds a circular progress indicator with percentage text
-  Widget _buildProgressIndicator(double progress) {
-    final percentage = (progress * 100).toStringAsFixed(0);
-
-    return Tooltip(
-      message: '$percentage%',
-      child: SizedBox(
-        height: 48,
-        width: 48,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // Circular progress indicator
-            SizedBox(
-              height: 28,
-              width: 28,
-              child: CircularProgressIndicator(
-                value: progress,
-                strokeCap: StrokeCap.round,
-                strokeWidth: 2.5,
-              ),
-            ),
-            // Percentage text
-            Text(
-              percentage,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// Download the wallpaper using MediaStore API (Scoped Storage).
-  ///
-  /// This method does not require permissions on Android 10+ (API 29+) because it uses
-  /// MediaStore to save the image directly to the device gallery.
-  /// Only requires WRITE_EXTERNAL_STORAGE for Android 9 and earlier versions.
-  Future<void> _downloadWallpaper(
-    BuildContext context,
-    WidgetRef ref,
-    ColorScheme colors,
-  ) async {
-    setState(() => _isDownloading = true);
-
-    try {
-      final repository = ref.read(repositoryProvider);
-      final progressNotifier = ref.read(progressDownloaderProvider.notifier);
-
-      // Download and save the wallpaper using MediaStore with progress tracking
-      final success = await repository.downloadWallpaper(
-        widget.wallpaperEntity.url.trim(),
-        widget.wallpaperEntity.name,
-        onProgressUpdate: (progress) {
-          // Update the progress in the Riverpod provider (0.0 to 1.0)
-          progressNotifier.changeProgress(progress);
-        },
-      );
-
-      if (context.mounted) {
-        // Reset progress to 0
-        progressNotifier.changeProgress(0);
-
-        if (success) {
-          SnackbarHelpers.showSuccess(
-            context: context,
-            message: AppLocalizations.of(context)!.downloadOk,
-            color: colors,
-          );
-        } else {
-          SnackbarHelpers.showError(
-            context: context,
-            message: AppLocalizations.of(context)!.downloadError,
-            color: colors,
-          );
-        }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        SnackbarHelpers.showError(
-          context: context,
-          message: AppLocalizations.of(context)!.downloadError,
-          color: colors,
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isDownloading = false);
-      }
-    }
   }
 }
 

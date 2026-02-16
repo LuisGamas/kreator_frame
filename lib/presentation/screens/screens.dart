@@ -1,8 +1,7 @@
 export 'home_screen.dart';
 export 'licenses/license_detail_screen.dart';
 export 'licenses/licenses_screen.dart';
-export 'secondary/klwp_screen.dart';
-export 'secondary/kwgt_screen.dart';
+export 'secondary/kustom_widgets_screen.dart';
 export 'secondary/settings_screen.dart';
 export 'secondary/wallpapers_screen.dart';
 export 'tertiary/about_dashboard_screen.dart';

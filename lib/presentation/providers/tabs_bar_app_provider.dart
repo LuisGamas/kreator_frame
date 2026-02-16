@@ -24,8 +24,8 @@ class TabsBarAppNotifier extends AsyncNotifier<List<TabBarEntity>> {
     if (kwgt.isNotEmpty) {
       tabList.add(
         TabBarEntity(
-          tabBarView: const KWGTScreen(),
-          tabBar: const Tab(text: 'KWGT'),
+          tabBarView: const KustomWidgetsScreen(config: KustomWidgetConfig.kwgt),
+          tabBar: Tab(text: KustomWidgetConfig.kwgt.tabLabel),
         ),
       );
     }
@@ -33,8 +33,8 @@ class TabsBarAppNotifier extends AsyncNotifier<List<TabBarEntity>> {
     if (klwp.isNotEmpty) {
       tabList.add(
         TabBarEntity(
-          tabBarView: const KLWPScreen(),
-          tabBar: const Tab(text: 'KLWP'),
+          tabBarView: const KustomWidgetsScreen(config: KustomWidgetConfig.klwp),
+          tabBar: Tab(text: KustomWidgetConfig.klwp.tabLabel),
         ),
       );
     }

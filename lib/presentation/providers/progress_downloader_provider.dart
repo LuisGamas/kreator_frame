@@ -1,16 +1,20 @@
 // 📦 Package imports:
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'progress_downloader_provider.g.dart';
-
-@riverpod
-class ProgressDownloader extends _$ProgressDownloader {
+/// Notifier que gestiona el progreso de descarga del wallpaper.
+/// Permite actualizar el progreso de 0.0 a 1.0 durante una descarga.
+class ProgressDownloaderNotifier extends Notifier<double?> {
   @override
-  double? build() {
-    return 0;
-  }
+  double? build() => 0;
 
+  /// Actualiza el progreso actual de la descarga.
+  /// Valores: null (inactivo), 0 (iniciado), 0.0-1.0 (progreso), 1.0 (completado).
   void changeProgress(double? progress) {
     state = progress;
   }
 }
+
+/// Provider que expone el estado del progreso de descarga del wallpaper.
+final progressDownloaderProvider = NotifierProvider<ProgressDownloaderNotifier, double?>(
+  ProgressDownloaderNotifier.new,
+);

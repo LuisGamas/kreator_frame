@@ -2,10 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
-import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
-
-// 🌎 Project imports:
 
 // * STATE
 class InAppUpdateState {
@@ -27,17 +24,19 @@ class InAppUpdateState {
 }
 
 // * NOTIFIER
-class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
-  final Repository repository;
-  
-  InAppUpdateNotifier({
-    required this.repository,
-  }) : super(InAppUpdateState());
+class InAppUpdateNotifier extends Notifier<InAppUpdateState> {
+  @override
+  InAppUpdateState build() {
+    return InAppUpdateState();
+  }
 
+  /// Verifica si hay actualizaciones disponibles para la aplicación.
+  /// Actualiza el estado con el resultado de la verificación.
   Future<void> checkAppForUpdates() async {
     try {
       if (state.hasLaunchedUpdate) return;
 
+      final repository = ref.read(repositoryProvider);
       final resultOfReviewingUpdates = await repository.checkAppForUpdates();
 
       state = state.copyWith(
@@ -52,8 +51,11 @@ class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
     }
   }
 
+  /// Ejecuta la actualización inmediata de la aplicación.
+  /// Solo se puede ejecutar si hay una actualización disponible.
   Future<void> executeImmediateAppUpdate() async {
     try {
+      final repository = ref.read(repositoryProvider);
       final resultOfReviewingUpdates = await repository.executeImmediateAppUpdate();
 
       state = state.copyWith(
@@ -67,14 +69,9 @@ class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
       );
     }
   }
-
 }
 
 // * PROVIDER
-final inAppUpdateProvider = StateNotifierProvider<InAppUpdateNotifier, InAppUpdateState>((ref) {
-  final repository = ref.watch(repositoryProvider);
-
-  return InAppUpdateNotifier(
-    repository: repository
-  );
-});
+final inAppUpdateProvider = NotifierProvider<InAppUpdateNotifier, InAppUpdateState>(
+  InAppUpdateNotifier.new,
+);

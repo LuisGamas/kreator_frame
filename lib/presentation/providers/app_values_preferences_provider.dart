@@ -37,18 +37,19 @@ class AppValuesPreferencesState {
 }
 
 // * NOTIFIER
-class AppValuesPreferencesNotifier extends StateNotifier<AppValuesPreferencesState> {
-  final KeyValueStorageServices keyValueStorageServices;
-  
-  AppValuesPreferencesNotifier({
-    required this.keyValueStorageServices,
-  }) : super(AppValuesPreferencesState()) {
+class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
+  late final KeyValueStorageServices _keyValueStorageServices;
+
+  @override
+  AppValuesPreferencesState build() {
+    _keyValueStorageServices = KeyValueStorageServicesImpl();
     _updateStateFromPreferences();
+    return AppValuesPreferencesState();
   }
   
   void _updateStateFromPreferences() async {
-    final indexColorAccent = await keyValueStorageServices.getKeyValue<int>(Environment.keyColorTheme) ?? 4;
-    final indexThemeMode = await keyValueStorageServices.getKeyValue<String>(Environment.keyThemeMode);
+    final indexColorAccent = await _keyValueStorageServices.getKeyValue<int>(Environment.keyColorTheme) ?? 4;
+    final indexThemeMode = await _keyValueStorageServices.getKeyValue<String>(Environment.keyThemeMode);
     // final showMinimalGridView = await keyValueStorageServices.getKeyValue<bool>(Environment.keyMinimalGrid);
 
     final themeMode = switch (indexThemeMode) {
@@ -69,7 +70,7 @@ class AppValuesPreferencesNotifier extends StateNotifier<AppValuesPreferencesSta
   }
 
   void setPreferenceForThemeMode(ThemeMode themeMode) async {
-    await keyValueStorageServices.setKeyValue(Environment.keyThemeMode, themeMode.name);
+    await _keyValueStorageServices.setKeyValue(Environment.keyThemeMode, themeMode.name);
     if (themeMode != state.themeModeForApp) {
       state = state.copyWith(
         themeModeForApp: themeMode
@@ -80,7 +81,7 @@ class AppValuesPreferencesNotifier extends StateNotifier<AppValuesPreferencesSta
   void setPreferenceForColorAccent(Color color) async {
     if (color != state.colorAccentForTheme) {
       final colorIndex = AppHelpers.primaryColor.indexOf(color);
-      await keyValueStorageServices.setKeyValue(Environment.keyColorTheme, colorIndex);
+      await _keyValueStorageServices.setKeyValue(Environment.keyColorTheme, colorIndex);
       state = state.copyWith(
         colorAccentForTheme: color
       );
@@ -97,10 +98,6 @@ class AppValuesPreferencesNotifier extends StateNotifier<AppValuesPreferencesSta
 }
 
 // * PROVIDER
-final appValuesPreferencesProvider = StateNotifierProvider<AppValuesPreferencesNotifier, AppValuesPreferencesState>((ref) {
-  final keyValueStorageServices = KeyValueStorageServicesImpl();
-
-  return AppValuesPreferencesNotifier(
-    keyValueStorageServices: keyValueStorageServices
-  );  
-});
+final appValuesPreferencesProvider = NotifierProvider<AppValuesPreferencesNotifier, AppValuesPreferencesState>(
+  AppValuesPreferencesNotifier.new,
+);

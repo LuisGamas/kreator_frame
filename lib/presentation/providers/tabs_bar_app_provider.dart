@@ -3,49 +3,58 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
 import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/presentation/providers/providers.dart';
+import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 import 'package:kreator_frame/presentation/screens/screens.dart';
 
-part 'tabs_bar_app_provider.g.dart';
+/// Notifier que gestiona la lista de pestañas de la aplicación.
+/// Crea dinámicamente las pestañas basadas en los widgets y wallpapers disponibles.
+class TabsBarAppNotifier extends AsyncNotifier<List<TabBarEntity>> {
+  @override
+  Future<List<TabBarEntity>> build() async {
+    ref.keepAlive();
+    final repository = ref.watch(repositoryProvider);
+    final kwgt = await repository.getListOfWidgets('kwgt', 'preset_thumb_portrait.jpg');
+    final klwp = await repository.getListOfWidgets('klwp', 'preset_thumb_portrait.jpg');
+    List<TabBarEntity> tabList = [];
 
-@Riverpod(keepAlive: true)
-Future<List<TabBarEntity>>  tabsBarApp(Ref ref) async {
-  final repository = ref.watch(repositoryProvider);
-  final kwgt = await repository.getListOfWidgets('kwgt', 'preset_thumb_portrait.jpg');
-  final klwp = await repository.getListOfWidgets('klwp', 'preset_thumb_portrait.jpg');
-  List<TabBarEntity> tabList = [];
+    if (kwgt.isNotEmpty) {
+      tabList.add(
+        TabBarEntity(
+          tabBarView: const KWGTScreen(),
+          tabBar: const Tab(text: 'KWGT'),
+        ),
+      );
+    }
 
-  if (kwgt.isNotEmpty) {
-    tabList.add(
-      TabBarEntity(
-        tabBarView: const KWGTScreen(),
-        tabBar: const Tab(text: 'KWGT'),
-      )
-    );
+    if (klwp.isNotEmpty) {
+      tabList.add(
+        TabBarEntity(
+          tabBarView: const KLWPScreen(),
+          tabBar: const Tab(text: 'KLWP'),
+        ),
+      );
+    }
+
+    if (Environment.userWallpapersUrl != 'NA' &&
+        Environment.userWallpapersUrl != 'Error WALLPAPERS_URL') {
+      tabList.add(
+        TabBarEntity(
+          tabBarView: const WallpapersScreen(),
+          tabBar: const Tab(text: 'WALLPAPERS'),
+        ),
+      );
+    }
+
+    return tabList;
   }
-
-  if (klwp.isNotEmpty) {
-    tabList.add(
-      TabBarEntity(
-        tabBarView: const KLWPScreen(),
-        tabBar: const Tab(text: 'KLWP'),
-      )
-    );
-  }
-
-  if (Environment.userWallpapersUrl != 'NA' && Environment.userWallpapersUrl != 'Error WALLPAPERS_URL') {
-    tabList.add(
-      TabBarEntity(
-        tabBarView: const WallpapersScreen(),
-        tabBar: const Tab(text: 'WALLPAPERS'),
-      )
-    );
-  }
-
-  return tabList;
 }
+
+/// Provider que expone la lista de pestañas de la aplicación.
+/// El estado se mantiene en memoria durante la vida de la app.
+final tabsBarAppProvider = AsyncNotifierProvider<TabsBarAppNotifier, List<TabBarEntity>>(
+  TabsBarAppNotifier.new,
+);

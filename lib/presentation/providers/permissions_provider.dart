@@ -27,11 +27,13 @@ class PermissionsState {
 }
 
 // * Notifier State
-class PermissionsNotifier extends StateNotifier<PermissionsState> {
+class PermissionsNotifier extends Notifier<PermissionsState> {
   int _androidSdkVersion = 25;
 
-  PermissionsNotifier() : super(PermissionsState()) {
+  @override
+  PermissionsState build() {
     _init();
+    return PermissionsState();
   }
 
   Future<void> _init() async {
@@ -92,6 +94,6 @@ class PermissionsNotifier extends StateNotifier<PermissionsState> {
 }
 
 // * Provider
-final permissionsProvider = StateNotifierProvider<PermissionsNotifier, PermissionsState>((ref) {
-  return PermissionsNotifier();
-});
+final permissionsProvider = NotifierProvider<PermissionsNotifier, PermissionsState>(
+  PermissionsNotifier.new,
+);

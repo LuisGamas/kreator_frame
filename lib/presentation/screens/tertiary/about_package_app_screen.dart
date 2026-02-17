@@ -20,7 +20,7 @@ class AboutPackageAppScreen extends ConsumerWidget {
     final packageAppInfo = ref.watch(packageInfoProvider);
     final repository = ref.watch(repositoryProvider);
     final colors = Theme.of(context).colorScheme;
-    final packageName = packageAppInfo.valueOrNull?.appName ?? 'Error Package Name';
+    final packageName = packageAppInfo.value?.appName ?? 'Error Package Name';
 
 
     // * Widget view

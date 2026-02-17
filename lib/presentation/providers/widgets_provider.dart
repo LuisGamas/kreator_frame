@@ -7,9 +7,13 @@ import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
 /// Notifier that manages the widgets list by type.
 /// Accepts a [widgetExt] parameter ('kwgt' or 'klwp') to filter specific widgets.
-class WidgetsNotifier extends FamilyAsyncNotifier<List<WidgetEntity>, String> {
+/// The argument is received via constructor (Riverpod 3.x family pattern).
+class WidgetsNotifier extends AsyncNotifier<List<WidgetEntity>> {
+  WidgetsNotifier(this.widgetExt);
+  final String widgetExt;
+
   @override
-  Future<List<WidgetEntity>> build(String widgetExt) async {
+  Future<List<WidgetEntity>> build() async {
     ref.keepAlive();
     final repository = ref.watch(repositoryProvider);
     return await repository.getListOfWidgets(widgetExt, 'preset_thumb_portrait.jpg');

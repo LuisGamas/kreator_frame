@@ -78,13 +78,11 @@ class _HeroImagePreview extends StatelessWidget {
             child: CircularProgressIndicator(strokeCap: StrokeCap.round),
           );
         },
-        errorBuilder: (context, error, stackTrace) {
-          return const Center(
-            child: Icon(
-              Hicon.dangerTriangleOutline
-            ),
-          );
-        },
+        errorBuilder: (_, _, _) => const Center(
+          child: Icon(
+            Hicon.dangerTriangleOutline
+          ),
+        ),
       ),
     );
   }

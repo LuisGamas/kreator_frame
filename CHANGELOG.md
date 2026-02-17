@@ -6,12 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [v1.5.1] - 2026-02-17
 
+### Added
+- New `ErrorView` reusable widget for displaying error states in async operations with optional retry button and customizable styling. Integrated across all screens using `AsyncValue.when()` for consistent error handling.
+
 ### Fixed
 - Completed the Riverpod 2.x → 3.x library migration by upgrading `flutter_riverpod` to `3.2.1` (previously only API patterns were updated, but the library remained on `2.6.1`).
 - Replaced `FamilyAsyncNotifier<T, Arg>` (removed in Riverpod 3.x) with standard `AsyncNotifier<T>` using constructor-based argument injection for the `WidgetsNotifier` family provider.
 - Replaced `AsyncValue.valueOrNull` (removed in Riverpod 3.x) with `AsyncValue.value` in `AboutPackageAppScreen`.
 
 ### Changed
+- Refactored error handling in HomeScreen, LicensesScreen, KustomWidgetsScreen, WallpapersScreen, and WallpaperPreviewScreen to use the new centralized `ErrorView` widget, eliminating code duplication.
 - Updated multiple dependency versions to latest compatible releases: `archive`, `device_info_plus`, `dio`, `flutter_dotenv`, `flutter_markdown_plus`, `flutter_native_splash`, `go_router`, `image`, `shared_preferences`.
 - Removed unused `flutter_cache_manager` direct dependency.
 

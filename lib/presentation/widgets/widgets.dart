@@ -6,6 +6,7 @@ export 'buttons/social_media_button_list.dart';
 export 'buttons/wallpaper_download_button.dart';
 export 'cards/custom_card_previews.dart';
 export 'feedback/app_circular_progress_indicator.dart';
+export 'feedback/error_view.dart';
 export 'list_tile/custom_list_tile.dart';
 export 'list_tile/section_title.dart';
 export 'theme/color_theme_switcher.dart';

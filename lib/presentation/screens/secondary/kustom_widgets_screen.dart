@@ -8,7 +8,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
-import 'package:kreator_frame/l10n/app_localizations.dart';
 import 'package:kreator_frame/presentation/providers/providers.dart';
 import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
@@ -128,14 +127,8 @@ class KustomWidgetsScreen extends ConsumerWidget {
           },
         );
       },
-      error: (error, stackTrace) => Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: Text(
-            AppLocalizations.of(context)!.errorMessage,
-            textAlign: TextAlign.center,
-          ),
-        ),
+      error: (_, _) => ErrorView(
+        onRetry: () => ref.invalidate(getWidgetsProvider(config.widgetExtension)),
       ),
       loading: () => const Center(
         child: CircularProgressIndicator(strokeCap: StrokeCap.round),

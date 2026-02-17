@@ -52,16 +52,9 @@ class LicensesScreen extends ConsumerWidget {
               ),
             ],
           ),
-        error: (_, _) => Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Text(
-            AppLocalizations.of(context)!.errorMessage,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-          ),
-        ),
-      ),
+        error: (_, _) => ErrorView(
+          onRetry: () => ref.invalidate(licensesOssProvider),
+        )
       ),
     );
 

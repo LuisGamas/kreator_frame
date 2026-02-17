@@ -24,14 +24,18 @@ class InAppUpdateState {
 }
 
 // * NOTIFIER
+/// Notifier that manages in-app update state and automatically checks
+/// for updates when the provider is first created.
 class InAppUpdateNotifier extends Notifier<InAppUpdateState> {
   @override
   InAppUpdateState build() {
+    // Auto-initialize: Check for updates on first build
+    Future.microtask(() => checkAppForUpdates());
     return InAppUpdateState();
   }
 
-  /// Verifica si hay actualizaciones disponibles para la aplicación.
-  /// Actualiza el estado con el resultado de la verificación.
+  /// Checks if there are updates available for the application.
+  /// Updates the state with the result of the verification.
   Future<void> checkAppForUpdates() async {
     try {
       if (state.hasLaunchedUpdate) return;
@@ -51,8 +55,8 @@ class InAppUpdateNotifier extends Notifier<InAppUpdateState> {
     }
   }
 
-  /// Ejecuta la actualización inmediata de la aplicación.
-  /// Solo se puede ejecutar si hay una actualización disponible.
+  /// Executes the immediate update of the application.
+  /// Can only be executed if an update is available.
   Future<void> executeImmediateAppUpdate() async {
     try {
       final repository = ref.read(repositoryProvider);

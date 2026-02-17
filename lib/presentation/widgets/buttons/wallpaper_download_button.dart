@@ -21,9 +21,11 @@ import 'package:kreator_frame/shared/utils/utils.dart';
 /// - Error handling with snackbar feedback
 /// - Success confirmation
 ///
-/// The widget manages the download state internally and communicates with
-/// the repository to handle the actual download operation using MediaStore
-/// API for proper scoped storage support on Android 10+.
+/// State management is handled entirely through providers:
+/// - `progressDownloaderProvider`: Tracks download progress (0.0 to 1.0)
+/// - `permissionsProvider`: Manages storage permission state
+///
+/// The widget uses MediaStore API for proper scoped storage support on Android 10+.
 ///
 /// Example:
 /// ```dart
@@ -32,7 +34,7 @@ import 'package:kreator_frame/shared/utils/utils.dart';
 ///   iconColor: Colors.white,
 /// )
 /// ```
-class WallpaperDownloadButton extends ConsumerStatefulWidget {
+class WallpaperDownloadButton extends ConsumerWidget {
   final WallpaperEntity wallpaperEntity;
   final Color? iconColor;
 
@@ -43,20 +45,16 @@ class WallpaperDownloadButton extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<WallpaperDownloadButton> createState() => _WallpaperDownloadButtonState();
-}
-
-class _WallpaperDownloadButtonState extends ConsumerState<WallpaperDownloadButton> {
-  bool _isDownloading = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final permissions = ref.watch(permissionsProvider);
     final progress = ref.watch(progressDownloaderProvider);
     final colors = Theme.of(context).colorScheme;
 
+    // Determine download state from progress provider
+    final isDownloading = progress != null && progress > 0;
+
     // Show progress indicator if downloading and progress is available
-    if (_isDownloading && progress != null && progress > 0) {
+    if (isDownloading) {
       return _buildProgressIndicator(progress);
     }
 
@@ -65,8 +63,8 @@ class _WallpaperDownloadButtonState extends ConsumerState<WallpaperDownloadButto
         ? _downloadWallpaper(context, ref, colors)
         : ref.read(permissionsProvider.notifier).requestStoragePermission(),
       icon: Hicon.downloadOutline,
-      iconColor: widget.iconColor ?? Colors.white,
-      isLoading: _isDownloading,
+      iconColor: iconColor ?? Colors.white,
+      isLoading: false,
     );
   }
 
@@ -112,21 +110,26 @@ class _WallpaperDownloadButtonState extends ConsumerState<WallpaperDownloadButto
   /// This method does not require permissions on Android 10+ (API 29+) because it uses
   /// MediaStore to save the image directly to the device gallery.
   /// Only requires WRITE_EXTERNAL_STORAGE for Android 9 and earlier versions.
+  ///
+  /// Download state is managed through `progressDownloaderProvider`:
+  /// - Progress > 0: Download in progress
+  /// - Progress = 0 or null: Idle state
   Future<void> _downloadWallpaper(
     BuildContext context,
     WidgetRef ref,
     ColorScheme colors,
   ) async {
-    setState(() => _isDownloading = true);
+    final repository = ref.read(repositoryProvider);
+    final progressNotifier = ref.read(progressDownloaderProvider.notifier);
+
+    // Initialize download state with a small progress value
+    progressNotifier.changeProgress(0.001);
 
     try {
-      final repository = ref.read(repositoryProvider);
-      final progressNotifier = ref.read(progressDownloaderProvider.notifier);
-
       // Download and save the wallpaper using MediaStore with progress tracking
       final success = await repository.downloadWallpaper(
-        widget.wallpaperEntity.url.trim(),
-        widget.wallpaperEntity.name,
+        wallpaperEntity.url.trim(),
+        wallpaperEntity.name,
         onProgressUpdate: (progress) {
           // Update the progress in the Riverpod provider (0.0 to 1.0)
           progressNotifier.changeProgress(progress);
@@ -134,7 +137,7 @@ class _WallpaperDownloadButtonState extends ConsumerState<WallpaperDownloadButto
       );
 
       if (context.mounted) {
-        // Reset progress to 0
+        // Reset progress to 0 (idle state)
         progressNotifier.changeProgress(0);
 
         if (success) {
@@ -152,16 +155,15 @@ class _WallpaperDownloadButtonState extends ConsumerState<WallpaperDownloadButto
         }
       }
     } catch (e) {
+      // Reset progress on error
+      progressNotifier.changeProgress(0);
+
       if (context.mounted) {
         SnackbarHelpers.showError(
           context: context,
           message: AppLocalizations.of(context)!.downloadError,
           color: colors,
         );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isDownloading = false);
       }
     }
   }

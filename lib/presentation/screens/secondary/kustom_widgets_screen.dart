@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -23,8 +22,10 @@ class KustomWidgetConfig {
   /// External URL/link to launch when tapping a widget card.
   final String externalLink;
 
-  /// Height of each widget preview card in the grid.
-  final double previewHeight;
+  /// Total height of each grid cell (image area + text section + Card margins).
+  /// Controls the [SliverGridDelegateWithFixedCrossAxisCount.mainAxisExtent]
+  /// passed to the grid, so [CustomCardPreviews] can fill the available space.
+  final double cellHeight;
 
   /// BoxFit setting for how preview images fit in their containers.
   final BoxFit previewFit;
@@ -38,7 +39,7 @@ class KustomWidgetConfig {
   const KustomWidgetConfig({
     required this.widgetExtension,
     required this.externalLink,
-    required this.previewHeight,
+    required this.cellHeight,
     required this.previewFit,
     required this.addPadding,
     required this.tabLabel,
@@ -49,10 +50,11 @@ class KustomWidgetConfig {
   /// KWGT stands for Kustom Widget. These are smaller Android app widgets
   /// with standard dimensions and scaleDown fitting for proper aspect ratio
   /// preservation.
+  /// cellHeight = 200 (image) + 54 (text section) + 8 (Card margins) = 262dp
   static const kwgt = KustomWidgetConfig(
     widgetExtension: 'kwgt',
     externalLink: Environment.externalLinkKWGT,
-    previewHeight: 200,
+    cellHeight: 262,
     previewFit: BoxFit.scaleDown,
     addPadding: true,
     tabLabel: 'KWGT',
@@ -62,10 +64,11 @@ class KustomWidgetConfig {
   ///
   /// KLWP stands for Kustom Live Wallpaper. These are fullscreen wallpapers
   /// with taller aspect ratios, using cover fitting for seamless display.
+  /// cellHeight = 290 (image) + 54 (text section) + 8 (Card margins) = 352dp
   static const klwp = KustomWidgetConfig(
     widgetExtension: 'klwp',
     externalLink: Environment.externalLinkKLWP,
-    previewHeight: 290,
+    cellHeight: 352,
     previewFit: BoxFit.cover,
     addPadding: false,
     tabLabel: 'KLWP',
@@ -102,8 +105,11 @@ class KustomWidgetsScreen extends ConsumerWidget {
 
     return widgets.when(
       data: (data) {
-        return MasonryGridView.count(
-          crossAxisCount: 2,
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: config.cellHeight,
+          ),
           itemCount: data.length,
           padding: const EdgeInsets.all(AppSpacing.xxs),
           physics: const BouncingScrollPhysics(),
@@ -117,7 +123,6 @@ class KustomWidgetsScreen extends ConsumerWidget {
                   image: widget.widgetThumbnail,
                   topText: widget.nameWidget,
                   bottomText: widget.nameDeveloper,
-                  heightPreview: config.previewHeight,
                   fitPreview: config.previewFit,
                   addPadding: config.addPadding,
                   onTap: () => repository.launchExternalApp(config.externalLink),

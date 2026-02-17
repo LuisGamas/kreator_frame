@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
@@ -19,17 +18,18 @@ class WallpapersScreen extends ConsumerWidget {
     final wallpapers = ref.watch( getWallpapersProvider );
     final appRouter = ref.watch(appRouterProvider);
 
-    // * Widget to show Wallpapers Web previews
     return wallpapers.when(
       data: (data) {
-        return MasonryGridView.count(
-          crossAxisCount: 2,
+        // cellHeight = 290 (image) + 54 (text section) + 8 (Card margins) = 352dp
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 352,
+          ),
           itemCount: data.length,
-          addAutomaticKeepAlives: true,
           padding: const EdgeInsets.all(AppSpacing.xxs),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-
             final wallpaper = data[index];
 
             return ZoomIn(
@@ -41,14 +41,12 @@ class WallpapersScreen extends ConsumerWidget {
                     imageUrl: wallpaper.url,
                     topText: wallpaper.name,
                     bottomText: wallpaper.author,
-                    heightPreview: 290,
                     fitPreview: BoxFit.cover,
                     onTap: () => appRouter.push(AppRoutes.wallpaperPreview, extra: wallpaper),
                   ),
                 ),
               ),
             );
-
           },
         );
       },

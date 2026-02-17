@@ -29,7 +29,7 @@ class Environment {
 
   // * Variables for assets **DO NOT REMOVE**
   static const String iconPackageLogo = 'assets/logo/app_logo.png';
-  static const String iconDashboardLogo = 'assets/dashboard/dashboard_logo.png';
+  static const String iconDashboardLogo = 'assets/dashboard/dashboard_icon.png';
 
   // * Variables for external links **DO NOT REMOVE**
   static const String externalLinkTwitter = 'https://kutt.it/TwitterGamas';

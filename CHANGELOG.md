@@ -16,8 +16,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Refactored error handling in HomeScreen, LicensesScreen, KustomWidgetsScreen, WallpapersScreen, and WallpaperPreviewScreen to use the new centralized `ErrorView` widget, eliminating code duplication.
+- Replaced `flutter_staggered_grid_view` library with native `GridView.builder` using `mainAxisExtent` for precise cell height control. Refactored `CustomCardPreviews` to be constraint-responsive: removed `heightPreview` parameter, enabled image section to expand with `Expanded`, allowing parent grid to fully control sizing.
+- Updated `KustomWidgetConfig` to use `cellHeight` (total grid cell height including image, text, and margins) instead of separate `previewHeight`, improving separation of concerns. Updated calculations: KWGT = 262dp (200 image + 62 overhead), KLWP = 352dp (290 image + 62 overhead).
 - Updated multiple dependency versions to latest compatible releases: `archive`, `device_info_plus`, `dio`, `flutter_dotenv`, `flutter_markdown_plus`, `flutter_native_splash`, `go_router`, `image`, `shared_preferences`.
-- Removed unused `flutter_cache_manager` direct dependency.
+- Removed unused `flutter_cache_manager` direct dependency and corrected asset references in `Environment` constants.
+
+### Removed
+- `flutter_staggered_grid_view` (0.7.0) - functionality replicated using native Flutter GridView.
 
 ---
 

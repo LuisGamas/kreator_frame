@@ -13,8 +13,12 @@ import 'package:kreator_frame/config/config.dart';
 
 /// Custom card widget optimized to display image previews
 /// with additional information and enhanced visual effects.
-/// 
+///
 /// Supports both images from URLs and from memory (Uint8List).
+/// The card fills its parent's available space — use the parent's constraints
+/// (e.g. [SliverGridDelegateWithFixedCrossAxisCount.mainAxisExtent]) to control
+/// the total card height. The image section expands to fill the space left after
+/// the text section renders at its natural height.
 class CustomCardPreviews extends StatelessWidget {
   final Uint8List? image;
   final String? imageUrl;
@@ -22,7 +26,6 @@ class CustomCardPreviews extends StatelessWidget {
   final bool addPadding;
   final String topText;
   final String bottomText;
-  final double? heightPreview;
   final BoxFit? fitPreview;
   final VoidCallback? onTap;
 
@@ -34,7 +37,6 @@ class CustomCardPreviews extends StatelessWidget {
     this.imageUrl,
     required this.isUrlImage,
     this.addPadding = false,
-    this.heightPreview,
     required this.fitPreview,
     this.onTap,
   });
@@ -50,15 +52,16 @@ class CustomCardPreviews extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            _ImagePreviewSection(
-              image: image,
-              imageUrl: imageUrl,
-              isUrlImage: isUrlImage,
-              addPadding: addPadding,
-              heightPreview: heightPreview,
-              fitPreview: fitPreview,
+            Expanded(
+              child: _ImagePreviewSection(
+                image: image,
+                imageUrl: imageUrl,
+                isUrlImage: isUrlImage,
+                addPadding: addPadding,
+                fitPreview: fitPreview,
+              ),
             ),
             _TextContentSection(
               topText: topText,
@@ -71,13 +74,13 @@ class CustomCardPreviews extends StatelessWidget {
   }
 }
 
-/// Optimized image preview section
+/// Optimized image preview section.
+/// Expands to fill the available space provided by its parent [Expanded].
 class _ImagePreviewSection extends StatelessWidget {
   final Uint8List? image;
   final String? imageUrl;
   final bool isUrlImage;
   final bool addPadding;
-  final double? heightPreview;
   final BoxFit? fitPreview;
 
   const _ImagePreviewSection({
@@ -85,7 +88,6 @@ class _ImagePreviewSection extends StatelessWidget {
     this.imageUrl,
     required this.isUrlImage,
     required this.addPadding,
-    this.heightPreview,
     required this.fitPreview,
   });
 
@@ -95,7 +97,6 @@ class _ImagePreviewSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: heightPreview,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppRadius.sm),

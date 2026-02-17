@@ -70,9 +70,9 @@ dev_dependencies:
 flutter_launcher_icons:
   # * dart run flutter_launcher_icons
   # For all platforms
-  image_path: "assets/dashboard/dashboard_icon.png"
+  image_path: "assets/logo/app_logo.png"
   # For Android
-  adaptive_icon_foreground: "assets/dashboard/dashboard_icon.png"
+  adaptive_icon_foreground: "assets/logo/app_logo.png"
   adaptive_icon_background: "#FDFDFD"
   android: true
 
@@ -80,8 +80,8 @@ flutter_native_splash:
   # * dart run flutter_native_splash:create
   color: "#FFFFFF"
   color_dark: "#181818"
-  image: "assets/dashboard/dashboard_icon.png"
-  image_dark: "assets/dashboard/dashboard_icon.png"
+  image: "assets/logo/app_logo.png"
+  image_dark: "assets/logo/app_logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

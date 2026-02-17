@@ -31,6 +31,11 @@ class Environment {
   static const String iconPackageLogo = 'assets/logo/app_logo.png';
   static const String iconDashboardLogo = 'assets/dashboard/dashboard_icon.png';
 
+  // * Wallpaper screen location constants **DO NOT REMOVE**
+  static const int wallpaperHomeScreen = 1;   // Equivalent to WallpaperManager.FLAG_SYSTEM
+  static const int wallpaperLockScreen = 2;   // Equivalent to WallpaperManager.FLAG_LOCK
+  static const int wallpaperBothScreens = 3;  // FLAG_SYSTEM | FLAG_LOCK
+
   // * Variables for external links **DO NOT REMOVE**
   static const String externalLinkTwitter = 'https://kutt.it/TwitterGamas';
   static const String externalLinkInstagram = 'https://kutt.it/InstagramGamas';

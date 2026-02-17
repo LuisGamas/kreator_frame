@@ -30,6 +30,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bottomWallSelectorBS => 'Pantallas de bloqueo y principal';
 
   @override
+  String get bottomWallSelectorNative => 'Usar selector nativo de Android';
+
+  @override
   String get appliedOk => 'Wallpaper aplicado con exito!';
 
   @override

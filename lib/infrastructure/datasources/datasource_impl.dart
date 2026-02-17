@@ -1,19 +1,12 @@
-// 🎯 Dart imports:
-import 'dart:io';
-import 'dart:ui' as ui;
-
 // 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_upgrade_version/flutter_upgrade_version.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
@@ -27,6 +20,8 @@ import 'package:kreator_frame/infrastructure/infrastructure.dart';
 class DataSourceImpl extends DataSource {
   final InAppUpdateManager _inAppUpdateManager = InAppUpdateManager();
   final dio = Dio();
+
+  static const _channel = MethodChannel('kreator_frame/wallpaper');
 
   // ============================================================
   // App Information
@@ -96,18 +91,34 @@ class DataSourceImpl extends DataSource {
   // ============================================================
 
   /// Sets a wallpaper on the device (home screen, lock screen, or both).
-  /// Crops the image to fit the screen dimensions before applying.
+  /// Delegates to native Android via MethodChannel for background processing.
   /// Returns true if successful, false otherwise.
   @override
-  Future<bool> setWallpaper(String url, int location, Size size) async {
-    final File? croppedImage = await _cropAndSaveImage(url, size);
-
-    if (croppedImage != null) {
-      bool result =
-          await WallpaperManager.setWallpaperFromFile(croppedImage.path, location);
-      return result;
+  Future<bool> setWallpaper(String url, int location) async {
+    try {
+      final result = await _channel.invokeMethod<bool>('setWallpaper', {
+        'url': url,
+        'location': location,
+      });
+      return result ?? false;
+    } catch (e) {
+      return false;
     }
-    return false;
+  }
+
+  /// Opens the native Android wallpaper picker by launching a system intent.
+  /// Downloads the image to a temp cache file and delegates the rest to the OS.
+  /// Returns true if the intent was launched successfully, false otherwise.
+  @override
+  Future<bool> openNativeWallpaperPicker(String url) async {
+    try {
+      final result = await _channel.invokeMethod<bool>('openNativeWallpaperPicker', {
+        'url': url,
+      });
+      return result ?? false;
+    } catch (e) {
+      return false;
+    }
   }
 
   /// Retrieves the list of available wallpapers from the remote API.
@@ -307,68 +318,6 @@ class DataSourceImpl extends DataSource {
     // Remove path prefix and file extension
     zipFiles = zipFiles.map((zip) => zip.split('/').last).toList();
     return zipFiles;
-  }
-
-  /// Crops and saves a wallpaper image to match the device screen dimensions.
-  /// Maintains aspect ratio while fitting the image to the screen.
-  /// Returns the cropped image file or null if the operation fails.
-  Future<File?> _cropAndSaveImage(String imageUrl, Size screenSize) async {
-    try {
-      // 1. Upload the image from the URL
-      final ByteData data = await NetworkAssetBundle(Uri.parse(imageUrl)).load("");
-      final Uint8List bytes = data.buffer.asUint8List();
-      // 2. Decoding the image
-      final codec = await ui.instantiateImageCodec(bytes);
-      final frame = await codec.getNextFrame();
-      final ui.Image originalImage = frame.image;
-      // 3. Get screen dimensions
-      final screenWidth = screenSize.width;
-      final screenHeight = screenSize.height;
-      // 4. Crop the image while maintaining its proportion
-      final originalWidth = originalImage.width;
-      final originalHeight = originalImage.height;
-
-      final screenAspectRatio = screenWidth / screenHeight;
-      final imageAspectRatio = originalWidth / originalHeight;
-
-      double cropWidth;
-      double cropHeight;
-
-      if (imageAspectRatio > screenAspectRatio) {
-        // The image is wider than the screen, we adjust the width proportionally.
-        cropHeight = originalHeight.toDouble();
-        cropWidth = cropHeight * screenAspectRatio;
-      } else {
-        // The image is higher than the screen, we adjust the height proportionally.
-        cropWidth = originalWidth.toDouble();
-        cropHeight = cropWidth / screenAspectRatio;
-      }
-
-      final left = (originalWidth - cropWidth) / 2;
-      final top = (originalHeight - cropHeight) / 2;
-      final srcRect = Rect.fromLTWH(left, top, cropWidth, cropHeight);
-
-      final recorder = ui.PictureRecorder();
-      final canvas = Canvas(recorder);
-      final dstRect = Rect.fromLTWH(0, 0, screenWidth, screenHeight);
-      // 5. Draw the cut-out image on the canvas
-      canvas.drawImageRect(originalImage, srcRect, dstRect, Paint());
-
-      final picture = recorder.endRecording();
-      final ui.Image croppedImage = await picture.toImage(screenWidth.toInt(), screenHeight.toInt());
-      // 6. Convert cropped image to PNG bytes
-      final ByteData? byteData = await croppedImage.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List pngBytes = byteData!.buffer.asUint8List();
-      // 7. Saving PNG bytes as a temporary file
-      final directory = await getTemporaryDirectory();
-      final String filePath = '${directory.path}/cropped_image.png';
-      final File file = File(filePath);
-      // 8. Write the bytes to the file
-      await file.writeAsBytes(pngBytes);
-      return file;
-    } catch (e) {
-      return null;
-    }
   }
 
 }

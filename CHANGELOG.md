@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - New `ErrorView` reusable widget for displaying error states in async operations with optional retry button and customizable styling. Integrated across all screens using `AsyncValue.when()` for consistent error handling.
+- Native Android wallpaper picker service via `WallpaperManager.getCropAndSetWallpaperIntent()`, allowing system UI selection of home screen, lock screen, or both. Implemented with `FileProvider` for secure content URI sharing.
+- `WallpapersNativeServices` Kotlin class with clean separation of concerns: custom wallpaper application (download → crop → apply) and native picker integration (download → expose via FileProvider → system intent).
+- New `_NativePickerButton` widget in WallpaperPreviewScreen providing alternative wallpaper application via native Android system UI.
+- Wallpaper location constants in `Environment` class: `wallpaperHomeScreen` (1), `wallpaperLockScreen` (2), `wallpaperBothScreens` (3).
+- New method `openNativeWallpaperPicker(String url)` across all data/repository layers (datasource → repository → UI).
+- Localization strings for native picker option: `bottomWallSelectorNative` (English: "Use Android Wallpaper Picker", Spanish: "Usar selector nativo de Android").
 
 ### Fixed
 - Completed the Riverpod 2.x → 3.x library migration by upgrading `flutter_riverpod` to `3.2.1` (previously only API patterns were updated, but the library remained on `2.6.1`).
@@ -15,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Replaced `AsyncValue.valueOrNull` (removed in Riverpod 3.x) with `AsyncValue.value` in `AboutPackageAppScreen`.
 
 ### Changed
+- Migrated wallpaper application from third-party `flutter_wallpaper_manager` (0.0.4) to native Android implementation via Kotlin MethodChannel (`kreator_frame/wallpaper`). Image download, center-crop, and scaling now execute on background threads via `Thread` + `Handler` pattern, eliminating main thread blocking.
+- Removed `Size size` parameter from `setWallpaper()` method across all layers (datasource → repository → UI). Screen dimensions now obtained natively via Android's `Resources.getSystem().displayMetrics`.
 - Refactored error handling in HomeScreen, LicensesScreen, KustomWidgetsScreen, WallpapersScreen, and WallpaperPreviewScreen to use the new centralized `ErrorView` widget, eliminating code duplication.
 - Replaced `flutter_staggered_grid_view` library with native `GridView.builder` using `mainAxisExtent` for precise cell height control. Refactored `CustomCardPreviews` to be constraint-responsive: removed `heightPreview` parameter, enabled image section to expand with `Expanded`, allowing parent grid to fully control sizing.
 - Updated `KustomWidgetConfig` to use `cellHeight` (total grid cell height including image, text, and margins) instead of separate `previewHeight`, improving separation of concerns. Updated calculations: KWGT = 262dp (200 image + 62 overhead), KLWP = 352dp (290 image + 62 overhead).
@@ -22,7 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Removed unused `flutter_cache_manager` direct dependency and corrected asset references in `Environment` constants.
 
 ### Removed
+- `flutter_wallpaper_manager` (0.0.4) - functionality completely replaced with native Kotlin implementation.
 - `flutter_staggered_grid_view` (0.7.0) - functionality replicated using native Flutter GridView.
+- Unused Dart image processing methods: removed `_cropAndSaveImage()`, `dart:ui` codec operations, and `path_provider` dependency from datasource layer (moved to native Kotlin).
 
 ---
 

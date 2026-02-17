@@ -30,6 +30,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bottomWallSelectorBS => 'Set as Both Screen';
 
   @override
+  String get bottomWallSelectorNative => 'Use Android Wallpaper Picker';
+
+  @override
   String get appliedOk => 'Wallpaper successfully applied!';
 
   @override

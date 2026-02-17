@@ -134,6 +134,12 @@ abstract class AppLocalizations {
   /// **'Set as Both Screen'**
   String get bottomWallSelectorBS;
 
+  /// No description provided for @bottomWallSelectorNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Android Wallpaper Picker'**
+  String get bottomWallSelectorNative;
+
   /// No description provided for @appliedOk.
   ///
   /// In en, this message translates to:

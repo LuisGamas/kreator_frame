@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
@@ -252,20 +251,24 @@ class _BottomCardContent extends StatelessWidget {
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorHS,
             wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.HOME_SCREEN,
+            screenLocation: Environment.wallpaperHomeScreen,
           ),
           const Gap(AppSpacing.xs),
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorLS,
             wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.LOCK_SCREEN,
+            screenLocation: Environment.wallpaperLockScreen,
           ),
           const Gap(AppSpacing.xs),
           _ModalButton(
             textButton: AppLocalizations.of(context)!.bottomWallSelectorBS,
             wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.BOTH_SCREEN,
+            screenLocation: Environment.wallpaperBothScreens,
           ),
+          const Gap(AppSpacing.xxs),
+          const Divider(),
+          // const Gap(AppSpacing.xs),
+          _NativePickerButton(wallpaperEntity: wallpaperEntity),
           const Gap(AppSpacing.md),
         ],
       ),
@@ -305,7 +308,7 @@ class _ModalButton extends ConsumerWidget {
 
     ref.read(setWallpaperProvider.notifier).changeState();
 
-    final result = await repository.setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.sizeOf(context));
+    final result = await repository.setWallpaper(wallpaperEntity.url, screenLocation);
 
     if (context.mounted) {
       ref.read(setWallpaperProvider.notifier).changeState();
@@ -324,6 +327,50 @@ class _ModalButton extends ConsumerWidget {
       }
       appRouter.pop();
     }
-    
+
+  }
+}
+
+// ##
+class _NativePickerButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _NativePickerButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final setWallpaperState = ref.watch(setWallpaperProvider);
+
+    return CustomButton.tonal(
+      width: double.infinity,
+      borderRadius: AppRadius.radiusLg,
+      isLoading: setWallpaperState,
+      text: AppLocalizations.of(context)!.bottomWallSelectorNative,
+      onPressed: () => _openNativePicker(context, ref),
+    );
+  }
+
+  void _openNativePicker(BuildContext context, WidgetRef ref) async {
+    final repository = ref.watch(repositoryProvider);
+    final appRouter = ref.watch(appRouterProvider);
+    final colors = Theme.of(context).colorScheme;
+
+    ref.read(setWallpaperProvider.notifier).changeState();
+
+    final result = await repository.openNativeWallpaperPicker(wallpaperEntity.url);
+
+    if (context.mounted) {
+      ref.read(setWallpaperProvider.notifier).changeState();
+      if (!result) {
+        SnackbarHelpers.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedError,
+          color: colors,
+        );
+      }
+      appRouter.pop();
+    }
   }
 }

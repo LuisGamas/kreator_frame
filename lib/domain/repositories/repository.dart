@@ -1,6 +1,3 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
 
@@ -24,7 +21,10 @@ abstract class Repository {
   Future<String> executeImmediateAppUpdate();
 
   /// Sets a wallpaper from a URL to the device.
-  Future<bool> setWallpaper(String url, int location, Size size);
+  Future<bool> setWallpaper(String url, int location);
+
+  /// Opens the native Android wallpaper picker for the given image URL.
+  Future<bool> openNativeWallpaperPicker(String url);
 
   /// Retrieves the list of available wallpapers.
   Future<List<WallpaperEntity>> getListOfWallpapers();

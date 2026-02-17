@@ -1,6 +1,3 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
 
@@ -36,8 +33,13 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<bool> setWallpaper(String url, int location, Size size) {
-    return dataSource.setWallpaper(url, location, size);
+  Future<bool> setWallpaper(String url, int location) {
+    return dataSource.setWallpaper(url, location);
+  }
+
+  @override
+  Future<bool> openNativeWallpaperPicker(String url) {
+    return dataSource.openNativeWallpaperPicker(url);
   }
 
   @override

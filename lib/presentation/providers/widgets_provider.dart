@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
-/// Notifier que gestiona la lista de widgets por tipo.
-/// Acepta un parámetro [widgetExt] ('kwgt' o 'klwp') para filtrar widgets específicos.
+/// Notifier that manages the widgets list by type.
+/// Accepts a [widgetExt] parameter ('kwgt' or 'klwp') to filter specific widgets.
 class WidgetsNotifier extends FamilyAsyncNotifier<List<WidgetEntity>, String> {
   @override
   Future<List<WidgetEntity>> build(String widgetExt) async {
@@ -16,9 +16,9 @@ class WidgetsNotifier extends FamilyAsyncNotifier<List<WidgetEntity>, String> {
   }
 }
 
-/// Provider que expone la lista de widgets filtrada por tipo.
-/// Uso: `ref.watch(getWidgetsProvider('kwgt'))` o `ref.watch(getWidgetsProvider('klwp'))`
-/// El estado se mantiene en memoria durante la vida de la app.
+/// Provider that exposes the widgets list filtered by type.
+/// Usage: `ref.watch(getWidgetsProvider('kwgt'))` or `ref.watch(getWidgetsProvider('klwp'))`
+/// The state is kept in memory for the lifetime of the app.
 final getWidgetsProvider = AsyncNotifierProvider.family<WidgetsNotifier, List<WidgetEntity>, String>(
   WidgetsNotifier.new,
 );

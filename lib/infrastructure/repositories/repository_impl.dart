@@ -4,6 +4,17 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:kreator_frame/domain/domain.dart';
 
+/// Implementation of the Repository interface.
+///
+/// This class acts as a pass-through to the DataSource, following Clean Architecture
+/// principles where the repository sits between the domain and data layers. While
+/// currently a simple delegation, this structure allows for:
+/// - Future aggregation of multiple data sources
+/// - Addition of caching logic
+/// - Domain-specific data transformations
+/// - Business rule enforcement
+///
+/// The repository receives the DataSource through dependency injection via providers.
 class RepositoryImpl extends Repository {
   final DataSource dataSource;
 

@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v1.5.0] - 2026-02-16
+
+### Added
+- Complete English documentation for all public classes and methods across the entire codebase.
+- Auto-initialization pattern for in-app update checks using provider lifecycle.
+- Material Design 3 improvements to AppBar, Cards, and Profile Header components.
+- New unified KustomWidgetsScreen replacing duplicate KWGT/KLWP screens with configuration-based approach.
+- Extracted WallpaperDownloadButton as reusable widget with progress tracking.
+
+### Changed
+- Migrated all providers from Riverpod 2.x codegen patterns to Riverpod 3.x manual patterns.
+- Converted all ConsumerStatefulWidget instances to ConsumerWidget for better state management.
+- Reorganized shared layer: split AppHelpers into SnackbarHelpers and AppConstants.
+- Extracted route constants to dedicated AppRoutes class.
+- Enhanced all entities with copyWith, operator==, and hashCode methods.
+- Reorganized DataSourceImpl with clear sections and comprehensive documentation.
+- Reduced wallpaper_preview_screen from 465 to 332 lines (-28.6%).
+- Eliminated 100% code duplication between KWGT and KLWP screens.
+- Optimized AppBar logo size (70dp → 65dp) with improved spacing and layout.
+- Implemented ripple feedback effect in cards using InkWell.
+- Reduced profile header avatar size (80dp → 65dp) for better visual balance.
+- Moved button widgets (social_media_button_list, wallpaper_download_button) to organized buttons folder.
+- Translated all Spanish comments and documentation to English.
+- Updated all barrel export files with proper alphabetical organization.
+
+### Removed
+- Unused dependencies: flutter_hooks and hooks_riverpod.
+- All .g.dart generated files and codegen-related dependencies.
+- Legacy StateNotifier and StateNotifierProvider patterns.
+- Duplicate screen files (kwgt_screen.dart and klwp_screen.dart).
+
+### Fixed
+- Improved provider injection chain: dataSourceProvider → repositoryProvider → notifiers.
+- Enhanced download state management using progressDownloaderProvider instead of local state.
+- Better Material Design 3 compliance while maintaining visual coherence.
+
 ## [v1.4.0] - 2025-07-11
 
 ### Added

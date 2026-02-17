@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
-/// Notifier que gestiona la lista de wallpapers.
-/// Recupera y cachea los wallpapers disponibles desde el repository.
+/// Notifier that manages the wallpapers list.
+/// Retrieves and caches available wallpapers from the repository.
 class WallpapersNotifier extends AsyncNotifier<List<WallpaperEntity>> {
   @override
   Future<List<WallpaperEntity>> build() async {
@@ -16,8 +16,8 @@ class WallpapersNotifier extends AsyncNotifier<List<WallpaperEntity>> {
   }
 }
 
-/// Provider que expone la lista de wallpapers.
-/// El estado se mantiene en memoria durante la vida de la app.
+/// Provider that exposes the wallpapers list.
+/// The state is kept in memory for the lifetime of the app.
 final getWallpapersProvider = AsyncNotifierProvider<WallpapersNotifier, List<WallpaperEntity>>(
   WallpapersNotifier.new,
 );

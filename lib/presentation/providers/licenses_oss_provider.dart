@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
-/// Notifier que gestiona la lista de licencias de código abierto.
-/// Recupera y cachea las licencias OSS desde el repository.
+/// Notifier that manages the open-source licenses list.
+/// Retrieves and caches OSS licenses from the repository.
 class LicensesOssNotifier extends AsyncNotifier<List<LicenseEntity>> {
   @override
   Future<List<LicenseEntity>> build() async {
@@ -16,8 +16,8 @@ class LicensesOssNotifier extends AsyncNotifier<List<LicenseEntity>> {
   }
 }
 
-/// Provider que expone la lista de licencias OSS.
-/// El estado se mantiene en memoria durante la vida de la app.
+/// Provider that exposes the OSS licenses list.
+/// The state is kept in memory for the lifetime of the app.
 final licensesOssProvider = AsyncNotifierProvider<LicensesOssNotifier, List<LicenseEntity>>(
   LicensesOssNotifier.new,
 );

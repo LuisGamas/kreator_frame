@@ -5,6 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
 // * STATE
+/// State that holds in-app update information and status.
+///
+/// Tracks whether an update is available and whether an update
+/// has already been launched to avoid duplicate update prompts.
 class InAppUpdateState {
   final bool canExecuteUpdate;
   final bool hasLaunchedUpdate;
@@ -76,6 +80,8 @@ class InAppUpdateNotifier extends Notifier<InAppUpdateState> {
 }
 
 // * PROVIDER
+/// Provider that exposes in-app update state and functionality.
+/// Automatically checks for updates when the app starts.
 final inAppUpdateProvider = NotifierProvider<InAppUpdateNotifier, InAppUpdateState>(
   InAppUpdateNotifier.new,
 );

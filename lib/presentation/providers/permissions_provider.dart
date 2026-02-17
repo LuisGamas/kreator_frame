@@ -4,6 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // * State
+/// State that holds permission statuses for the application.
+///
+/// Manages storage permission state with special handling for Android versions:
+/// - Android 10+ (API 29+): No permissions needed (Scoped Storage/MediaStore)
+/// - Android 9 and earlier: Requires WRITE_EXTERNAL_STORAGE permission
 class PermissionsState {
   final PermissionStatus storage;
 
@@ -27,6 +32,11 @@ class PermissionsState {
 }
 
 // * Notifier State
+/// Notifier that manages permission requests and status checks.
+///
+/// Automatically initializes permission states on creation and provides
+/// methods to request permissions when needed. Adapts behavior based on
+/// Android version to support both legacy storage and Scoped Storage.
 class PermissionsNotifier extends Notifier<PermissionsState> {
   int _androidSdkVersion = 25;
 
@@ -94,6 +104,7 @@ class PermissionsNotifier extends Notifier<PermissionsState> {
 }
 
 // * Provider
+/// Provider that exposes permission states and management functionality.
 final permissionsProvider = NotifierProvider<PermissionsNotifier, PermissionsState>(
   PermissionsNotifier.new,
 );

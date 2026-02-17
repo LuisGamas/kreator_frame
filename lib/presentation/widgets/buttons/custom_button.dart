@@ -153,17 +153,17 @@ class CustomButton extends StatelessWidget {
   ButtonStyle _getButtonStyle(BuildContext context) {
     final Size minSize = Size(width ?? 0, height ?? 56);
 
-    // Estas son las personalizaciones que queremos aplicar sobre el tema base
+    // These are the customizations we want to apply over the base theme
     final styleOverrides = ButtonStyle(
       minimumSize: WidgetStateProperty.all(minSize),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(borderRadius: borderRadius ?? AppRadius.radiusMd),
       ),
-      // Colores personalizados
+      // Custom colors
       backgroundColor: WidgetStateProperty.resolveWith<Color?>(
         (states) {
           if (states.contains(WidgetState.disabled)) return null;
-          return color; // Aplica solo si no está desactivado
+          return color; // Apply only if not disabled
         },
       ),
       foregroundColor: WidgetStateProperty.resolveWith<Color?>(
@@ -172,7 +172,7 @@ class CustomButton extends StatelessWidget {
           return textColor;
         },
       ),
-      // Estilo del borde para OutlinedButton
+      // Border style for OutlinedButton
       side: type == CustomButtonType.outlined
           ? WidgetStateProperty.resolveWith<BorderSide?>(
               (states) {
@@ -184,7 +184,7 @@ class CustomButton extends StatelessWidget {
           : null,
     );
 
-    // Obtenemos el estilo del tema y lo combinamos con nuestras personalizaciones
+    // Get the theme style and merge it with our customizations
     return switch (type) {
       CustomButtonType.filled =>
         FilledButton.styleFrom().merge(styleOverrides),
@@ -212,7 +212,7 @@ class _ButtonContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // El color del contenido lo hereda automáticamente del `foregroundColor` del ButtonStyle
+    // The content color is automatically inherited from the ButtonStyle's `foregroundColor`
     // final contentColor = IconTheme.of(context).color ?? Theme.of(context).colorScheme.primary;
 
     return AnimatedSwitcher(

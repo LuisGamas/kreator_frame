@@ -3,6 +3,27 @@ import 'package:flutter/material.dart';
 
 enum CustomIconButtonType { standard, filled, tonal, outlined }
 
+/// A customizable icon button with multiple Material 3 variants.
+///
+/// Supports four button types: standard, filled, tonal, and outlined.
+/// Each variant follows Material 3 design guidelines while allowing
+/// customization of colors, sizes, and loading states.
+///
+/// Features:
+/// - Loading state with spinning progress indicator
+/// - Custom icon and background colors
+/// - Configurable button and icon sizes
+/// - Tooltip support
+/// - Named constructors for each variant
+///
+/// Example:
+/// ```dart
+/// CustomIconButton.filled(
+///   onPressed: () => doSomething(),
+///   icon: Icons.download,
+///   color: Colors.blue,
+/// )
+/// ```
 class CustomIconButton extends StatelessWidget {
   final void Function()? onPressed;
   final IconData icon;
@@ -10,8 +31,8 @@ class CustomIconButton extends StatelessWidget {
   final bool isLoading;
   final double? iconSize;
   final double? buttonSize;
-  final Color? color; // Color de fondo o borde
-  final Color? iconColor; // Color del icono/loader personalizado
+  final Color? color; // Background or border color
+  final Color? iconColor; // Custom icon/loader color
   final String? tooltip;
 
   const CustomIconButton({
@@ -27,15 +48,15 @@ class CustomIconButton extends StatelessWidget {
     this.tooltip,
   });
 
-  // Constructores nombrados para mayor claridad
+  // Named constructors for better clarity
   factory CustomIconButton.filled({
     required VoidCallback? onPressed,
     required IconData icon,
     bool isLoading = false,
     double? iconSize,
     double? buttonSize,
-    Color? color, // Color de fondo o borde
-    Color? iconColor, // Color del icono/loader personalizado
+    Color? color, // Background or border color
+    Color? iconColor, // Custom icon/loader color
     String? tooltip,
   }) => CustomIconButton(
     onPressed: onPressed,
@@ -55,8 +76,8 @@ class CustomIconButton extends StatelessWidget {
     bool isLoading = false,
     double? iconSize,
     double? buttonSize,
-    Color? color, // Color de fondo o borde
-    Color? iconColor, // Color del icono/loader personalizado
+    Color? color, // Background or border color
+    Color? iconColor, // Custom icon/loader color
     String? tooltip,
   }) => CustomIconButton(
     onPressed: onPressed,
@@ -76,8 +97,8 @@ class CustomIconButton extends StatelessWidget {
     bool isLoading = false,
     double? iconSize,
     double? buttonSize,
-    Color? color, // Color de fondo o borde
-    Color? iconColor, // Color del icono/loader personalizado
+    Color? color, // Background or border color
+    Color? iconColor, // Custom icon/loader color
     String? tooltip,
   }) => CustomIconButton(
     onPressed: onPressed,
@@ -96,13 +117,13 @@ class CustomIconButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
 
-    // 1. Resolvemos el color del contenido (Icono y Loader)
+    // 1. Resolve the content color (Icon and Loader)
     final Color effectiveIconColor = _getIconColor(colors);
 
-    // 2. Resolvemos el estilo del botón
+    // 2. Resolve the button style
     final ButtonStyle style = _getButtonStyle(colors);
 
-    // 3. El contenido con animación de cambio
+    // 3. Content with change animation
     final Widget content = AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
       child: isLoading
@@ -124,7 +145,7 @@ class CustomIconButton extends StatelessWidget {
             ),
     );
 
-    // 4. Retorno según el tipo de IconButton de Material 3
+    // 4. Return based on Material 3 IconButton type
     return switch (type) {
       CustomIconButtonType.filled => IconButton.filled(
         onPressed: isLoading ? null : onPressed,
@@ -154,18 +175,18 @@ class CustomIconButton extends StatelessWidget {
   }
 
   ButtonStyle _getButtonStyle(ColorScheme colors) {
-    // Si se definió un tamaño de botón, lo aplicamos a las restricciones
+    // If a button size is defined, apply it to the constraints
     final double? size = buttonSize;
     final visualDensity = size != null ? VisualDensity.standard : null;
 
     return switch (type) {
       CustomIconButtonType.filled => IconButton.styleFrom(
-        backgroundColor: color, // null usa primary por defecto
+        backgroundColor: color, // null uses primary by default
         minimumSize: size != null ? Size(size, size) : null,
         visualDensity: visualDensity,
       ),
       CustomIconButtonType.tonal => IconButton.styleFrom(
-        backgroundColor: color, // null usa secondaryContainer por defecto
+        backgroundColor: color, // null uses secondaryContainer by default
         minimumSize: size != null ? Size(size, size) : null,
         visualDensity: visualDensity,
       ),

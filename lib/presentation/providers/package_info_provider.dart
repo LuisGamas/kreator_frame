@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
-/// Notifier que gestiona el estado de la información de la aplicación.
-/// Recupera datos de la aplicación (versión, compilación, nombre) desde el repository.
+/// Notifier that manages the application information state.
+/// Retrieves app data (version, build, name) from the repository.
 class PackageInfoNotifier extends AsyncNotifier<AppInfoEntity> {
   @override
   Future<AppInfoEntity> build() async {
@@ -16,8 +16,8 @@ class PackageInfoNotifier extends AsyncNotifier<AppInfoEntity> {
   }
 }
 
-/// Provider que expone el estado de la información de la aplicación.
-/// El estado se mantiene en memoria durante la vida de la app.
+/// Provider that exposes the application information state.
+/// The state is kept in memory for the lifetime of the app.
 final packageInfoProvider = AsyncNotifierProvider<PackageInfoNotifier, AppInfoEntity>(
   PackageInfoNotifier.new,
 );

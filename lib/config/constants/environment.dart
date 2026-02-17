@@ -1,6 +1,14 @@
 // 📦 Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+/// Environment configuration and constants for the application.
+///
+/// Contains three types of configuration:
+/// 1. User-configurable values from .env file (developer name, URLs, social media)
+/// 2. SharedPreference keys for persistent storage
+/// 3. Static application constants (name, version, asset paths, external links)
+///
+/// WARNING: Variables marked with "DO NOT REMOVE" are critical for app functionality.
 class Environment {
   // * Declaration of static environment variables for non-instance access of the class **DO NOT REMOVE**
   static String userDeveloperName = dotenv.env['DEVELOPER_NAME'] ?? 'Error DEVELOPER_NAME';
@@ -16,7 +24,7 @@ class Environment {
 
   // * Variables of Dashboard Preference **DO NOT REMOVE**
   static const String dashName = 'Kreator Frame';
-  static const String dashVersion = '1.4.0';
+  static const String dashVersion = '1.5.0';
   static const String dashDeveloper = 'Luis Gamas';
 
   // * Variables for assets **DO NOT REMOVE**

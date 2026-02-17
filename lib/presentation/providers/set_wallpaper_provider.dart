@@ -1,19 +1,19 @@
 // 📦 Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Notifier que gestiona el estado de aplicación del wallpaper.
-/// Controla si un wallpaper se está aplicando actualmente.
+/// Notifier that manages wallpaper application state.
+/// Controls whether a wallpaper is currently being applied.
 class SetWallpaperNotifier extends Notifier<bool> {
   @override
   bool build() => false;
 
-  /// Alterna el estado de aplicación del wallpaper.
+  /// Toggles the wallpaper application state.
   void changeState() {
     state = !state;
   }
 }
 
-/// Provider que expone el estado de aplicación del wallpaper.
+/// Provider that exposes the wallpaper application state.
 final setWallpaperProvider = NotifierProvider<SetWallpaperNotifier, bool>(
   SetWallpaperNotifier.new,
 );

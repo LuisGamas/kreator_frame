@@ -5,15 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/infrastructure/infrastructure.dart';
 
-/// Provider del DataSource de la aplicación.
-/// Responsable de instanciar la implementación del DataSource.
+/// Provider for the application's DataSource.
+/// Responsible for instantiating the DataSource implementation.
 final dataSourceProvider = Provider<DataSource>((ref) {
   return DataSourceImpl();
 });
 
-/// Provider del Repository de la aplicación.
-/// Recibe el DataSource a través de inyección de dependencias.
-/// Sigue el patrón Clean Architecture: DataSource → Repository → UI.
+/// Provider for the application's Repository.
+/// Receives the DataSource through dependency injection.
+/// Follows the Clean Architecture pattern: DataSource → Repository → UI.
 final repositoryProvider = Provider<Repository>((ref) {
   final dataSource = ref.watch(dataSourceProvider);
   return RepositoryImpl(dataSource);

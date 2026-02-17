@@ -1,6 +1,3 @@
-
-// * STATE
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -12,6 +9,13 @@ import 'package:kreator_frame/config/constants/environment.dart';
 import 'package:kreator_frame/shared/services/services.dart';
 import 'package:kreator_frame/shared/utils/utils.dart';
 
+// * STATE
+/// State that holds user preferences for app appearance and behavior.
+///
+/// Stores:
+/// - Theme mode (light, dark, system)
+/// - Accent color for the theme
+/// - Grid view preferences (currently unused)
 class AppValuesPreferencesState {
   final Color colorAccentForTheme;
   final ThemeMode themeModeForApp;
@@ -37,6 +41,11 @@ class AppValuesPreferencesState {
 }
 
 // * NOTIFIER
+/// Notifier that manages user preferences for app appearance.
+///
+/// Loads preferences from persistent storage on initialization and provides
+/// methods to update theme mode and accent color. All changes are automatically
+/// persisted to SharedPreferences.
 class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
   late final KeyValueStorageServices _keyValueStorageServices;
 
@@ -98,6 +107,8 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
 }
 
 // * PROVIDER
+/// Provider that exposes user preference state and management functionality.
+/// The state persists across app restarts using SharedPreferences.
 final appValuesPreferencesProvider = NotifierProvider<AppValuesPreferencesNotifier, AppValuesPreferencesState>(
   AppValuesPreferencesNotifier.new,
 );

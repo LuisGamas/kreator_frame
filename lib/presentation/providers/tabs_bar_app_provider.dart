@@ -10,8 +10,8 @@ import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 import 'package:kreator_frame/presentation/screens/screens.dart';
 
-/// Notifier que gestiona la lista de pestañas de la aplicación.
-/// Crea dinámicamente las pestañas basadas en los widgets y wallpapers disponibles.
+/// Notifier that manages the application's tab list.
+/// Dynamically creates tabs based on available widgets and wallpapers.
 class TabsBarAppNotifier extends AsyncNotifier<List<TabBarEntity>> {
   @override
   Future<List<TabBarEntity>> build() async {
@@ -53,8 +53,8 @@ class TabsBarAppNotifier extends AsyncNotifier<List<TabBarEntity>> {
   }
 }
 
-/// Provider que expone la lista de pestañas de la aplicación.
-/// El estado se mantiene en memoria durante la vida de la app.
+/// Provider that exposes the application's tab list.
+/// The state is kept in memory for the lifetime of the app.
 final tabsBarAppProvider = AsyncNotifierProvider<TabsBarAppNotifier, List<TabBarEntity>>(
   TabsBarAppNotifier.new,
 );

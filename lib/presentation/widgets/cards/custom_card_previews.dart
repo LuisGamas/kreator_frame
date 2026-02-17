@@ -43,10 +43,11 @@ class CustomCardPreviews extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return Card.filled(
-      color: colors.surfaceContainerLowest,
+    return Card(
+      color: colors.surfaceContainerHighest,
       elevation: 2,
-      child: GestureDetector(
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
         onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -92,17 +93,15 @@ class _ImagePreviewSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(AppRadius.sm),
-        topRight: Radius.circular(AppRadius.sm),
+    return Container(
+      width: double.infinity,
+      height: heightPreview,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        color: colors.surfaceContainer,
       ),
-      child: Container(
-        width: double.infinity,
-        height: heightPreview,
-        color: colors.surfaceContainerHigh,
-        child: _buildImageWidget(),
-      ),
+      child: _buildImageWidget(),
     );
   }
 
@@ -238,13 +237,6 @@ class _TextContentSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerHighest,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(AppRadius.sm),
-          bottomRight: Radius.circular(AppRadius.sm),
-        ),
-      ),
       padding: const EdgeInsets.all(AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -183,7 +183,6 @@ class _DonationBanner extends ConsumerWidget {
                   const Gap(AppSpacing.sm),
 
                   CustomButton.outlined(
-                    height: 48,
                     text: AppLocalizations.of(context)!.donationsButton,
                     onPressed: () => repository.launchExternalApp(Environment.externalLinkBuyMeACoffe),
                   ),

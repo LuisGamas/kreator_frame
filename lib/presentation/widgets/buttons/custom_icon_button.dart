@@ -156,7 +156,7 @@ class CustomIconButton extends StatelessWidget {
   ButtonStyle _getButtonStyle(ColorScheme colors) {
     // Si se definió un tamaño de botón, lo aplicamos a las restricciones
     final double? size = buttonSize;
-    final visualDensity = size != null ? VisualDensity.compact : null;
+    final visualDensity = size != null ? VisualDensity.standard : null;
 
     return switch (type) {
       CustomIconButtonType.filled => IconButton.styleFrom(

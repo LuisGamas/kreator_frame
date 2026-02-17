@@ -293,7 +293,6 @@ class _ModalButton extends ConsumerWidget {
 
     return CustomButton.tonal(
       width: double.infinity,
-      height: 48,
       borderRadius: AppRadius.radiusLg,
       isLoading: setWallpaperState,
       text: textButton,

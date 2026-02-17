@@ -77,7 +77,7 @@ class CustomSliverAppBar extends ConsumerWidget {
           );
         },
       )
-    ); 
+    );
   }
 }
 
@@ -97,89 +97,99 @@ class _AppBarWidgets extends ConsumerWidget {
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Leading: App logo
         ZoomIn(
-          child: SizedBox(
-            height: 70,
-            width: 70,
-            child: Card(
-              margin: EdgeInsets.zero,
-              color: colors.surfaceContainer,
-              elevation: 0,
-              clipBehavior: Clip.hardEdge,
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.radiusMd),
-              child: const Image(
-                image: AssetImage(Environment.iconPackageLogo),
-                fit: BoxFit.cover,
-              )
+          child: Card(
+            margin: EdgeInsets.zero,
+            color: colors.surfaceContainer,
+            elevation: 0,
+            clipBehavior: Clip.hardEdge,
+            shape: RoundedRectangleBorder(borderRadius: AppRadius.radiusMd),
+            child: const Image(
+              height: 65,
+              width: 65,
+              image: AssetImage(Environment.iconPackageLogo),
+              fit: BoxFit.cover,
             ),
-          )
+          ),
         ),
+
+        // Title section: App name + developer
         ZoomIn(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              // App name
               packageAppInfo.when(
                 data: (data) {
                   return Text(
                     data.appName,
-                    style: textStyles.headlineSmall!.copyWith(
+                    style: textStyles.titleLarge?.copyWith(
                       color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   );
                 },
                 error: (error, stackTrace) {
                   return Text(
-                    'Error here :(',
-                    style: textStyles.headlineSmall!.copyWith(
-                      color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                    'Error',
+                    style: textStyles.titleLarge?.copyWith(
+                      color: colors.error,
+                      fontWeight: FontWeight.w600,
                     ),
                   );
                 },
                 loading: () {
                   return Text(
                     '...',
-                    style: textStyles.headlineSmall!.copyWith(
+                    style: textStyles.titleLarge?.copyWith(
                       color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   );
                 },
               ),
-
+        
+              // Developer info
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
-                    style: textStyles.bodySmall!.copyWith(
-                      color: colors.onSurface,
-                      fontStyle: FontStyle.italic,
+                  Flexible(
+                    child: Text(
+                      AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
+                      style: textStyles.bodySmall?.copyWith(
+                        color: colors.onSurfaceVariant,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   if (Environment.userDeveloperName == Environment.dashDeveloper) ...[
                     const Gap(AppSpacing.xxxs),
                     Icon(
                       Hicon.verifiedBold,
-                      color: colors.primary,
+                      color: colors.secondary,
                       size: AppIconSizes.xxxs,
                     ),
-                  ]
+                  ],
                 ],
-              )
-              
+              ),
             ],
           ),
         ),
+
+        // Actions: Settings button
         ZoomIn(
-          child: CustomIconButton.tonal(
+          child: CustomIconButton(
             onPressed: () => appRouter.push(AppRoutes.settings),
             icon: Hicon.categoryBold,
+            color: colors.onSurface,
           ),
-        )
+        ),
       ],
     );
   }

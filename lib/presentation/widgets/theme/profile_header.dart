@@ -39,10 +39,10 @@ class ProfileHeader extends StatelessWidget {
         // Profile image
         ZoomIn(
           child: Container(
-            height: 80,
-            width: 80,
+            height: 65,
+            width: 65,
             decoration: BoxDecoration(
-              borderRadius: AppRadius.radiusLg,
+              borderRadius: AppRadius.radiusMd,
               image: DecorationImage(
                 image: AssetImage(imagePath),
                 fit: BoxFit.cover,

@@ -32,7 +32,7 @@ class SocialMediaButtonList extends StatelessWidget {
         // Twitter
         CustomIconButton.tonal(
           buttonSize: 56,
-          iconSize: AppIconSizes.sm,
+          iconSize: AppIconSizes.md,
           tooltip: 'Twitter',
           icon: Hicon.twitterBold,
           onPressed: onTwitterPressed,
@@ -43,7 +43,7 @@ class SocialMediaButtonList extends StatelessWidget {
         // Instagram
         CustomIconButton.tonal(
           buttonSize: 56,
-          iconSize: AppIconSizes.sm,
+          iconSize: AppIconSizes.md,
           tooltip: 'Instagram',
           icon: Hicon.instagramBold,
           onPressed: onInstagramPressed,
@@ -54,8 +54,8 @@ class SocialMediaButtonList extends StatelessWidget {
         // Web Page
         CustomIconButton.tonal(
           buttonSize: 56,
-          iconSize: AppIconSizes.sm,
-          tooltip: 'Web Page',
+          iconSize: AppIconSizes.md,
+          tooltip: 'Personal Site',
           icon: Hicon.websiteBold,
           onPressed: onPersonalSitePressed,
         ),

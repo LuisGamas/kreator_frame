@@ -25,19 +25,68 @@ class ColorThemeSwitcher extends ConsumerWidget {
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
+          // First item: Dynamic color (Material You)
+          if (index == 0) {
+            final isSelected = appValuesFromPreference.isDynamicColor;
 
-          final isSelectedColor = AppConstants.accentColors[index] 
-            == appValuesFromPreference.colorAccentForTheme;
+            return GestureDetector(
+              onTap: isSelected
+                  ? null
+                  : () => ref.read(appValuesPreferencesProvider.notifier)
+                      .setPreferenceForDynamicColor(),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  gradient: const SweepGradient(
+                    colors: AppConstants.accentColors,
+                  ),
+                  borderRadius: AppRadius.radiusLg,
+                ),
+                child: AnimatedOpacity(
+                  opacity: isSelected ? 1 : 0,
+                  duration: AppDurations.normal,
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: AppRadius.radiusSm,
+                      child: Container(
+                        padding: const EdgeInsets.all(AppSpacing.xs),
+                        decoration: BoxDecoration(
+                          borderRadius: AppRadius.radiusXs,
+                          color: colors.onPrimary.withValues(alpha: 0.7),
+                        ),
+                        child: const Icon(
+                          Hicon.tickBold,
+                          size: AppIconSizes.xxs,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+
+          // Remaining items: accent color options (shifted by 1)
+          final colorIndex = index - 1;
+          final seedColor = AppConstants.accentColors[colorIndex];
+          final isSelectedColor = !appValuesFromPreference.isDynamicColor &&
+              seedColor == appValuesFromPreference.colorAccentForTheme;
+
+          // Generate a theme-adaptive display color based on current brightness
+          final displayScheme = ColorScheme.fromSeed(
+            seedColor: seedColor,
+            brightness: Theme.of(context).brightness,
+          );
 
           return GestureDetector(
             onTap: isSelectedColor
                 ? null
                   : () => ref.read(appValuesPreferencesProvider.notifier)
-                      .setPreferenceForColorAccent(AppConstants.accentColors[index]),
+                      .setPreferenceForColorAccent(AppConstants.accentColors[colorIndex]),
             child: Container(
               height: 50,
               decoration: BoxDecoration(
-                color: AppConstants.accentColors[index],
+                color: displayScheme.primary,
                 borderRadius: AppRadius.radiusLg,
               ),
               child: AnimatedOpacity(
@@ -63,7 +112,7 @@ class ColorThemeSwitcher extends ConsumerWidget {
             ),
           );
         },
-        childCount: AppConstants.accentColors.length,
+        childCount: AppConstants.accentColors.length + 1,
       ),
     );
   }

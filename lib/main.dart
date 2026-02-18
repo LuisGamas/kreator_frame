@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,6 +29,7 @@ void main() async {
 /// - Localization support (English and Spanish)
 /// - Go Router navigation
 /// - Dynamic theming (light/dark modes with custom accent colors)
+/// - Material You dynamic color support
 /// - State management via Riverpod providers
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -36,13 +38,29 @@ class MyApp extends ConsumerWidget {
     final appRouter = ref.watch(appRouterProvider);
     final appValuesFromPreference = ref.watch(appValuesPreferencesProvider);
 
-    return MaterialApp.router(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: appRouter,
-      themeMode: appValuesFromPreference.themeModeForApp,
-      theme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).lightTheme,
-      darkTheme: AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme).darkTheme,
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        final ThemeData lightTheme;
+        final ThemeData darkTheme;
+
+        if (appValuesFromPreference.isDynamicColor && lightDynamic != null) {
+          lightTheme = AppTheme.buildFromColorScheme(lightDynamic);
+          darkTheme = AppTheme.buildFromColorScheme(darkDynamic!);
+        } else {
+          final appTheme = AppTheme(primaryColor: appValuesFromPreference.colorAccentForTheme);
+          lightTheme = appTheme.lightTheme;
+          darkTheme = appTheme.darkTheme;
+        }
+
+        return MaterialApp.router(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          routerConfig: appRouter,
+          themeMode: appValuesFromPreference.themeModeForApp,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+        );
+      },
     );
   }
 }

@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v1.5.2] - 2026-02-18
+
+### Added
+- Material You dynamic color (Material Design 3) support with `dynamic_color` package integration.
+- Dynamic color option as first item in color theme selector with spectrum gradient visualization.
+
+### Changed
+- Color theme selector now displays theme-adaptive color previews: colors adjust brightness/saturation based on current light/dark mode for proper contrast.
+- Refactored color theme selector grid: dynamic color option (index 0) with SweepGradient, accent colors shifted to indices 1+.
+- `ColorScheme.fromSeed()` now generates per-color display variants matching current app brightness in real-time.
+
+### Technical Details
+- Added `isDynamicColor` field to `AppValuesPreferencesState` with index `-1` storage convention.
+- New `setPreferenceForDynamicColor()` method in `AppValuesPreferencesNotifier`.
+- Added static `buildFromColorScheme()` method to `AppTheme` for Material You support.
+- Wrapped `MaterialApp.router` with `DynamicColorBuilder` in `main.dart` with fallback to seed color for unsupported devices.
+
+### Notes
+- Dynamic Color support requires Android 12+ and is fully supported on Pixel devices; Samsung and other OEMs may have limited support due to custom color palette implementations.
+
+---
+
 ## [v1.5.1] - 2026-02-17
 
 ### Added

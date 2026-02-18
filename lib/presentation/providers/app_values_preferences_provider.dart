@@ -15,15 +15,18 @@ import 'package:kreator_frame/shared/utils/utils.dart';
 /// Stores:
 /// - Theme mode (light, dark, system)
 /// - Accent color for the theme
+/// - Dynamic color (Material You) toggle
 /// - Grid view preferences (currently unused)
 class AppValuesPreferencesState {
   final Color colorAccentForTheme;
   final ThemeMode themeModeForApp;
+  final bool isDynamicColor;
   final bool minimalViewForGrids;
 
   AppValuesPreferencesState({
     Color? colorAccentForTheme,
     ThemeMode? themeModeForApp,
+    this.isDynamicColor = false,
     this.minimalViewForGrids = false,
   })  : colorAccentForTheme = colorAccentForTheme ?? AppConstants.accentColors[4],
         themeModeForApp = themeModeForApp ?? AppConstants.themeModeOptions[0].themeMode;
@@ -31,10 +34,12 @@ class AppValuesPreferencesState {
   AppValuesPreferencesState copyWith({
     Color? colorAccentForTheme,
     ThemeMode? themeModeForApp,
+    bool? isDynamicColor,
     bool? minimalViewForGrids,
   }) => AppValuesPreferencesState(
     colorAccentForTheme: colorAccentForTheme ?? this.colorAccentForTheme,
     themeModeForApp: themeModeForApp ?? this.themeModeForApp,
+    isDynamicColor: isDynamicColor ?? this.isDynamicColor,
     minimalViewForGrids: minimalViewForGrids ?? this.minimalViewForGrids,
   );
 
@@ -55,7 +60,7 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
     _updateStateFromPreferences();
     return AppValuesPreferencesState();
   }
-  
+
   void _updateStateFromPreferences() async {
     final indexColorAccent = await _keyValueStorageServices.getKeyValue<int>(Environment.keyColorTheme) ?? 4;
     final indexThemeMode = await _keyValueStorageServices.getKeyValue<String>(Environment.keyThemeMode);
@@ -68,14 +73,22 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
       _ => ThemeMode.system,
     };
 
-    state = state.copyWith(
-      colorAccentForTheme: AppConstants.accentColors[
-        (indexColorAccent >= 0 && indexColorAccent < AppConstants.accentColors.length)
-        ? indexColorAccent
-        : 4 ],
-      themeModeForApp: themeMode,
-      // minimalViewForGrids: showMinimalGridView ?? false,
-    );
+    if (indexColorAccent == -1) {
+      state = state.copyWith(
+        isDynamicColor: true,
+        themeModeForApp: themeMode,
+      );
+    } else {
+      final clampedIndex = (indexColorAccent >= 0 && indexColorAccent < AppConstants.accentColors.length)
+          ? indexColorAccent
+          : 4;
+      state = state.copyWith(
+        isDynamicColor: false,
+        colorAccentForTheme: AppConstants.accentColors[clampedIndex],
+        themeModeForApp: themeMode,
+        // minimalViewForGrids: showMinimalGridView ?? false,
+      );
+    }
   }
 
   void setPreferenceForThemeMode(ThemeMode themeMode) async {
@@ -88,13 +101,17 @@ class AppValuesPreferencesNotifier extends Notifier<AppValuesPreferencesState> {
   }
 
   void setPreferenceForColorAccent(Color color) async {
-    if (color != state.colorAccentForTheme) {
-      final colorIndex = AppConstants.accentColors.indexOf(color);
-      await _keyValueStorageServices.setKeyValue(Environment.keyColorTheme, colorIndex);
-      state = state.copyWith(
-        colorAccentForTheme: color
-      );
-    }
+    final colorIndex = AppConstants.accentColors.indexOf(color);
+    await _keyValueStorageServices.setKeyValue(Environment.keyColorTheme, colorIndex);
+    state = state.copyWith(
+      colorAccentForTheme: color,
+      isDynamicColor: false,
+    );
+  }
+
+  void setPreferenceForDynamicColor() async {
+    await _keyValueStorageServices.setKeyValue(Environment.keyColorTheme, -1);
+    state = state.copyWith(isDynamicColor: true);
   }
 
   /* void toggleMinimalViewForGrids() async {

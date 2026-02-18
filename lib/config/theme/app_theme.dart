@@ -26,7 +26,16 @@ class AppTheme {
     );
   }
 
-  TextTheme _buildTextTheme(ColorScheme colorScheme) {
+  static ThemeData buildFromColorScheme(ColorScheme colorScheme) {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: colorScheme.brightness,
+      colorScheme: colorScheme,
+      textTheme: _buildTextTheme(colorScheme),
+    );
+  }
+
+  static TextTheme _buildTextTheme(ColorScheme colorScheme) {
     final baseTheme = colorScheme.brightness == Brightness.light 
       ? Typography.material2021().black 
       : Typography.material2021().white;

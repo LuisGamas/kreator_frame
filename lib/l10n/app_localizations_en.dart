@@ -21,13 +21,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Would you like to set this image as your wallpaper, lock screen, or both?';
 
   @override
-  String get bottomWallSelectorHS => 'Set as Home Screen';
+  String get bottomWallSelectorHS => 'Home';
 
   @override
-  String get bottomWallSelectorLS => 'Set as Lock Screen';
+  String get bottomWallSelectorLS => 'Lock';
 
   @override
-  String get bottomWallSelectorBS => 'Set as Both Screen';
+  String get bottomWallSelectorBS => 'Both';
+
+  @override
+  String get bottomWallSelectorNative => 'Use Android Wallpaper Picker';
+
+  @override
+  String get bottomWallSelectorChooser => 'More options...';
 
   @override
   String get appliedOk => 'Wallpaper successfully applied!';

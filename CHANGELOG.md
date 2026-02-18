@@ -4,6 +4,108 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v1.5.2] - 2026-02-18
+
+### Added
+- Material You dynamic color (Material Design 3) support with `dynamic_color` package integration.
+- Dynamic color option as first item in color theme selector with spectrum gradient visualization (SweepGradient).
+- Wallpaper app chooser feature via Android system intent (ACTION_ATTACH_DATA): "Apply with..." bottom sheet showing all available apps for wallpaper application.
+- New `_LocationButton` widget: compact icon button layout for wallpaper location selection (home, lock, both) with improved bottom sheet space efficiency.
+
+### Changed
+- Color theme selector now displays theme-adaptive color previews: colors adjust brightness/saturation based on current light/dark mode for proper contrast.
+- Refactored color theme selector grid: dynamic color option (index 0) with SweepGradient, accent colors shifted to indices 1+.
+- `ColorScheme.fromSeed()` now generates per-color display variants matching current app brightness in real-time.
+- Wallpaper application bottom sheet layout optimized: 3 location options now display as compact icon buttons in a single row instead of 3 full-width buttons.
+- `_ModalButton` replaced with `_LocationButton` and `_WallpaperChooserButton` for improved visual hierarchy and space efficiency.
+- `_WallpaperChooserButton` uses `CustomButton.text` for visual differentiation as an alternative wallpaper application method.
+- Theme mode switcher refined for consistent UI coherence across appearance settings.
+
+### Technical Details
+- Added `isDynamicColor` field to `AppValuesPreferencesState` with index `-1` storage convention.
+- New `setPreferenceForDynamicColor()` method in `AppValuesPreferencesNotifier`.
+- Added static `buildFromColorScheme()` method to `AppTheme` for Material You support.
+- Wrapped `MaterialApp.router` with `DynamicColorBuilder` in `main.dart` with fallback to seed color for unsupported devices.
+- New native Kotlin method `prepareWallpaperChooserIntent()` in `WallpapersNativeServices` for ACTION_ATTACH_DATA intent generation.
+- New MethodChannel handler `openWallpaperChooser` in MainActivity for system app chooser intent.
+- Added `openWallpaperChooser(String url)` across datasource → repository → UI layers.
+- Localization strings: `bottomWallSelectorChooser` (English: "More options...", Spanish: "Más opciones...") and shortened location labels for compact display.
+- `_LocationButton` widget: icon button (tonal) with label text below, supporting loading states and tap callbacks.
+
+### Notes
+- Dynamic Color support requires Android 12+ and is fully supported on Pixel devices; Samsung and other OEMs may have limited support due to custom color palette implementations.
+- Wallpaper chooser requires Android system support for ACTION_ATTACH_DATA; behavior depends on installed apps that handle image attachment intents.
+
+---
+
+## [v1.5.1] - 2026-02-17
+
+### Added
+- New `ErrorView` reusable widget for displaying error states in async operations with optional retry button and customizable styling. Integrated across all screens using `AsyncValue.when()` for consistent error handling.
+- Native Android wallpaper picker service via `WallpaperManager.getCropAndSetWallpaperIntent()`, allowing system UI selection of home screen, lock screen, or both. Implemented with `FileProvider` for secure content URI sharing.
+- `WallpapersNativeServices` Kotlin class with clean separation of concerns: custom wallpaper application (download → crop → apply) and native picker integration (download → expose via FileProvider → system intent).
+- New `_NativePickerButton` widget in WallpaperPreviewScreen providing alternative wallpaper application via native Android system UI.
+- Wallpaper location constants in `Environment` class: `wallpaperHomeScreen` (1), `wallpaperLockScreen` (2), `wallpaperBothScreens` (3).
+- New method `openNativeWallpaperPicker(String url)` across all data/repository layers (datasource → repository → UI).
+- Localization strings for native picker option: `bottomWallSelectorNative` (English: "Use Android Wallpaper Picker", Spanish: "Usar selector nativo de Android").
+
+### Fixed
+- Completed the Riverpod 2.x → 3.x library migration by upgrading `flutter_riverpod` to `3.2.1` (previously only API patterns were updated, but the library remained on `2.6.1`).
+- Replaced `FamilyAsyncNotifier<T, Arg>` (removed in Riverpod 3.x) with standard `AsyncNotifier<T>` using constructor-based argument injection for the `WidgetsNotifier` family provider.
+- Replaced `AsyncValue.valueOrNull` (removed in Riverpod 3.x) with `AsyncValue.value` in `AboutPackageAppScreen`.
+
+### Changed
+- Migrated wallpaper application from third-party `flutter_wallpaper_manager` (0.0.4) to native Android implementation via Kotlin MethodChannel (`kreator_frame/wallpaper`). Image download, center-crop, and scaling now execute on background threads via `Thread` + `Handler` pattern, eliminating main thread blocking.
+- Removed `Size size` parameter from `setWallpaper()` method across all layers (datasource → repository → UI). Screen dimensions now obtained natively via Android's `Resources.getSystem().displayMetrics`.
+- Refactored error handling in HomeScreen, LicensesScreen, KustomWidgetsScreen, WallpapersScreen, and WallpaperPreviewScreen to use the new centralized `ErrorView` widget, eliminating code duplication.
+- Replaced `flutter_staggered_grid_view` library with native `GridView.builder` using `mainAxisExtent` for precise cell height control. Refactored `CustomCardPreviews` to be constraint-responsive: removed `heightPreview` parameter, enabled image section to expand with `Expanded`, allowing parent grid to fully control sizing.
+- Updated `KustomWidgetConfig` to use `cellHeight` (total grid cell height including image, text, and margins) instead of separate `previewHeight`, improving separation of concerns. Updated calculations: KWGT = 262dp (200 image + 62 overhead), KLWP = 352dp (290 image + 62 overhead).
+- Updated multiple dependency versions to latest compatible releases: `archive`, `device_info_plus`, `dio`, `flutter_dotenv`, `flutter_markdown_plus`, `flutter_native_splash`, `go_router`, `image`, `shared_preferences`.
+- Removed unused `flutter_cache_manager` direct dependency and corrected asset references in `Environment` constants.
+
+### Removed
+- `flutter_wallpaper_manager` (0.0.4) - functionality completely replaced with native Kotlin implementation.
+- `flutter_staggered_grid_view` (0.7.0) - functionality replicated using native Flutter GridView.
+- Unused Dart image processing methods: removed `_cropAndSaveImage()`, `dart:ui` codec operations, and `path_provider` dependency from datasource layer (moved to native Kotlin).
+
+---
+
+## [v1.5.0] - 2026-02-16
+
+### Added
+- Complete English documentation for all public classes and methods across the entire codebase.
+- Auto-initialization pattern for in-app update checks using provider lifecycle.
+- Material Design 3 improvements to AppBar, Cards, and Profile Header components.
+- New unified KustomWidgetsScreen replacing duplicate KWGT/KLWP screens with configuration-based approach.
+- Extracted WallpaperDownloadButton as reusable widget with progress tracking.
+
+### Changed
+- Migrated all providers from Riverpod 2.x codegen patterns to Riverpod 3.x manual patterns.
+- Converted all ConsumerStatefulWidget instances to ConsumerWidget for better state management.
+- Reorganized shared layer: split AppHelpers into SnackbarHelpers and AppConstants.
+- Extracted route constants to dedicated AppRoutes class.
+- Enhanced all entities with copyWith, operator==, and hashCode methods.
+- Reorganized DataSourceImpl with clear sections and comprehensive documentation.
+- Reduced wallpaper_preview_screen from 465 to 332 lines (-28.6%).
+- Eliminated 100% code duplication between KWGT and KLWP screens.
+- Optimized AppBar logo size (70dp → 65dp) with improved spacing and layout.
+- Implemented ripple feedback effect in cards using InkWell.
+- Reduced profile header avatar size (80dp → 65dp) for better visual balance.
+- Moved button widgets (social_media_button_list, wallpaper_download_button) to organized buttons folder.
+- Translated all Spanish comments and documentation to English.
+- Updated all barrel export files with proper alphabetical organization.
+
+### Removed
+- Unused dependencies: flutter_hooks and hooks_riverpod.
+- All .g.dart generated files and codegen-related dependencies.
+- Legacy StateNotifier and StateNotifierProvider patterns.
+- Duplicate screen files (kwgt_screen.dart and klwp_screen.dart).
+
+### Fixed
+- Improved provider injection chain: dataSourceProvider → repositoryProvider → notifiers.
+- Enhanced download state management using progressDownloaderProvider instead of local state.
+- Better Material Design 3 compliance while maintaining visual coherence.
+
 ## [v1.4.0] - 2025-07-11
 
 ### Added

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
@@ -39,14 +38,12 @@ class LicensesScreen extends ConsumerWidget {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final license = licenses[index];
-                    return FadeIn(
-                      child: _CustomListTile(
-                        title: license.name,
-                        subTitle: '${license.licenseCount} License${license.licenseCount == 1 ? '' : 's'}',
-                        onTap: () => appRouter.push(
-                          licenseDetailRoute,
-                          extra: license,
-                        ),
+                    return CustomListTile(
+                      title: license.name,
+                      subTitle: '${license.licenseCount} License${license.licenseCount == 1 ? '' : 's'}',
+                      onTap: () => appRouter.push(
+                        AppRoutes.licenseDetail,
+                        extra: license,
                       ),
                     );
                   },
@@ -55,52 +52,12 @@ class LicensesScreen extends ConsumerWidget {
               ),
             ],
           ),
-        error: (_, __) => Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Text(
-            AppLocalizations.of(context)!.errorMessage,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-          ),
-        ),
-      ),
+        error: (_, _) => ErrorView(
+          onRetry: () => ref.invalidate(licensesOssProvider),
+        )
       ),
     );
 
   }
 }
 
-// * Custom ListTile widget
-class _CustomListTile extends StatelessWidget {
-  final String title;
-  final String subTitle;
-  final void Function()? onTap;
-
-  const _CustomListTile({
-    required this.title,
-    required this.subTitle,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final textStyles = Theme.of(context).textTheme;
-
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-      splashColor: colors.secondaryContainer,
-      textColor: colors.onSurface,
-      title: Text(title),
-      titleTextStyle: textStyles.titleMedium,
-      subtitle: Text(subTitle),
-      subtitleTextStyle: textStyles.bodySmall,
-      trailing: Icon(
-        Hicon.right2Bold,
-        color: colors.onSurface,
-      ),
-      onTap: onTap,
-    );
-  }
-}

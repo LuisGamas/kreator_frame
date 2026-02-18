@@ -20,7 +20,6 @@ class CustomSliverAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final tabsBar = ref.watch(tabsBarAppProvider);
     final textStyles = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
@@ -37,7 +36,7 @@ class CustomSliverAppBar extends ConsumerWidget {
         collapseMode: CollapseMode.pin,
         background: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,7 +54,7 @@ class CustomSliverAppBar extends ConsumerWidget {
             labelColor: colors.secondary,
             indicatorColor: colors.secondary,
             unselectedLabelColor: colors.outline,
-            splashBorderRadius: BorderRadius.circular(10),
+            splashBorderRadius: AppRadius.radiusSm,
             tabs: data.map((tabEntity) => tabEntity.tabBar).toList(),
           );
         },
@@ -72,13 +71,13 @@ class CustomSliverAppBar extends ConsumerWidget {
             preferredSize: Size.fromHeight( size.height * 0.2),
             child: const Center(
               child: CircularProgressIndicator(
-                strokeWidth: 2,
+                strokeCap: StrokeCap.round,
               ),
             )
           );
         },
       )
-    ); 
+    );
   }
 }
 
@@ -93,101 +92,104 @@ class _AppBarWidgets extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Variables
     final packageAppInfo = ref.watch(packageInfoProvider);
     final appRouter = ref.watch(appRouterProvider);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Leading: App logo
         ZoomIn(
-          child: SizedBox(
-            height: 70,
-            width: 70,
-            child: Card(
-              margin: const EdgeInsets.all(0),
-              color: colors.surfaceContainer,
-              elevation: 0,
-              clipBehavior: Clip.hardEdge,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Image(
-                image: AssetImage(Environment.iconPackageLogo),
-                fit: BoxFit.cover,
-              )
+          child: Card(
+            margin: EdgeInsets.zero,
+            color: colors.surfaceContainer,
+            elevation: 0,
+            clipBehavior: Clip.hardEdge,
+            shape: RoundedRectangleBorder(borderRadius: AppRadius.radiusMd),
+            child: const Image(
+              height: 65,
+              width: 65,
+              image: AssetImage(Environment.iconPackageLogo),
+              fit: BoxFit.cover,
             ),
-          )
+          ),
         ),
+
+        // Title section: App name + developer
         ZoomIn(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              // App name
               packageAppInfo.when(
                 data: (data) {
                   return Text(
                     data.appName,
-                    style: textStyles.headlineSmall!.copyWith(
+                    style: textStyles.titleLarge?.copyWith(
                       color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   );
                 },
                 error: (error, stackTrace) {
                   return Text(
-                    'Error here :(',
-                    style: textStyles.headlineSmall!.copyWith(
-                      color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                    'Error',
+                    style: textStyles.titleLarge?.copyWith(
+                      color: colors.error,
+                      fontWeight: FontWeight.w600,
                     ),
                   );
                 },
                 loading: () {
                   return Text(
                     '...',
-                    style: textStyles.headlineSmall!.copyWith(
+                    style: textStyles.titleLarge?.copyWith(
                       color: colors.onSurface,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   );
                 },
               ),
-
+        
+              // Developer info
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
-                    style: textStyles.bodySmall!.copyWith(
-                      color: colors.onSurface,
-                      fontStyle: FontStyle.italic,
+                  Flexible(
+                    child: Text(
+                      AppLocalizations.of(context)!.byDeveloper(Environment.userDeveloperName),
+                      style: textStyles.bodySmall?.copyWith(
+                        color: colors.onSurfaceVariant,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   if (Environment.userDeveloperName == Environment.dashDeveloper) ...[
-                    const Gap(2),
+                    const Gap(AppSpacing.xxxs),
                     Icon(
                       Hicon.verifiedBold,
-                      color: colors.primary,
-                      size: 10,
+                      color: colors.secondary,
+                      size: AppIconSizes.xxxs,
                     ),
-                  ]
+                  ],
                 ],
-              )
-              
+              ),
             ],
           ),
         ),
+
+        // Actions: Settings button
         ZoomIn(
-          child: SizedBox(
-            child: CustomFilledIconButton(
-              onPressed: () => appRouter.push(settingsRoute),
-              buttonColor: colors.secondary,
-              icon: Icon(
-                Hicon.categoryBold,
-                color: colors.onSecondary,
-              ),
-            ),
+          child: CustomIconButton(
+            onPressed: () => appRouter.push(AppRoutes.settings),
+            icon: Hicon.categoryBold,
+            color: colors.onSurface,
           ),
-        )
+        ),
       ],
     );
   }

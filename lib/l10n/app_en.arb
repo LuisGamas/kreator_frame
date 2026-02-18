@@ -4,9 +4,11 @@
   
   "bottomWallSelectorTitle": "Set Wallpaper as",
   "bottomWallSelectorSubTitle": "Would you like to set this image as your wallpaper, lock screen, or both?",
-  "bottomWallSelectorHS": "Set as Home Screen",
-  "bottomWallSelectorLS": "Set as Lock Screen",
-  "bottomWallSelectorBS": "Set as Both Screen",
+  "bottomWallSelectorHS": "Home",
+  "bottomWallSelectorLS": "Lock",
+  "bottomWallSelectorBS": "Both",
+  "bottomWallSelectorNative": "Use Android Wallpaper Picker",
+  "bottomWallSelectorChooser": "More options...",
 
   "appliedOk": "Wallpaper successfully applied!",
   "appliedError": "Error when applying wallpaper :(",

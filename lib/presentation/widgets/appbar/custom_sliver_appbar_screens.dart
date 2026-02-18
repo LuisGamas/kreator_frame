@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 🌎 Project imports:
 import 'package:kreator_frame/config/config.dart';
+import 'package:kreator_frame/presentation/widgets/widgets.dart';
 
 class CustomSliverAppBarScreens extends ConsumerWidget {
   final String tileText;
@@ -15,13 +16,16 @@ class CustomSliverAppBarScreens extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
+    final colors = Theme.of(context).colorScheme;
 
     // * Widget
     return SliverAppBar.large(
         pinned: true,
-        leading: IconButton(
+        leading: CustomIconButton(
             onPressed: () => appRouter.pop(),
-            icon: const Icon(Hicon.left1Bold)),
+            icon: Hicon.left1Bold,
+            iconColor: colors.onSurface,
+          ),
         title: Text(tileText));
   }
 }

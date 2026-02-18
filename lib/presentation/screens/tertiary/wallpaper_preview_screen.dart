@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:gap/gap.dart';
 
 // 🌎 Project imports:
@@ -76,16 +74,14 @@ class _HeroImagePreview extends StatelessWidget {
           return loadingProgress == null
           ? child
           : const Center(
-            child: CircularProgressIndicator(strokeWidth: 2),
+            child: CircularProgressIndicator(strokeCap: StrokeCap.round),
           );
         },
-        errorBuilder: (context, error, stackTrace) {
-          return const Center(
-            child: Icon(
-              Hicon.dangerTriangleOutline
-            ),
-          );
-        },
+        errorBuilder: (_, _, _) => const Center(
+          child: Icon(
+            Hicon.dangerTriangleOutline
+          ),
+        ),
       ),
     );
   }
@@ -104,11 +100,11 @@ class _BottomContentData extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
     
     return Positioned(
-      bottom: 20,
-      left: 16,
-      right: 16,
+      bottom: AppSpacing.lg,
+      left: AppSpacing.md,
+      right: AppSpacing.md,
       child: FadeIn(
-        delay: Durations.medium4,
+        delay: AppDurations.slow,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -118,7 +114,7 @@ class _BottomContentData extends StatelessWidget {
               wallpaperEntity.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: textStyles.headlineSmall?.copyWith(
+              style: textStyles.titleLarge?.copyWith(
                 color: Colors.white
               ),
             ),
@@ -126,20 +122,19 @@ class _BottomContentData extends StatelessWidget {
               wallpaperEntity.author,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textStyles.titleMedium?.copyWith(
+              style: textStyles.labelLarge?.copyWith(
                 color: Colors.white,
-                fontWeight: FontWeight.w200,
               ),
             ),
         
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _NoFunctionButton(icon: Hicon.heart2Outline),
-                const Gap(5),
-                _NoFunctionButton(icon: Hicon.paletteOutline),
-                const Gap(5),
-                _DownloadButton(wallpaperEntity: wallpaperEntity),
+                const _NoFunctionButton(icon: Hicon.heart2Outline),
+                const Gap(AppSpacing.xxxs),
+                const _NoFunctionButton(icon: Hicon.paletteOutline),
+                const Gap(AppSpacing.xxxs),
+                WallpaperDownloadButton(wallpaperEntity: wallpaperEntity),
                 const Spacer(),
                 _ApplyWallpaperButton(wallpaperEntity: wallpaperEntity),
               ],
@@ -164,90 +159,14 @@ class _NoFunctionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return IconButton(
-      onPressed: () => AppHelpers.showSnackbarError(
+    return CustomIconButton(
+      onPressed: () => SnackbarHelpers.showError(
         context: context,
         message: AppLocalizations.of(context)!.noFunction,
         color: colors
       ),
-      icon: Icon(icon, color: Colors.white),
-    );
-  }
-}
-
-// ##
-class _DownloadButton extends ConsumerWidget {
-  final WallpaperEntity wallpaperEntity;
-
-  const _DownloadButton({
-    required this.wallpaperEntity,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final progressDownloader = ref.watch(progressDownloaderProvider);
-    final packageAppInfo = ref.watch(packageInfoProvider);
-    final permissions = ref.watch(permissionsProvider);
-    final colors = Theme.of(context).colorScheme;
-
-    return packageAppInfo.when(
-      data: (data) => progressDownloader != 0
-          ? _replaceButtonWithCircularProgress()
-          : IconButton(
-              onPressed: () => permissions.storageGranted 
-                ? _downloadWallpaper(context, ref, data.appName, colors)
-                : ref.read(permissionsProvider.notifier).requestPhotoLibrary(),
-              icon: const Icon(Hicon.downloadOutline, color: Colors.white),
-            ),
-      error: (_, __) => _replaceButtonWithCircularProgress(),
-      loading: () => _replaceButtonWithCircularProgress(),
-    );
-  }
-
-  void _downloadWallpaper(BuildContext context, WidgetRef ref, String packageName, ColorScheme colors) {
-    FileDownloader.downloadFile(
-      url: wallpaperEntity.url.trim(),
-      name: wallpaperEntity.name,
-      subPath: packageName,
-      onProgress: (_, progress) {
-        ref.read(progressDownloaderProvider.notifier).changeProgress(progress);
-      },
-      onDownloadCompleted: (_) {
-        AppHelpers.showSnackbarSuccess(
-          context: context,
-          message: AppLocalizations.of(context)!.downloadOk,
-          color: colors
-        );
-        ref.read(progressDownloaderProvider.notifier).changeProgress(0);
-      },
-      onDownloadError: (_) {
-        AppHelpers.showSnackbarError(
-          context: context,
-          message: AppLocalizations.of(context)!.downloadError,
-          color: colors
-        );
-        ref.read(progressDownloaderProvider.notifier).changeProgress(0);
-      },
-    );
-  }
-
-  /// Replaces the download button with a [CircularProgressIndicator].
-  ///
-  /// This is used when the wallpaper is being downloaded or the package info
-  /// is loading. The button is disabled while the progress indicator is shown.
-  ///
-  /// The progress indicator is 24 logical pixels in size and is styled with
-  /// the current theme's color scheme.
-  IconButton _replaceButtonWithCircularProgress() {
-    return const IconButton(
-      onPressed: null,
-      icon: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(
-          strokeWidth: 2
-        ),
-      ),
+      icon: icon,
+      iconColor: Colors.white,
     );
   }
 }
@@ -265,36 +184,19 @@ class _ApplyWallpaperButton extends ConsumerWidget {
     final setWallpaperState = ref.watch(setWallpaperProvider);
     final colors = Theme.of(context).colorScheme;
 
-    return GestureDetector(
-      onTap: setWallpaperState
-      ? null
-      : () => _showBottomCard(
-        context: context,
-        ref: ref,
-        colors: colors
-      ),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle
+    return CustomIconButton.filled(
+      onPressed: setWallpaperState
+        ? null
+        : () => _showBottomCard(
+          context: context,
+          ref: ref,
+          colors: colors
         ),
-        height: 56,
-        width: 56,
-        child: setWallpaperState
-          ? const Center(
-            child: SizedBox(
-              height: 28,
-              width: 28,
-              child: CircularProgressIndicator(
-                strokeWidth: 2
-              ),
-            )
-          )
-          : const Icon(
-            Hicon.send1Outline,
-            color: Colors.black
-          ),
-      ),
+      icon: Hicon.send1Outline,
+      iconColor: Colors.black,
+      color: Colors.white,
+      isLoading: setWallpaperState,
+      buttonSize: 56,
     );
   }
 
@@ -307,7 +209,6 @@ class _ApplyWallpaperButton extends ConsumerWidget {
       context: context,
       backgroundColor: colors.surface,
       showDragHandle: true,
-      useSafeArea: true,
       builder: (context) => _BottomCardContent(
         wallpaperEntity: wallpaperEntity,
         colors: colors,
@@ -330,7 +231,7 @@ class _BottomCardContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -339,31 +240,47 @@ class _BottomCardContent extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
-          const Gap(5),
+          const Gap(AppSpacing.xs),
           Text(
             AppLocalizations.of(context)!.bottomWallSelectorSubTitle,
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
-          const Gap(15),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorHS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.HOME_SCREEN,
+          const Gap(AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.home3Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorHS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperHomeScreen,
+                ),
+              ),
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.lock2Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorLS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperLockScreen,
+                ),
+              ),
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.display1Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorBS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperBothScreens,
+                ),
+              ),
+            ],
           ),
-          const Gap(5),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorLS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.LOCK_SCREEN,
-          ),
-          const Gap(5),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorBS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: WallpaperManager.BOTH_SCREEN,
-          ),
-          const Gap(16),
+          const Gap(AppSpacing.xxs),
+          const Divider(),
+          _NativePickerButton(wallpaperEntity: wallpaperEntity),
+          const Gap(AppSpacing.xs),
+          _WallpaperChooserButton(wallpaperEntity: wallpaperEntity),
+          const Gap(AppSpacing.md),
         ],
       ),
     );
@@ -371,50 +288,40 @@ class _BottomCardContent extends StatelessWidget {
 }
 
 // ##
-class _ModalButton extends ConsumerWidget {
+class _LocationButton extends ConsumerWidget {
   final WallpaperEntity wallpaperEntity;
-  final String textButton;
+  final IconData icon;
+  final String label;
   final int screenLocation;
 
-  const _ModalButton({
+  const _LocationButton({
     required this.wallpaperEntity,
-    required this.textButton,
+    required this.icon,
+    required this.label,
     required this.screenLocation,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final setWallpaperState = ref.watch(setWallpaperProvider);
-    final colors = Theme.of(context).colorScheme;
+    final textStyles = Theme.of(context).textTheme;
 
-    return setWallpaperState 
-    ? Container(
-      width: double.infinity,
-      height: 56,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: colors.primary
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomIconButton.tonal(
+          buttonSize: 56,
+          onPressed: setWallpaperState ? null : () => _applyWallpaper(context, ref),
+          icon: icon,
+          isLoading: setWallpaperState,
         ),
-        child: Center(
-          child: SizedBox(
-            height: 28,
-            width: 28,
-            child: CircularProgressIndicator(
-              color: colors.onPrimary,
-              strokeCap: StrokeCap.round
-            ),
-          ),
+        const Gap(AppSpacing.xxxs),
+        Text(
+          label,
+          style: textStyles.labelSmall,
+          textAlign: TextAlign.center,
         ),
-      )
-    : SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: CustomFilledButton(
-        text: textButton,
-        buttonColor: colors.primary,
-        textColor: colors.onPrimary,
-        onPressed: () => _applyWallpaper(context, ref),
-      ),
+      ],
     );
   }
 
@@ -425,25 +332,112 @@ class _ModalButton extends ConsumerWidget {
 
     ref.read(setWallpaperProvider.notifier).changeState();
 
-    final result = await repository.setWallpaper(wallpaperEntity.url, screenLocation, MediaQuery.sizeOf(context));
+    final result = await repository.setWallpaper(wallpaperEntity.url, screenLocation);
 
     if (context.mounted) {
       ref.read(setWallpaperProvider.notifier).changeState();
       if (result) {
-        AppHelpers.showSnackbarSuccess(
+        SnackbarHelpers.showSuccess(
           context: context,
           message: AppLocalizations.of(context)!.appliedOk,
-          color: colors
+          color: colors,
         );
       } else {
-        AppHelpers.showSnackbarError(
+        SnackbarHelpers.showError(
           context: context,
           message: AppLocalizations.of(context)!.appliedError,
-          color: colors
+          color: colors,
         );
       }
       appRouter.pop();
     }
-    
+  }
+}
+
+// ##
+class _WallpaperChooserButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _WallpaperChooserButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final setWallpaperState = ref.watch(setWallpaperProvider);
+
+    return CustomButton.text(
+      width: double.infinity,
+      borderRadius: AppRadius.radiusLg,
+      isLoading: setWallpaperState,
+      text: AppLocalizations.of(context)!.bottomWallSelectorChooser,
+      onPressed: () => _openChooser(context, ref),
+    );
+  }
+
+  void _openChooser(BuildContext context, WidgetRef ref) async {
+    final repository = ref.watch(repositoryProvider);
+    final appRouter = ref.watch(appRouterProvider);
+    final colors = Theme.of(context).colorScheme;
+
+    ref.read(setWallpaperProvider.notifier).changeState();
+
+    final result = await repository.openWallpaperChooser(wallpaperEntity.url);
+
+    if (context.mounted) {
+      ref.read(setWallpaperProvider.notifier).changeState();
+      if (!result) {
+        SnackbarHelpers.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedError,
+          color: colors,
+        );
+      }
+      appRouter.pop();
+    }
+  }
+}
+
+// ##
+class _NativePickerButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _NativePickerButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final setWallpaperState = ref.watch(setWallpaperProvider);
+
+    return CustomButton.tonal(
+      width: double.infinity,
+      borderRadius: AppRadius.radiusLg,
+      isLoading: setWallpaperState,
+      text: AppLocalizations.of(context)!.bottomWallSelectorNative,
+      onPressed: () => _openNativePicker(context, ref),
+    );
+  }
+
+  void _openNativePicker(BuildContext context, WidgetRef ref) async {
+    final repository = ref.watch(repositoryProvider);
+    final appRouter = ref.watch(appRouterProvider);
+    final colors = Theme.of(context).colorScheme;
+
+    ref.read(setWallpaperProvider.notifier).changeState();
+
+    final result = await repository.openNativeWallpaperPicker(wallpaperEntity.url);
+
+    if (context.mounted) {
+      ref.read(setWallpaperProvider.notifier).changeState();
+      if (!result) {
+        SnackbarHelpers.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedError,
+          color: colors,
+        );
+      }
+      appRouter.pop();
+    }
   }
 }

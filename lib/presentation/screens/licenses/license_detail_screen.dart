@@ -19,8 +19,6 @@ class LicenseDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-
-          // * App Bar
           CustomSliverAppBarScreens(
             tileText: licenseEntity.name
           ),
@@ -32,11 +30,9 @@ class LicenseDetailScreen extends StatelessWidget {
                 title: license,
               );
             },
-            addAutomaticKeepAlives: true,
             childCount: licenseEntity.licenses.length
             )
           ),
-          
         ],
       )
     );

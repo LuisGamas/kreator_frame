@@ -1,11 +1,14 @@
 // 📦 Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kreator_frame/domain/domain.dart';
-import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/presentation/providers/repository_provider.dart';
 
 // * STATE
+/// State that holds in-app update information and status.
+///
+/// Tracks whether an update is available and whether an update
+/// has already been launched to avoid duplicate update prompts.
 class InAppUpdateState {
   final bool canExecuteUpdate;
   final bool hasLaunchedUpdate;
@@ -25,17 +28,23 @@ class InAppUpdateState {
 }
 
 // * NOTIFIER
-class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
-  final Repository repository;
-  
-  InAppUpdateNotifier({
-    required this.repository,
-  }) : super(InAppUpdateState());
+/// Notifier that manages in-app update state and automatically checks
+/// for updates when the provider is first created.
+class InAppUpdateNotifier extends Notifier<InAppUpdateState> {
+  @override
+  InAppUpdateState build() {
+    // Auto-initialize: Check for updates on first build
+    Future.microtask(() => checkAppForUpdates());
+    return InAppUpdateState();
+  }
 
+  /// Checks if there are updates available for the application.
+  /// Updates the state with the result of the verification.
   Future<void> checkAppForUpdates() async {
     try {
       if (state.hasLaunchedUpdate) return;
 
+      final repository = ref.read(repositoryProvider);
       final resultOfReviewingUpdates = await repository.checkAppForUpdates();
 
       state = state.copyWith(
@@ -50,8 +59,11 @@ class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
     }
   }
 
+  /// Executes the immediate update of the application.
+  /// Can only be executed if an update is available.
   Future<void> executeImmediateAppUpdate() async {
     try {
+      final repository = ref.read(repositoryProvider);
       final resultOfReviewingUpdates = await repository.executeImmediateAppUpdate();
 
       state = state.copyWith(
@@ -65,14 +77,11 @@ class InAppUpdateNotifier extends StateNotifier<InAppUpdateState> {
       );
     }
   }
-
 }
 
 // * PROVIDER
-final inAppUpdateProvider = StateNotifierProvider<InAppUpdateNotifier, InAppUpdateState>((ref) {
-  final repository = ref.watch(repositoryProvider);
-
-  return InAppUpdateNotifier(
-    repository: repository
-  );
-});
+/// Provider that exposes in-app update state and functionality.
+/// Automatically checks for updates when the app starts.
+final inAppUpdateProvider = NotifierProvider<InAppUpdateNotifier, InAppUpdateState>(
+  InAppUpdateNotifier.new,
+);

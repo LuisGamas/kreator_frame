@@ -119,20 +119,32 @@ abstract class AppLocalizations {
   /// No description provided for @bottomWallSelectorHS.
   ///
   /// In en, this message translates to:
-  /// **'Set as Home Screen'**
+  /// **'Home'**
   String get bottomWallSelectorHS;
 
   /// No description provided for @bottomWallSelectorLS.
   ///
   /// In en, this message translates to:
-  /// **'Set as Lock Screen'**
+  /// **'Lock'**
   String get bottomWallSelectorLS;
 
   /// No description provided for @bottomWallSelectorBS.
   ///
   /// In en, this message translates to:
-  /// **'Set as Both Screen'**
+  /// **'Both'**
   String get bottomWallSelectorBS;
+
+  /// No description provided for @bottomWallSelectorNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Android Wallpaper Picker'**
+  String get bottomWallSelectorNative;
+
+  /// No description provided for @bottomWallSelectorChooser.
+  ///
+  /// In en, this message translates to:
+  /// **'More options...'**
+  String get bottomWallSelectorChooser;
 
   /// No description provided for @appliedOk.
   ///

@@ -2,11 +2,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 🌎 Project imports:
-import 'key_value_storae_service.dart';
+import 'key_value_storage_service.dart';
 
+/// Implementation of KeyValueStorageServices using SharedPreferences.
+///
+/// Provides persistent storage for primitive types (int, String, bool).
+/// Uses SharedPreferences as the underlying storage mechanism.
 class KeyValueStorageServicesImpl extends KeyValueStorageServices {
 
-  //! Starts the SharedPreference instance
+  /// Gets the SharedPreferences instance.
   Future<SharedPreferences> getSharedPreferences() async {
     return await SharedPreferences.getInstance();
   }

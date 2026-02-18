@@ -1,16 +1,19 @@
 // 📦 Package imports:
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'set_wallpaper_provider.g.dart';
-
-@riverpod
-class SetWallpaper extends _$SetWallpaper {
+/// Notifier that manages wallpaper application state.
+/// Controls whether a wallpaper is currently being applied.
+class SetWallpaperNotifier extends Notifier<bool> {
   @override
-  bool build() {
-    return false;
-  }
+  bool build() => false;
 
+  /// Toggles the wallpaper application state.
   void changeState() {
     state = !state;
   }
 }
+
+/// Provider that exposes the wallpaper application state.
+final setWallpaperProvider = NotifierProvider<SetWallpaperNotifier, bool>(
+  SetWallpaperNotifier.new,
+);

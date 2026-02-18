@@ -6,23 +6,22 @@
     <!-- You can comment all permissions out if you are not using wallpapers -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <!--
-      Granular media permissions for Android 13 and newer.
-      See https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions
-      for more information.
+      WRITE_EXTERNAL_STORAGE is only required for Android 9 (API 28) and earlier.
+      Starting with Android 10 (API 29+), you can write to MediaStore without permissions.
+      maxSdkVersion="28" ensures that this permission is not requested in modern versions.
     -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- Permissions options for the `storage` group -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- Read storage permission for Android 12 and lower -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
 
     <!-- #################### PERMISSIONS #################### -->
 
     <application
+        android:label="Kreator Frame"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon"
-        android:label="Kreator Frame">
+        android:icon="@mipmap/ic_launcher">
         <!-- Content provider sending data to Kustom, DO NOT CHANGE AUTHORITY NAME! -->
         <provider
             android:name="org.kustom.api.Provider"
@@ -34,23 +33,36 @@
                 <action android:name="org.kustom.provider.WIDGETS" />
             </intent-filter>
         </provider>
+        <!-- FileProvider to expose cached images to the native wallpaper picker -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
         <!-- This is the Dashboard, remove only if you know what you are doing -->
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:enableOnBackInvokedCallback="true"
             android:exported="true"
-            android:hardwareAccelerated="true"
+            android:enableOnBackInvokedCallback="true"
             android:launchMode="singleTop"
+            android:taskAffinity=""
             android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme" />
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!-- To show up in the launcher -->

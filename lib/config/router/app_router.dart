@@ -4,64 +4,50 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // 🌎 Project imports:
+import 'package:kreator_frame/config/router/app_routes.dart';
 import 'package:kreator_frame/domain/domain.dart';
 import 'package:kreator_frame/presentation/screens/screens.dart';
 
-part 'app_router.g.dart';
+/// Provider for the main application router.
+/// Configures all routes and navigation transitions.
+final appRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: AppRoutes.home,
+    routes: [
+      // Primary Screens
+      _createRoute(AppRoutes.home, const HomeScreen()),
 
-// * Routes Names
-// Primary Routes
-const homeRoute = '/';
-// Secondary Routes
-const settingsRoute = '/settings';
-// Tertiary Routes
-const wallpaperPreviewRoute = '/wallpaper-preview';
-const appearanceThemeRoute = '/theme-selector';
-const aboutPackageRoute = '/kustom-app-information';
-const aboutDashboardRoute = '/dashboard-information';
-// Licenses Routes
-const licensesOpenSourceRoute = '/licenses-screen';
-const licenseDetailRoute = '/license-detail-screen';
+      // Secondary Screens
+      _createRoute(AppRoutes.settings, const SettingsScreen()),
 
-// * This is the router
-@riverpod
-GoRouter appRouter(Ref ref) {
-  return GoRouter(routes: [
-    // Primary Screens
-    _createRoute(homeRoute, const HomeScreen()),
+      // Tertiary Screens
+      GoRoute(
+        path: AppRoutes.wallpaperPreview,
+        builder: (context, state) {
+          WallpaperEntity wallpaperEntity = state.extra as WallpaperEntity;
+          return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
+        },
+      ),
 
-    // Secondary Screens
-    _createRoute(settingsRoute, const SettingsScreen()),
+      _createRoute(AppRoutes.appearanceTheme, const ThemeSelectorScreen()),
+      _createRoute(AppRoutes.aboutPackage, const AboutPackageAppScreen()),
+      _createRoute(AppRoutes.aboutDashboard, const AboutDashboardScreen()),
 
-    // Tertiary Screens
-    GoRoute(
-      path: wallpaperPreviewRoute,
-      builder: (context, state) {
-        WallpaperEntity wallpaperEntity = state.extra as WallpaperEntity;
-        return WallpaperPreviewScreen(wallpaperEntity: wallpaperEntity);
-      },
-    ),
+      // Other Screens
+      _createRoute(AppRoutes.licensesOpenSource, const LicensesScreen()),
 
-    _createRoute(appearanceThemeRoute, const ThemeSelectorScreen()),
-    _createRoute(aboutPackageRoute, const AboutPackageAppScreen()),
-    _createRoute(aboutDashboardRoute, const AboutDashboardScreen()),
-
-    // Other Screens
-    _createRoute(licensesOpenSourceRoute, const LicensesScreen()),
-
-    GoRoute(
-      path: licenseDetailRoute,
-      pageBuilder: (context, state) {
-        LicenseEntity  licenseEntity = state.extra as LicenseEntity ;
-        return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));
-      },
-    ),
-
-  ]);
-}
+      GoRoute(
+        path: AppRoutes.licenseDetail,
+        pageBuilder: (context, state) {
+          LicenseEntity licenseEntity = state.extra as LicenseEntity;
+          return pagesTransition(LicenseDetailScreen(licenseEntity: licenseEntity));
+        },
+      ),
+    ],
+  );
+});
 
 GoRoute _createRoute(String path, Widget page) {
   return GoRoute(

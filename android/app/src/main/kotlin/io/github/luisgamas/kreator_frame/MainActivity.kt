@@ -60,6 +60,28 @@ class MainActivity : FlutterActivity() {
                         }.start()
                     }
 
+                    "openWallpaperChooser" -> {
+                        val url = call.argument<String>("url") ?: run {
+                            result.error("INVALID_ARGS", "url is required", null)
+                            return@setMethodCallHandler
+                        }
+
+                        Thread {
+                            try {
+                                val service = WallpapersNativeServices(applicationContext)
+                                val intent = service.prepareWallpaperChooserIntent(url)
+                                Handler(Looper.getMainLooper()).post {
+                                    startActivity(intent)
+                                    result.success(true)
+                                }
+                            } catch (e: Exception) {
+                                Handler(Looper.getMainLooper()).post {
+                                    result.error("WALLPAPER_ERROR", e.message, null)
+                                }
+                            }
+                        }.start()
+                    }
+
                     else -> result.notImplemented()
                 }
             }

@@ -19,8 +19,8 @@ class ColorThemeSwitcher extends ConsumerWidget {
 
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: AppSpacing.xxs,
-        mainAxisSpacing: AppSpacing.xxs,
+        crossAxisSpacing: AppSpacing.xs,
+        mainAxisSpacing: AppSpacing.xs,
         crossAxisCount: 4,
       ),
       delegate: SliverChildBuilderDelegate(

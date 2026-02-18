@@ -21,8 +21,8 @@ class ThemeModeSwitcher extends ConsumerWidget {
 
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: AppSpacing.xs,
-        mainAxisSpacing: AppSpacing.xs,
+        crossAxisSpacing: AppSpacing.md,
+        mainAxisSpacing: AppSpacing.md,
         crossAxisCount: AppConstants.themeModeOptions.length,
       ),
       delegate: SliverChildBuilderDelegate(
@@ -40,27 +40,25 @@ class ThemeModeSwitcher extends ConsumerWidget {
               duration: AppDurations.normal,
               decoration: BoxDecoration(
                 color: colors.surface,
-                borderRadius: AppRadius.radiusXl,
+                borderRadius: AppRadius.radiusLg,
                 border: Border.all(
                   color: isSelectedThemeMode ? colors.primary : colors.surface,
                   width: 3,
                 ),
               ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      AppConstants.themeModeOptions[index].icon,
-                      size: AppIconSizes.md,
-                      color: colors.onSurface,
-                    ),
-                    const Gap(AppSpacing.xxxs),
-                    Text(AppConstants.themeModeOptions[index].title(context),
-                        style: textStyles.titleSmall)
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    AppConstants.themeModeOptions[index].icon,
+                    size: AppIconSizes.md,
+                    color: colors.onSurface,
+                  ),
+                  const Gap(AppSpacing.xxxs),
+                  Text(AppConstants.themeModeOptions[index].title(context),
+                      style: textStyles.titleSmall)
+                ],
               ),
             ),
           );

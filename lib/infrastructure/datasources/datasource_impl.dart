@@ -121,6 +121,21 @@ class DataSourceImpl extends DataSource {
     }
   }
 
+  /// Opens the Android system app chooser (ACTION_ATTACH_DATA) for the given image URL.
+  /// Android displays all apps that can handle the image (e.g. Google Photos, Gallery).
+  /// Returns true if the chooser intent was launched successfully, false otherwise.
+  @override
+  Future<bool> openWallpaperChooser(String url) async {
+    try {
+      final result = await _channel.invokeMethod<bool>('openWallpaperChooser', {
+        'url': url,
+      });
+      return result ?? false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   /// Retrieves the list of available wallpapers from the remote API.
   /// Maps the response to WallpaperEntity objects.
   @override

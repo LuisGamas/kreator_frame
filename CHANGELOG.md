@@ -8,21 +8,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Material You dynamic color (Material Design 3) support with `dynamic_color` package integration.
-- Dynamic color option as first item in color theme selector with spectrum gradient visualization.
+- Dynamic color option as first item in color theme selector with spectrum gradient visualization (SweepGradient).
+- Wallpaper app chooser feature via Android system intent (ACTION_ATTACH_DATA): "Apply with..." bottom sheet showing all available apps for wallpaper application.
+- New `_LocationButton` widget: compact icon button layout for wallpaper location selection (home, lock, both) with improved bottom sheet space efficiency.
 
 ### Changed
 - Color theme selector now displays theme-adaptive color previews: colors adjust brightness/saturation based on current light/dark mode for proper contrast.
 - Refactored color theme selector grid: dynamic color option (index 0) with SweepGradient, accent colors shifted to indices 1+.
 - `ColorScheme.fromSeed()` now generates per-color display variants matching current app brightness in real-time.
+- Wallpaper application bottom sheet layout optimized: 3 location options now display as compact icon buttons in a single row instead of 3 full-width buttons.
+- `_ModalButton` replaced with `_LocationButton` and `_WallpaperChooserButton` for improved visual hierarchy and space efficiency.
+- `_WallpaperChooserButton` uses `CustomButton.text` for visual differentiation as an alternative wallpaper application method.
+- Theme mode switcher refined for consistent UI coherence across appearance settings.
 
 ### Technical Details
 - Added `isDynamicColor` field to `AppValuesPreferencesState` with index `-1` storage convention.
 - New `setPreferenceForDynamicColor()` method in `AppValuesPreferencesNotifier`.
 - Added static `buildFromColorScheme()` method to `AppTheme` for Material You support.
 - Wrapped `MaterialApp.router` with `DynamicColorBuilder` in `main.dart` with fallback to seed color for unsupported devices.
+- New native Kotlin method `prepareWallpaperChooserIntent()` in `WallpapersNativeServices` for ACTION_ATTACH_DATA intent generation.
+- New MethodChannel handler `openWallpaperChooser` in MainActivity for system app chooser intent.
+- Added `openWallpaperChooser(String url)` across datasource → repository → UI layers.
+- Localization strings: `bottomWallSelectorChooser` (English: "More options...", Spanish: "Más opciones...") and shortened location labels for compact display.
+- `_LocationButton` widget: icon button (tonal) with label text below, supporting loading states and tap callbacks.
 
 ### Notes
 - Dynamic Color support requires Android 12+ and is fully supported on Pixel devices; Samsung and other OEMs may have limited support due to custom color palette implementations.
+- Wallpaper chooser requires Android system support for ACTION_ATTACH_DATA; behavior depends on installed apps that handle image attachment intents.
 
 ---
 

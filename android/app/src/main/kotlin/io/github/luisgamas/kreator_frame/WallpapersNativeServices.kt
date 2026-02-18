@@ -111,6 +111,32 @@ class WallpapersNativeServices(private val context: Context) {
         return intent
     }
 
+    // ============================================================
+    // Wallpaper app chooser (ACTION_ATTACH_DATA)
+    // ============================================================
+
+    fun prepareWallpaperChooserIntent(url: String): Intent {
+        // 1. Download original image to a separate cache file
+        val file = downloadImageToChooserFile(url)
+
+        // 2. Expose the file via FileProvider to get a shareable content URI
+        val contentUri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.fileprovider",
+            file
+        )
+
+        // 3. Build ACTION_ATTACH_DATA intent: Android shows "Apply with..." system bottom sheet
+        val attachIntent = Intent(Intent.ACTION_ATTACH_DATA).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+            setDataAndType(contentUri, "image/jpeg")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            putExtra("mimeType", "image/jpeg")
+        }
+
+        return Intent.createChooser(attachIntent, null)
+    }
+
     private fun downloadImageToFile(url: String): File {
         val connection = URL(url).openConnection() as HttpURLConnection
         connection.doInput = true
@@ -119,6 +145,18 @@ class WallpapersNativeServices(private val context: Context) {
         connection.inputStream.close()
 
         val file = File(context.cacheDir, "wallpaper_native_picker.jpg")
+        file.writeBytes(bytes)
+        return file
+    }
+
+    private fun downloadImageToChooserFile(url: String): File {
+        val connection = URL(url).openConnection() as HttpURLConnection
+        connection.doInput = true
+        connection.connect()
+        val bytes = connection.inputStream.readBytes()
+        connection.inputStream.close()
+
+        val file = File(context.cacheDir, "wallpaper_chooser.jpg")
         file.writeBytes(bytes)
         return file
     }

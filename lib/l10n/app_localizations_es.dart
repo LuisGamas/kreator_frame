@@ -21,16 +21,19 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Quieres poner esta imagen como fondo de pantalla principal, pantalla de bloqueo o ambas pantallas?';
 
   @override
-  String get bottomWallSelectorHS => 'Pantalla principal';
+  String get bottomWallSelectorHS => 'Principal';
 
   @override
-  String get bottomWallSelectorLS => 'Pantalla de bloqueo';
+  String get bottomWallSelectorLS => 'Bloqueo';
 
   @override
-  String get bottomWallSelectorBS => 'Pantallas de bloqueo y principal';
+  String get bottomWallSelectorBS => 'Ambas';
 
   @override
   String get bottomWallSelectorNative => 'Usar selector nativo de Android';
+
+  @override
+  String get bottomWallSelectorChooser => 'Más opciones...';
 
   @override
   String get appliedOk => 'Wallpaper aplicado con exito!';

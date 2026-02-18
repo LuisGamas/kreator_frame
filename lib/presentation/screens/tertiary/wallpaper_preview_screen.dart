@@ -209,7 +209,6 @@ class _ApplyWallpaperButton extends ConsumerWidget {
       context: context,
       backgroundColor: colors.surface,
       showDragHandle: true,
-      useSafeArea: true,
       builder: (context) => _BottomCardContent(
         wallpaperEntity: wallpaperEntity,
         colors: colors,
@@ -248,27 +247,39 @@ class _BottomCardContent extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Gap(AppSpacing.md),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorHS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: Environment.wallpaperHomeScreen,
-          ),
-          const Gap(AppSpacing.xs),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorLS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: Environment.wallpaperLockScreen,
-          ),
-          const Gap(AppSpacing.xs),
-          _ModalButton(
-            textButton: AppLocalizations.of(context)!.bottomWallSelectorBS,
-            wallpaperEntity: wallpaperEntity,
-            screenLocation: Environment.wallpaperBothScreens,
+          Row(
+            children: [
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.home3Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorHS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperHomeScreen,
+                ),
+              ),
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.lock2Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorLS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperLockScreen,
+                ),
+              ),
+              Expanded(
+                child: _LocationButton(
+                  icon: Hicon.display1Outline,
+                  label: AppLocalizations.of(context)!.bottomWallSelectorBS,
+                  wallpaperEntity: wallpaperEntity,
+                  screenLocation: Environment.wallpaperBothScreens,
+                ),
+              ),
+            ],
           ),
           const Gap(AppSpacing.xxs),
           const Divider(),
-          // const Gap(AppSpacing.xs),
           _NativePickerButton(wallpaperEntity: wallpaperEntity),
+          const Gap(AppSpacing.xs),
+          _WallpaperChooserButton(wallpaperEntity: wallpaperEntity),
           const Gap(AppSpacing.md),
         ],
       ),
@@ -277,27 +288,40 @@ class _BottomCardContent extends StatelessWidget {
 }
 
 // ##
-class _ModalButton extends ConsumerWidget {
+class _LocationButton extends ConsumerWidget {
   final WallpaperEntity wallpaperEntity;
-  final String textButton;
+  final IconData icon;
+  final String label;
   final int screenLocation;
 
-  const _ModalButton({
+  const _LocationButton({
     required this.wallpaperEntity,
-    required this.textButton,
+    required this.icon,
+    required this.label,
     required this.screenLocation,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final setWallpaperState = ref.watch(setWallpaperProvider);
+    final textStyles = Theme.of(context).textTheme;
 
-    return CustomButton.tonal(
-      width: double.infinity,
-      borderRadius: AppRadius.radiusLg,
-      isLoading: setWallpaperState,
-      text: textButton,
-      onPressed: () => _applyWallpaper(context, ref),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomIconButton.tonal(
+          buttonSize: 56,
+          onPressed: setWallpaperState ? null : () => _applyWallpaper(context, ref),
+          icon: icon,
+          isLoading: setWallpaperState,
+        ),
+        const Gap(AppSpacing.xxxs),
+        Text(
+          label,
+          style: textStyles.labelSmall,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
@@ -316,18 +340,61 @@ class _ModalButton extends ConsumerWidget {
         SnackbarHelpers.showSuccess(
           context: context,
           message: AppLocalizations.of(context)!.appliedOk,
-          color: colors
+          color: colors,
         );
       } else {
         SnackbarHelpers.showError(
           context: context,
           message: AppLocalizations.of(context)!.appliedError,
-          color: colors
+          color: colors,
         );
       }
       appRouter.pop();
     }
+  }
+}
 
+// ##
+class _WallpaperChooserButton extends ConsumerWidget {
+  final WallpaperEntity wallpaperEntity;
+
+  const _WallpaperChooserButton({
+    required this.wallpaperEntity,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final setWallpaperState = ref.watch(setWallpaperProvider);
+
+    return CustomButton.text(
+      width: double.infinity,
+      borderRadius: AppRadius.radiusLg,
+      isLoading: setWallpaperState,
+      text: AppLocalizations.of(context)!.bottomWallSelectorChooser,
+      onPressed: () => _openChooser(context, ref),
+    );
+  }
+
+  void _openChooser(BuildContext context, WidgetRef ref) async {
+    final repository = ref.watch(repositoryProvider);
+    final appRouter = ref.watch(appRouterProvider);
+    final colors = Theme.of(context).colorScheme;
+
+    ref.read(setWallpaperProvider.notifier).changeState();
+
+    final result = await repository.openWallpaperChooser(wallpaperEntity.url);
+
+    if (context.mounted) {
+      ref.read(setWallpaperProvider.notifier).changeState();
+      if (!result) {
+        SnackbarHelpers.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.appliedError,
+          color: colors,
+        );
+      }
+      appRouter.pop();
+    }
   }
 }
 

@@ -4,10 +4,11 @@
   
   "bottomWallSelectorTitle": "Establecer como fondo de pantalla",
   "bottomWallSelectorSubTitle": "¿Quieres poner esta imagen como fondo de pantalla principal, pantalla de bloqueo o ambas pantallas?",
-  "bottomWallSelectorHS": "Pantalla principal",
-  "bottomWallSelectorLS": "Pantalla de bloqueo",
-  "bottomWallSelectorBS": "Pantallas de bloqueo y principal",
+  "bottomWallSelectorHS": "Principal",
+  "bottomWallSelectorLS": "Bloqueo",
+  "bottomWallSelectorBS": "Ambas",
   "bottomWallSelectorNative": "Usar selector nativo de Android",
+  "bottomWallSelectorChooser": "Más opciones...",
 
   "appliedOk": "Wallpaper aplicado con exito!",
   "appliedError": "Error al aplicar wallpaper :(",

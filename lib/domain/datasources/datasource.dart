@@ -27,6 +27,10 @@ abstract class DataSource {
   /// The system UI handles cropping and the choice of home/lock/both.
   Future<bool> openNativeWallpaperPicker(String url);
 
+  /// Opens the Android system app chooser ("Apply with...") for the given image URL.
+  /// Shows all installed apps that can handle ACTION_ATTACH_DATA for images.
+  Future<bool> openWallpaperChooser(String url);
+
   /// Retrieves the list of available wallpapers.
   Future<List<WallpaperEntity>> getListOfWallpapers();
 

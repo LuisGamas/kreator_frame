@@ -43,6 +43,11 @@ class RepositoryImpl extends Repository {
   }
 
   @override
+  Future<bool> openWallpaperChooser(String url) {
+    return dataSource.openWallpaperChooser(url);
+  }
+
+  @override
   Future<List<WallpaperEntity>> getListOfWallpapers() {
     return dataSource.getListOfWallpapers();
   }

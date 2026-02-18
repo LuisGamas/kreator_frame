@@ -26,6 +26,9 @@ abstract class Repository {
   /// Opens the native Android wallpaper picker for the given image URL.
   Future<bool> openNativeWallpaperPicker(String url);
 
+  /// Opens the Android system app chooser ("Apply with...") for the given image URL.
+  Future<bool> openWallpaperChooser(String url);
+
   /// Retrieves the list of available wallpapers.
   Future<List<WallpaperEntity>> getListOfWallpapers();
 
